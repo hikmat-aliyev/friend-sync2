@@ -4,8 +4,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
-router.use(express.json());
-
 router.post('/sign-in', async (req, res) => {
   const { email, password } = req.body;
   console.log(email)

@@ -21,9 +21,6 @@ const AuthService = {
       }
   
       localStorage.setItem('token', data.token);
-      const jwt = localStorage.getItem('token');
-      console.log(jwt);
-  
       return data;
     } catch (error) {
       console.error('Error during authentication:', error.message);
@@ -61,8 +58,6 @@ const AuthService = {
       if (!userData) {
         throw new Error('Failed to fetch user information');
       }
-  
-      console.log(userData);
   
       return userData;
     } catch (error) {
