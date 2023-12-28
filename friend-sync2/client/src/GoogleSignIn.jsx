@@ -1,0 +1,38 @@
+
+import AuthService from "./Authentication/AuthService";
+import { useNavigate} from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from "axios";
+
+function GoogleSignIn() {
+  const navigate = useNavigate();
+
+  const login = useGoogleLogin({
+    onSuccess: async (response) => {
+      try{
+        const res = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${response.access_token}`,
+            }
+          },
+        )
+        console.log(res.data.email);
+        await AuthService.googleSignIn(res.data.email);
+        navigate('/homepage')
+      }catch(err){
+        navigate('/tell-us-about-yourself')
+        console.log(err)
+      }
+    }
+  });
+  
+  return(
+    <div>
+      <button onClick={() => login()}>Sign in with Google </button>
+    </div>
+  )
+}
+
+export default GoogleSignIn;
