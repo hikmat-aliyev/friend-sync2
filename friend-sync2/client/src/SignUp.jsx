@@ -1,4 +1,3 @@
-import './Index.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import AuthService from './Authentication/AuthService';

@@ -1,42 +1,93 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+:root {
+  --fs-xl: 5rem;
+  --fs-l: 1.5rem;
+  --fs-m: 1rem;
+  font-size: 16px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media (min-width: 769px) {
+  :root {
+    --fs-xl: 5rem;
+    --fs-l: 3rem;
+    --fs-m: 2rem;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@media (max-width: 769px) {
+  :root {
+    --fs-xl: 3rem;
+    --fs-l: 2rem;
+    --fs-m: 1.2rem;
   }
 }
 
-.card {
-  padding: 2em;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  border: 12px solid green;
 }
 
-.read-the-docs {
-  color: #888;
+.index-container {
+  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh; 
+  width: 30vw;
+}
+
+@media (max-width: 769px) {
+  .index-container {
+    width: 85%;
+  }
+}
+
+.index-container > h1 {
+  font-size: var(--fs-xl);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.index-container > * {
+  font-size: var(--fs-m);
+  width: 70%;
+}
+
+.log-in-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border: 2px red solid;
+}
+
+.log-in-form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.log-in-form > div > input {
+  border-radius: 10px;
+  font-size: var(--fs-m);
+  padding: 2px;
+  height: var(--fs-l);
+}
+
+.log-in-form > * {
+  font-size: var(--fs-m);
+  width: 100%;
+}
+
+.log-in-form > button {
+  width: 65%;
+}
+
+.error-message {
+  font-size: var(--fs-m);
+  color: red;
+  height: var(--fs-m);
 }

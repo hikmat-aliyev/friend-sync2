@@ -7,7 +7,7 @@ import GoogleSignIn from './GoogleSignIn';
 function Index() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(" ");
   const navigate = useNavigate();
 
   //clear jwt
@@ -35,23 +35,34 @@ function Index() {
   };
  
   return (
-    <>
-      <form onSubmit={handleLogin}>
-        <label htmlFor="email">Email</label>
-        <input type="email" name="email"
-        value={email} onChange= {(e) => setEmail(e.target.value)}  />
-          
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" 
-        value={password} onChange= {(e) => setPassword(e.target.value)}/>
-        {error && <p>{error}</p>}
-        <button type="submit">Log in</button>
-    
-     </form>
-     <p>Or</p>
-     <GoogleSignIn />
-     <p>Do not have an account? <Link to='sign-up'>Sign up</Link></p>
-   </>
+      <div className='index-container'>
+        <h1>FriendSync</h1>
+
+        <form className='log-in-form' onSubmit={handleLogin}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input type="email" name="email"
+            value={email} onChange= {(e) => setEmail(e.target.value)}  
+            placeholder="Enter email"/>
+          </div>
+
+          <div>
+            <label htmlFor="password">Password</label>
+            <input type="password" name="password" 
+            value={password} onChange= {(e) => setPassword(e.target.value)}
+            placeholder="Enter password"/>
+            {error && <p className='error-message'>{error}</p> }
+          </div>
+
+          <button type="submit">Log in</button>
+        </form>
+
+        <p>Or</p>
+
+        <GoogleSignIn />
+
+        <p>Do not have an account? <Link to='sign-up'>Sign up</Link></p>
+      </div>
   )
 }
 
