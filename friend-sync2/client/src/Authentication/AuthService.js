@@ -115,8 +115,6 @@ const AuthService = {
       const data = response.data;
       console.log(data)
       if (!data.token) {
-        console.log('no user')
-        setError('No user');
         throw new Error('Authentication failed');
       }
   
@@ -131,10 +129,10 @@ const AuthService = {
     }
   },
 
-  googleSignUp: async (email) => {
+  googleSignUp: async (userData) => {
     try {
       const response = await axios.post(`${API_BASE}/user/google/sign-up`, {
-       email
+       userData
       }, {
         headers: {
           'Content-Type': 'application/json',

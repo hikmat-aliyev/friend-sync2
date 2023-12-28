@@ -3,10 +3,13 @@ import AuthService from "./Authentication/AuthService";
 import { useNavigate} from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 function GoogleSignIn() {
   const navigate = useNavigate();
-
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState(null);
   const login = useGoogleLogin({
     onSuccess: async (response) => {
       try{
@@ -18,15 +21,24 @@ function GoogleSignIn() {
             }
           },
         )
-        console.log(res.data.email);
+        console.log(res.data)
+        setFullName(res.data.name)
+        setEmail(res.data.email)
         await AuthService.googleSignIn(res.data.email);
         navigate('/homepage')
       }catch(err){
-        navigate('/tell-us-about-yourself')
-        console.log(err)
+        setError(err);
       }
     }
   });
+
+    // Use useEffect to navigate only when there is an error
+    useEffect(() => {
+      if (error) {
+        // Pass email to the next page when there is an error
+        navigate('/tell-us-about-yourself', { state: { fullName: fullName, email: email } });
+      }
+    }, [error, fullName, email, navigate]);
   
   return(
     <div>

@@ -18,7 +18,7 @@ function GoogleSignUp() {
           },
         )
         console.log(res.data.email);
-        await AuthService.googleSignIn(res.data.email);
+        await AuthService.googleSignUp(res.data);
         navigate('/homepage')
       }catch(err){
         console.log(err)

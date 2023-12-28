@@ -55,21 +55,23 @@ router.post('/google/sign-in', async (req, res) => {
     const user = await User.findOne({email: data.email});
     if(!user) {
       console.log('no user')
-      res.redirect('google/sign-up');
+      res.status(404).send(data);
     }
-    const expiresIn = '30d';
-    //if authentication successful, generate a JWT
-    const token = jwt.sign(
-      {
-        userId: user._id,
-        email: user.email,
-        firstName: user.first_name,
-        lastName: user.last_name,
-      },
-      'yourSecretKey', {expiresIn}
-    )
-    //send the jwt to the client
-    res.json({token})
+    if(user){
+      const expiresIn = '30d';
+      //if authentication successful, generate a JWT
+      const token = jwt.sign(
+        {
+          userId: user._id,
+          email: user.email,
+          firstName: user.first_name,
+          lastName: user.last_name,
+        },
+        'yourSecretKey', {expiresIn}
+      )
+      //send the jwt to the client
+      res.json({token})
+      }
   } catch(err) {
     console.log(err);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -150,6 +152,43 @@ router.post('/sign-up', async (req, res) => {
     console.log(err)
   }
 })
+
+router.post('/google/sign-up', async (req, res) => {
+  const data = req.body;
+  const userInfo = data.userData;
+  console.log(userInfo);
+
+  try{
+    let user = await User.findOne({email: userInfo.email});
+    if(!user) {
+      user = await User.create({
+        first_name: userInfo.given_name,
+        last_name: userInfo.family_name,
+        email: userInfo.email,
+      })
+      if(userInfo.birthDate){
+        user.birth_date = userInfo.birthDate;
+      }
+      await user.save()
+    }
+    const expiresIn = '30d';
+    //if authentication successful, generate a JWT
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        email: user.email,
+        firstName: user.first_name,
+        lastName: user.last_name,
+      },
+      'yourSecretKey', {expiresIn}
+    )
+    //send the jwt to the client
+    res.json({token})
+  } catch(err) {
+    console.log(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 
 module.exports = router;

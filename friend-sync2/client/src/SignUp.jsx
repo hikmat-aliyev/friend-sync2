@@ -1,8 +1,22 @@
 import './Index.css'
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AuthService from './Authentication/AuthService';
 import GoogleSignUp from './GoogleSignUp';
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const isValidBirthDate = (birthDate, minAge, maxAge) => {
+  const today = new Date();
+  const inputDate = new Date(birthDate);
+  const age = today.getFullYear() - inputDate.getFullYear();
+
+  return (
+    !isNaN(inputDate.getTime()) &&
+    inputDate <= today &&
+    age >= minAge &&
+    age <= maxAge
+  );
+};
 
 function Index() {
   const [firstName, setFirstName] = useState('');
@@ -13,19 +27,6 @@ function Index() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
-  const isValidBirthDate = (birthDate, minAge, maxAge) => {
-    const today = new Date();
-    const inputDate = new Date(birthDate);
-    const age = today.getFullYear() - inputDate.getFullYear();
-
-    return (
-      !isNaN(inputDate.getTime()) &&
-      inputDate <= today &&
-      age >= minAge &&
-      age <= maxAge
-    );
-  };
 
   const handleSignUp = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
