@@ -57,11 +57,14 @@ function Index() {
           <button type="submit">Log in</button>
         </form>
 
-        <p>Or</p>
+        <div className='other-info-container'>
+          <h2>Or</h2>
 
-        <GoogleSignIn />
+          <GoogleSignIn />
 
-        <p>Do not have an account? <Link to='sign-up'>Sign up</Link></p>
+          <p>Don't have an account? <Link to='sign-up'>Sign up</Link></p>
+        </div>
+
       </div>
   )
 }
