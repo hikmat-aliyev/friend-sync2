@@ -21,7 +21,7 @@ router.post('/submit', async (req, res) => {
   }catch(err){
     res.status(500) 
   }
-  const posts = await Post.find({user: user._id})
+  const posts = await Post.find({user: user._id}).sort({ date: -1 }).exec();
   res.json(posts)
 })
 
@@ -33,11 +33,67 @@ router.post('/get-posts', async (req, res) => {
 })
 
 router.post('/delete', async (req, res) => {
-  const data = req.body;
-  const userInfo = data.user;
-  await Post.findOneAndDelete({_id: data.postId});
-  const posts = await Post.find({user: userInfo.userId}).sort({ date: -1 }).exec();
-  res.json(posts);
+  try{
+    const data = req.body;
+    const userInfo = data.user;
+    await Post.findOneAndDelete({_id: data.postId});
+    const posts = await Post.find({user: userInfo.userId}).sort({ date: -1 }).exec();
+    res.json(posts);
+  }catch (error) {
+    console.error('Error in /like endpoint:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
+router.post('/like', async (req, res) => {
+  try {
+    const data = req.body;
+    console.log(data);
+    const userInfo = data.user;
+    
+    // Find the post by _id and update the like_number
+    const updatedPost = await Post.findByIdAndUpdate(
+      data.postId,
+      // Increment the like_number by 1
+      { $inc: { like_number: 1 },
+      //add user full name and email to likes array
+        $push: { likes: {username: userInfo.firstName + ' ' + userInfo.lastName,
+                          email: userInfo.email }} },
+      { new: true } // Return the updated document
+    );
+    await updatedPost.save();
+    // Find all posts for the user and sort them
+    const posts = await Post.find({ user: userInfo.userId }).sort({ date: -1 }).exec();
+    res.json(posts);
+  } catch (error) {
+    console.error('Error in /like endpoint:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
+router.post('/unlike', async (req, res) => {
+  try {
+    const data = req.body;
+    console.log(data);
+    const userInfo = data.user;
+    
+    // Find the post by _id and update the like_number
+    const updatedPost = await Post.findByIdAndUpdate(
+      data.postId,
+      // Increment the like_number by 1
+      { $inc: { like_number: -1 },
+      //add user full name and email to likes array
+        $pull: { likes: {email: userInfo.email }} },
+      { new: true } // Return the updated document
+    );
+    await updatedPost.save();
+    // Find all posts for the user and sort them
+    const posts = await Post.find({ user: userInfo.userId }).sort({ date: -1 }).exec();
+    res.json(posts);
+  } catch (error) {
+    console.error('Error in /like endpoint:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 })
 
 module.exports = router;

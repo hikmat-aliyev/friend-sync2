@@ -7,7 +7,8 @@ const PostSchema = new Schema({
   username: { type: String, required: true},
   text: { type: String, required: true, maxLength: 200 },
   date: { type: Date, default: Date.now() },
-  likes: [{ type: Schema.Types.ObjectId, ref: "User"}]
+  likes: [{ username: {type: String}, email: {type: String}}],
+  like_number: { type: Number, default: 0 }
 });
 
 // Virtual for User's URL

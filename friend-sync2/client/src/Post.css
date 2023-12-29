@@ -1,3 +1,8 @@
 .post-header {
   display: flex;
 }
+
+.liked-button {
+  color: blue;
+  border: 3px solid green;
+}

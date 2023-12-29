@@ -9,7 +9,6 @@ const Post = ({userInfo}) => {
   const [post, setPost] = useState('');
   const [error, setError] = useState(null);
   const [user, setUserInfo] = useState(userInfo);
-  console.log(posts)
   //get all posts
   useEffect(() => {
     const fetchData = async () => {
@@ -74,8 +73,40 @@ const Post = ({userInfo}) => {
     }
   }
 
-  async function handlePostLike () {
+  async function handlePostLike (postId) {
+    try{
+      const response = await axios.post(`${API_BASE}/post/like`, {
+        postId, user
+      },{
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      const data = response.data;
+      setPosts(data);
+    }catch(err){
+      console.log(err)
+    }
+  }
 
+  async function handlePostUnlike (postId) {
+    try{
+      const response = await axios.post(`${API_BASE}/post/unlike`, {
+        postId, user
+      },{
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      const data = response.data;
+      setPosts(data);
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  function isPostLiked(likes) {
+    return likes.some(like => like.email == user.email)
   }
 
   return (
@@ -90,8 +121,8 @@ const Post = ({userInfo}) => {
       </div>
 
       {posts && posts.map((post, index) => (
+        
         <div key={index}>
-
           <div className='post-header'>
             <h1>{post.username}</h1>
             <p>{formatDistanceToNow(post.date, {addSuffix: true})}</p>
@@ -101,13 +132,17 @@ const Post = ({userInfo}) => {
           <p>{post.text}</p>
 
           <div>
-            <a href="">likes</a>
+            <a href="">{post.like_number} likes</a>
             <a href="">comments</a>
           </div>
 
             
           <div>
-            <button>Like</button>
+            {isPostLiked(post.likes) ? 
+            <button onClick={() => handlePostUnlike(post._id)} className='liked-button'>Like</button> : 
+            <button  onClick={() => handlePostLike(post._id)}>Like</button>}
+
+
             <button>Comment</button>
           </div>
         </div>
