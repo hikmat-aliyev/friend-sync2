@@ -1,14 +1,34 @@
 import { useEffect, useState } from 'react';
-import AuthService from './Authentication/AuthService';
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
-
+import './Post.css'
+import { formatDistanceToNow } from 'date-fns';
 // eslint-disable-next-line react/prop-types
 const Post = ({userInfo}) => {
   const [posts, setPosts] = useState(null);
   const [post, setPost] = useState('');
   const [error, setError] = useState(null);
-  const [user, setUserInfo] = useState(userInfo)
+  const [user, setUserInfo] = useState(userInfo);
+  console.log(posts)
+  //get all posts
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(`${API_BASE}/post/get-posts`, {
+          user
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        setPosts(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+  
+    fetchData();
+  }, [user]);
 
   async function handlePostSubmit(e) {
       e.preventDefault();
@@ -38,6 +58,26 @@ const Post = ({userInfo}) => {
       
   }
 
+  async function handlePostDelete (postId) {
+    try{
+      const response = await axios.post(`${API_BASE}/post/delete`, {
+        postId, user
+      },{
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      const data = response.data;
+      setPosts(data);
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  async function handlePostLike () {
+
+  }
+
   return (
     <div>
       <div className='createPost'>
@@ -51,7 +91,25 @@ const Post = ({userInfo}) => {
 
       {posts && posts.map((post, index) => (
         <div key={index}>
+
+          <div className='post-header'>
+            <h1>{post.username}</h1>
+            <p>{formatDistanceToNow(post.date, {addSuffix: true})}</p>
+            <button onClick={() => handlePostDelete(post._id)}>Delete</button>
+          </div>
+
           <p>{post.text}</p>
+
+          <div>
+            <a href="">likes</a>
+            <a href="">comments</a>
+          </div>
+
+            
+          <div>
+            <button>Like</button>
+            <button>Comment</button>
+          </div>
         </div>
       ))}
 </div>

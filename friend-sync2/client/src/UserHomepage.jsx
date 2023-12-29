@@ -1,16 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from './Authentication/AuthService';
-import axios from 'axios';
-const API_BASE = 'http://localhost:3000'
 import Post from './Post';
 
 const UserHomepage = () => {
   const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState(null);
-  const [post, setPost] = useState('');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
