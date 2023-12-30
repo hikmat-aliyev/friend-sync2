@@ -63,7 +63,7 @@ body {
   width: 60%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .log-in-form > div {
@@ -106,12 +106,14 @@ body {
   border: 1px solid var(--main-color);
 }
 
-.error-message {
-  color: red;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
+.white {
+  color: white;
 }
+
+.red{
+  color: red;
+}
+
 
 .other-info-container {
   height: 20vh;

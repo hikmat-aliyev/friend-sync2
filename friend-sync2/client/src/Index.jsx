@@ -7,7 +7,7 @@ import GoogleSignIn from './GoogleSignIn';
 function Index() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(" ");
+  const [error, setError] = useState("error");
   const navigate = useNavigate();
 
   //clear jwt
@@ -39,6 +39,7 @@ function Index() {
         <h1>FriendSync</h1>
 
         <form className='log-in-form' onSubmit={handleLogin}>
+
           <div>
             <label htmlFor="email">Email</label>
             <input type="email" name="email"
@@ -46,15 +47,17 @@ function Index() {
             placeholder="Enter email"/>
           </div>
 
-          <div>
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" 
-            value={password} onChange= {(e) => setPassword(e.target.value)}
-            placeholder="Enter password"/>
-            {error && <p className='error-message'>{error}</p> }
-          </div>
+            <div>
+              <label htmlFor="password">Password</label>
+              <input type="password" name="password" 
+              value={password} onChange= {(e) => setPassword(e.target.value)}
+              placeholder="Enter password"/>
+            </div>
+
+          {error!=='error' ? <p className='red'>{error}</p> : <p className='white'>{error}</p>}
 
           <button type="submit">Log in</button>
+          
         </form>
 
         <div className='other-info-container'>
