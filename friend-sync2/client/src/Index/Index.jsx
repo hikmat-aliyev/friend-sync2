@@ -2,8 +2,8 @@
 import './Index.css'
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
-import AuthService from './Authentication/AuthService';
-import GoogleSignIn from './GoogleSignIn';
+import AuthService from '../Authentication/AuthService';
+import GoogleSignIn from '../Google/GoogleSignIn';
 
 function Index() {
   const [email, setEmail] = useState('');

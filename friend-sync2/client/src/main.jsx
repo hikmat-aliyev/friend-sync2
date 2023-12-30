@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Index from "./Index";
-import UserHomepage from "./UserHomepage";
-import SignUp from "./SignUp"
+import Index from "./Index/Index";
+import UserHomepage from "./UserHomepage/UserHomepage"
+import SignUp from "./SignUp/SignUp"
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import TellUsAboutYourself from "./TellUsAboutYourself";
+import TellUsAboutYourself from "./TellAboutYourself/TellUsAboutYourself";
 
 const router = createBrowserRouter([
   {

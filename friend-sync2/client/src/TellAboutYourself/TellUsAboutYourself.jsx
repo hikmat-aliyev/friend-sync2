@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
-import AuthService from './Authentication/AuthService';
-import { isValidBirthDate } from './SignUp';
+import AuthService from '../Authentication/AuthService';
+import { isValidBirthDate } from '../SignUp/SignUp';
 
 function TellUsAboutYourself() {
   const location = useLocation();

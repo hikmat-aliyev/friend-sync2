@@ -1,5 +1,5 @@
-import './GoogleSignIn.css'
-import AuthService from "./Authentication/AuthService";
+import './Google.css'
+import AuthService from '../Authentication/AuthService';
 import { useNavigate} from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from "axios";

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthService from './Authentication/AuthService';
-import Post from './Post';
+import AuthService from '../Authentication/AuthService';
+import Post from '../Post/Post'
 
 const UserHomepage = () => {
   const [user, setUser] = useState(null);

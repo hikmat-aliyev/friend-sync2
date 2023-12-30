@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import AuthService from './Authentication/AuthService';
-import GoogleSignUp from './GoogleSignUp';
+import AuthService from '../Authentication/AuthService';
+import GoogleSignUp from '../Google/GoogleSignUp';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const isValidBirthDate = (birthDate, minAge, maxAge) => {
