@@ -4,5 +4,34 @@
 
 .liked-button {
   color: blue;
-  border: 3px solid green;
+}
+
+.disabled-postBtn {
+  pointer-events: none;
+  opacity: 0.5; 
+}
+
+.list-of-likes, .list-of-comments {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30vw;
+  height: 50vh;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.see-all-comments {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.see-all-comments:hover {
+  text-decoration: underline;
 }

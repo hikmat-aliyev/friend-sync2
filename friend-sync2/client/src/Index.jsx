@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import './Index.css'
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
