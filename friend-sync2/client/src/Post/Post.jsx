@@ -1,13 +1,15 @@
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 import './Post.css'
 import { formatDistanceToNow } from 'date-fns';
+import deleteLogo from '../images/deleteLogo.svg';
+import postLogo from '../images/sendLogo.svg';
+
 // eslint-disable-next-line react/prop-types
 const Post = ({userInfo}) => {
   const [posts, setPosts] = useState(null);
   const [post, setPost] = useState('');
-  const [error, setError] = useState(null);
   const [user, setUserInfo] = useState(userInfo);
   const [commentInputToggle, setToggle] = useState(false);
   const [commentText, setCommentText] = useState(" ");
@@ -38,15 +40,6 @@ const Post = ({userInfo}) => {
 
   async function handlePostSubmit(e) {
       e.preventDefault();
-      const trimmedText = post.trim();
-      if(!post || trimmedText == ''){
-        setError('Your post can not be empty')
-        return
-      }
-      else if(post.length > 200){
-        setError('Post should not be longer than 200 characters')
-        return
-      }
       try{
         const response = await axios.post(`${API_BASE}/post/submit`, {
           post, user
@@ -148,32 +141,55 @@ const Post = ({userInfo}) => {
     setShowCommentList(true)
   }
 
+  async function handleCommentDelete(postId, commentId) {
+    try{
+      const response = await axios.post(`${API_BASE}/post/comment/delete`, {
+        postId, user, commentId
+      },{
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      const data = response.data;
+      setPosts(data);
+    }catch(err){
+      console.log(err)
+    }
+  }
+
   return (
-    <div>
-      <div className='createPost'>
+    <div className='post-container'>
+      <div className='create-post-container'>
         <form onSubmit={handlePostSubmit}>
-          <input type="text" placeholder="What's on your mind" 
+          <textarea type="text" placeholder="What's on your mind?" 
           value={post} onChange= {(e) => setPost(e.target.value)}/>
-          <button type='submit'>Share</button>
-          {error && <p>{error}</p>}
+          <button className={post.trim() == "" ? 'disabled-postBtn' : 'postBtn'}  type='submit'>
+            <img className='postLogo .material-symbols-outlined' src={postLogo} />
+          </button>
         </form>
       </div>
 
       {posts && posts.map((post, index) => (
-        <div key={index}>
+        <div className='post-container' key={index}>
 
           <div className='post-header'>
-            <h1>{post.username}</h1>
-            <p>posted {formatDistanceToNow(post.date, {addSuffix: true})}</p>
+            <div>
+              <h2>{post.username}</h2>
+              <p>posted {formatDistanceToNow(post.date, {addSuffix: true})}</p>
+            </div>
             {/* show delete btn if the post belongs to the current user */}
-            {post.user._id == user._id ? <button onClick={() => handlePostDelete(post._id)}>Delete</button> : null}
+            {post.user._id == user._id ? <button className='post-delete-button' onClick={() => handlePostDelete(post._id)}>
+              <img src={deleteLogo} alt="delete-logo" />
+              </button> : null}
           </div>
 
-          <p>{post.text}</p>
+          <p className='post-text'>{post.text}</p>
 
-          <div>
-            <button onClick={() => handleLikeList(post)}>{post.like_number} likes</button>
-            <button onClick={() => handleCommentList(post)}>{post.comment_number} comments</button>
+          <div className='like-comment-list-container'>
+            { post.like_number == 1 ? <button onClick={() => handleLikeList(post)}>{post.like_number} like</button> : null}
+            { post.like_number > 1 ? <button onClick={() => handleLikeList(post)}>{post.like_number} likes</button> : null}
+            { post.comment_number == 1 ? <button onClick={() => handleCommentList(post)}>{post.comment_number} comment</button> : null}
+            { post.comment_number > 1 ? <button onClick={() => handleCommentList(post)}>{post.comment_number} comments</button> : null}
           </div>
 
           {showLikeList && <div className='list-of-likes'>
@@ -209,7 +225,8 @@ const Post = ({userInfo}) => {
                   <p>posted {formatDistanceToNow(comment.date, {addSuffix: true})}</p>
                   <p>{comment.text}</p>
                   {/* show delete btn if the comment belongs to the current user */}
-                  {comment.email == user.email ? <button>Delete</button> : null}
+                  {comment.email == user.email ? <button 
+                  onClick={() => handleCommentDelete(post._id, comment._id)}>Delete</button> : null}
                 </div>
               ))}
 

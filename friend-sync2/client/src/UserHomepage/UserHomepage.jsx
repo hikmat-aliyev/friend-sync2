@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import AuthService from '../Authentication/AuthService';
-import Post from '../Post/Post'
+import Post from '../Post/Post';
+import Navbar from '../Navbar/Navbar';
+import './UserHomepage.css'
 
 const UserHomepage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const jwt = AuthService.getToken();
@@ -26,20 +26,19 @@ const UserHomepage = () => {
     }
   }, []);
 
-  function handleLogOut() {
-    AuthService.logout();
-    navigate('/');
-  }
 
   return (
     <div>
       {loading ? (
         <p>Loading...</p>
       ) : user ? (
-        <div>
-          <h1>Welcome, {user.firstName} {user.lastName}!</h1>
-          <button onClick={handleLogOut}>Log out</button>
-          <Post userInfo={user}/>
+        <div className='user-homepage'>
+          <div>
+            <Navbar/>
+          </div>
+          <div>
+            <Post userInfo={user}/>
+          </div>
         </div>
       ) : (
         <p>User not found</p>

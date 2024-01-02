@@ -1,14 +1,9 @@
-.post-header {
-  display: flex;
+:root {
+  --main2-color: #848482;
 }
 
 .liked-button {
   color: blue;
-}
-
-.disabled-postBtn {
-  pointer-events: none;
-  opacity: 0.5; 
 }
 
 .list-of-likes, .list-of-comments {
@@ -34,4 +29,112 @@
 
 .see-all-comments:hover {
   text-decoration: underline;
+}
+
+.create-post-container > form {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  width: 700px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid gray;
+}
+
+.create-post-container > form > textarea {
+  height: 90%;
+  padding: 1rem;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: var(--fs-l);
+}
+
+
+.postBtn {
+  background-color: var(--main2-color);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.postBtn:hover {
+  transform: scale(1.05);
+}
+
+.disabled-postBtn {
+  pointer-events: none;
+  opacity: 0.5; 
+}
+
+.disabled-postBtn, .postBtn {
+  font-weight: bold;
+  border: none;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.6rem;
+  border-radius: 5px;
+  align-self: flex-end;
+}
+
+.postLogo {
+  width: 2.7rem;
+  height: 2.7rem;
+  transition: transform 0.3s ease;
+}
+
+.postLogo:hover {
+  transform: scale(1.05);
+}
+
+/* single post info style */
+.post-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+  width: 700px;
+}
+
+.post-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.post-header > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-delete-button {
+  border: none;
+  background-color: transparent;
+  width: 2.2rem;
+}
+
+.post-delete-button > img {
+  width: 2.2rem;
+  fill: red;
+}
+
+.like-comment-list-container{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.like-comment-list-container > button {
+  border: none;
+  background-color: transparent;
+}
+
+.like-comment-list-container > button:hover{
+  text-decoration: underline;
+}
+
+
+.post-text {
+  word-wrap: break-word;
 }

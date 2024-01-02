@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+  font-size: 16px;
+  --fs-xl: 3rem;
+  --fs-l: 1.3rem;
+  --fs-m: 0.5rem;
+  --main-color: rgb(55, 55, 94);
+  --index-backgroundColor: rgba(113, 113, 172, 0.209);
+  --body-backgroundColor: rgba(94, 94, 139, 0.482);
+}
+
+@media (max-width: 800px) {
+  :root {
+    font-size: 10px;
+    --fs-xl: 3rem;
+    --fs-l: 1.3rem;
+    --fs-m: 0.5rem;
+  }
+}
+
+body {
+  border: 2px solid red;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f5f5;
+}
+
+@media (max-width: 800px) {
+  .index-container {
+    width: 80vw;
+    height: 60vh;
+  }
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid red;
+  width: 100vw;
+  height: 12vh;
+  padding: 2rem 5rem 2rem 3rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #848482; /* Optionally, set a background color */
+  z-index: 1000; /* Ensure the navbar is above other elements */
+}
+
+.right-side {
+  display: flex;
+  gap: 2rem;
+}
+
+
+.navbar-container > button, .right-side > button {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
