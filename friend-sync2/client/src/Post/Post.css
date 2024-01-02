@@ -38,6 +38,7 @@
   width: 700px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border: 1px solid gray;
+  background-color: white;
 }
 
 .create-post-container > form > textarea {
@@ -80,21 +81,19 @@
 
 .postLogo {
   width: 2.7rem;
-  height: 2.7rem;
-  transition: transform 0.3s ease;
-}
-
-.postLogo:hover {
-  transform: scale(1.05);
+  height: 2.7rem; 
 }
 
 /* single post info style */
-.post-container {
+.single-post-container {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   padding: 1rem;
   width: 700px;
+  border: 2px solid green;
+  background-color: white;
+  margin-top: 20px;
 }
 
 .post-header {
@@ -106,6 +105,10 @@
 .post-header > div {
   display: flex;
   flex-direction: column;
+}
+
+.post-header > div > p {
+  color: rgb(43, 43, 43);
 }
 
 .post-delete-button {
@@ -137,4 +140,33 @@
 
 .post-text {
   word-wrap: break-word;
+  font-size: var(--fs-l );
+}
+
+
+.default-like-btn {
+  color: white;
+}
+
+.like-comment-btn-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  border: 1px solid gray;
+  border-left: none;
+  border-right: none;
+}
+
+.like-comment-btn-container > button {
+  width: 47%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.like-comment-btn-container > button:hover{
+  background-color: rgba(128, 128, 128, 0.293);
 }

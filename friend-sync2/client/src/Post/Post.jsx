@@ -170,7 +170,7 @@ const Post = ({userInfo}) => {
       </div>
 
       {posts && posts.map((post, index) => (
-        <div className='post-container' key={index}>
+        <div className='single-post-container' key={index}>
 
           <div className='post-header'>
             <div>
@@ -186,10 +186,10 @@ const Post = ({userInfo}) => {
           <p className='post-text'>{post.text}</p>
 
           <div className='like-comment-list-container'>
-            { post.like_number == 1 ? <button onClick={() => handleLikeList(post)}>{post.like_number} like</button> : null}
-            { post.like_number > 1 ? <button onClick={() => handleLikeList(post)}>{post.like_number} likes</button> : null}
-            { post.comment_number == 1 ? <button onClick={() => handleCommentList(post)}>{post.comment_number} comment</button> : null}
-            { post.comment_number > 1 ? <button onClick={() => handleCommentList(post)}>{post.comment_number} comments</button> : null}
+            { post.like_number == 1 ? <button onClick={() => handleLikeList(post)}>{post.like_number} like</button> : <p> </p>}
+            { post.like_number > 1 ? <button onClick={() => handleLikeList(post)}>{post.like_number} likes</button> :  <p> </p>}
+            { post.comment_number == 1 ? <button className='comment-number' onClick={() => handleCommentList(post)}>{post.comment_number} comment</button> : null}
+            { post.comment_number > 1 ? <button className='comment-number'  onClick={() => handleCommentList(post)}>{post.comment_number} comments</button> : null}
           </div>
 
           {showLikeList && <div className='list-of-likes'>
@@ -210,13 +210,16 @@ const Post = ({userInfo}) => {
 
             
           <div>
-            {isPostLiked(post.likes) ? 
-            <button onClick={() => handlePostUnlike(post._id)} className='liked-button'>Like</button> : 
-            <button  onClick={() => handlePostLike(post._id)}>Like</button>}
+            <div className='like-comment-btn-container'>
+              {isPostLiked(post.likes) ? 
+              <button onClick={() => handlePostUnlike(post._id)} className='liked-button'>Like</button> : 
+              <button  onClick={() => handlePostLike(post._id)}>Like</button>}
 
-            <button onClick={() => handleCommentInput(post)}>Comment</button>
-
-            <button className='see-all-comments' onClick={() => handleCommentList(post)}>See all comments</button>
+              <button onClick={() => handleCommentInput(post)}>Comment</button>
+            </div>
+                
+            {post.comments.length > 3 && <button className='see-all-comments' onClick={() => handleCommentList(post)}>
+              See all comments</button>}
               
               {/* limit number of shown comments to 3 */}
             {post.comments.slice(-3).map((comment, id) => (

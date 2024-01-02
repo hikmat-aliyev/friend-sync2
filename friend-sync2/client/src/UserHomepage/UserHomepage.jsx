@@ -3,6 +3,7 @@ import AuthService from '../Authentication/AuthService';
 import Post from '../Post/Post';
 import Navbar from '../Navbar/Navbar';
 import './UserHomepage.css'
+import FriendList from "../Friends/FriendList";
 
 const UserHomepage = () => {
   const [user, setUser] = useState(null);
@@ -38,6 +39,9 @@ const UserHomepage = () => {
           </div>
           <div>
             <Post userInfo={user}/>
+          </div>
+          <div>
+            <FriendList />
           </div>
         </div>
       ) : (
