@@ -1,16 +1,12 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
-import './Friend.css'
+import './ProfilesList.css'
 import { useNavigate } from 'react-router-dom';
 
 const FriendList = () => {
   const [friends, setFriends] = useState([]);
   const navigate = useNavigate();
-
-  function handleFriendPage(friendId) {
-    navigate('/friend-homepage', { state: { id: friendId } });
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,12 +25,17 @@ const FriendList = () => {
     fetchData();
   }, []);
 
+
+  function handleFriendPage(friend) {
+    navigate('/friend-homepage', { state: { friend: friend } });
+  }
+
   return (
    <div>
     <h1>New users</h1>
     {friends.length > 0 && 
     <div className='friends-list'>{friends.map((friend, key) => 
-      <button onClick={() => handleFriendPage(friend.id)} key={key}>{friend.fullName}</button>)} </div>}
+      <button onClick={() => handleFriendPage(friend)} key={key}>{friend.fullName}</button>)} </div>}
    </div> 
   );
 };

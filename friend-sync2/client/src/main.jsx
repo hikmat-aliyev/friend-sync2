@@ -6,7 +6,7 @@ import UserHomepage from "./UserHomepage/UserHomepage"
 import SignUp from "./SignUp/SignUp"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import TellUsAboutYourself from "./TellAboutYourself/TellUsAboutYourself";
-import FriendHomepage from './FriendHomepage/FriendHomepage'
+import ProfilePage from './ProfilePage/ProfilePage'
 
 const router = createBrowserRouter([
   {
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: "friend-homepage",
-    element: <FriendHomepage />,
+    element: <ProfilePage />,
   },
 ]);
 

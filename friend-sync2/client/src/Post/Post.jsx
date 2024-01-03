@@ -3,14 +3,15 @@ import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 import './Post.css'
 import { formatDistanceToNow } from 'date-fns';
-import deleteLogo from '../images/deleteLogo.svg';
 import postLogo from '../images/sendLogo.svg';
 
 // eslint-disable-next-line react/prop-types
-const Post = ({userInfo}) => {
+const Post = ({userInfo, friendInfo}) => {
   const [posts, setPosts] = useState(null);
   const [post, setPost] = useState('');
-  const [user, setUserInfo] = useState(userInfo);
+  const user = userInfo;
+  // set postOwner to friend data if we are in friend page
+  const postOwner = friendInfo ? friendInfo : userInfo;
   const [commentInputToggle, setToggle] = useState(false);
   const [commentText, setCommentText] = useState(" ");
   const [showLikeList, setShowLikeList] = useState(false);
@@ -23,7 +24,7 @@ const Post = ({userInfo}) => {
     const fetchData = async () => {
       try {
         const response = await axios.post(`${API_BASE}/post/get-posts`, {
-          user
+          postOwner
         }, {
           headers: {
             'Content-Type': 'application/json',
@@ -36,7 +37,7 @@ const Post = ({userInfo}) => {
     };
   
     fetchData();
-  }, [user]);
+  }, [postOwner]);
 
   async function handlePostSubmit(e) {
       e.preventDefault();
@@ -76,7 +77,7 @@ const Post = ({userInfo}) => {
   async function handlePostLike (postId) {
     try{
       const response = await axios.post(`${API_BASE}/post/like`, {
-        postId, user
+        postId, user, postOwner
       },{
         headers: {
           'Content-Type': 'application/json',
@@ -92,7 +93,7 @@ const Post = ({userInfo}) => {
   async function handlePostUnlike (postId) {
     try{
       const response = await axios.post(`${API_BASE}/post/unlike`, {
-        postId, user
+        postId, postOwner, user
       },{
         headers: {
           'Content-Type': 'application/json',
@@ -113,7 +114,7 @@ const Post = ({userInfo}) => {
     setCommentText('');
     try{
       const response = await axios.post(`${API_BASE}/post/comment`, {
-        postId, user, commentText
+        postId, user, postOwner, commentText
       },{
         headers: {
           'Content-Type': 'application/json',
@@ -144,7 +145,7 @@ const Post = ({userInfo}) => {
   async function handleCommentDelete(postId, commentId) {
     try{
       const response = await axios.post(`${API_BASE}/post/comment/delete`, {
-        postId, user, commentId
+        postId, postOwner, commentId
       },{
         headers: {
           'Content-Type': 'application/json',
@@ -159,7 +160,7 @@ const Post = ({userInfo}) => {
 
   return (
     <div className='post-container'>
-      <div className='create-post-container'>
+      {!friendInfo && <div className='create-post-container'>
         <form onSubmit={handlePostSubmit}>
           <textarea type="text" placeholder="What's on your mind?" 
           value={post} onChange= {(e) => setPost(e.target.value)}/>
@@ -167,7 +168,7 @@ const Post = ({userInfo}) => {
             <img className='postLogo .material-symbols-outlined' src={postLogo} />
           </button>
         </form>
-      </div>
+      </div>}
 
       {posts && posts.map((post, index) => (
         <div className='single-post-container' key={index}>
@@ -177,9 +178,9 @@ const Post = ({userInfo}) => {
               <h2>{post.username}</h2>
               <p>posted {formatDistanceToNow(post.date, {addSuffix: true})}</p>
             </div>
-            {/* show delete btn if the post belongs to the current user */}
-            {post.user._id == user._id ? <button className='post-delete-button' onClick={() => handlePostDelete(post._id)}>
-              <img src={deleteLogo} alt="delete-logo" />
+            {/* show delete btn if the we are not in friend's page */}
+            {!friendInfo ? <button className='post-delete-button' onClick={() => handlePostDelete(post._id)}>
+            <span id='delete-logo' className="material-symbols-outlined"> delete </span>
               </button> : null}
           </div>
 
@@ -212,10 +213,17 @@ const Post = ({userInfo}) => {
           <div>
             <div className='like-comment-btn-container'>
               {isPostLiked(post.likes) ? 
-              <button onClick={() => handlePostUnlike(post._id)} className='liked-button'>Like</button> : 
-              <button  onClick={() => handlePostLike(post._id)}>Like</button>}
+              <button onClick={() => handlePostUnlike(post._id)} className='liked-button'>
+                 <span id='like-logo' className="material-symbols-outlined"> thumb_up </span>
+                   Like
+              </button> : 
+              <button  onClick={() => handlePostLike(post._id)}>
+                <span className="material-symbols-outlined"> thumb_up </span>
+                 Like
+              </button>}
 
-              <button onClick={() => handleCommentInput(post)}>Comment</button>
+              <button onClick={() => handleCommentInput(post)}>
+              <span id='comment-logo' className="material-symbols-outlined"> mode_comment </span> Comment</button>
             </div>
                 
             {post.comments.length > 3 && <button className='see-all-comments' onClick={() => handleCommentList(post)}>

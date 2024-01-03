@@ -3,7 +3,7 @@ import AuthService from '../Authentication/AuthService';
 import Post from '../Post/Post';
 import Navbar from '../Navbar/Navbar';
 import './UserHomepage.css'
-import FriendList from "../Friends/FriendList";
+import ProfilesList from "../Profiles/ProfilesList";
 
 const UserHomepage = () => {
   const [user, setUser] = useState(null);
@@ -41,7 +41,7 @@ const UserHomepage = () => {
             <Post userInfo={user}/>
           </div>
           <div>
-            <FriendList />
+            <ProfilesList />
           </div>
         </div>
       ) : (

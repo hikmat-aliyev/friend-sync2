@@ -117,9 +117,10 @@
   width: 2.2rem;
 }
 
-.post-delete-button > img {
-  width: 2.2rem;
-  fill: red;
+.post-delete-button > span {
+  font-size: 2.1rem;
+  color: red;
+  cursor: pointer;
 }
 
 .like-comment-list-container{
@@ -165,8 +166,17 @@
   font-weight: bold;
   padding: 0.5rem;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .like-comment-btn-container > button:hover{
   background-color: rgba(128, 128, 128, 0.293);
 }
+
+#like-logo {
+  color: blue;
+}
+
