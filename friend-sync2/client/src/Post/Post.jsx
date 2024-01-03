@@ -4,6 +4,7 @@ const API_BASE = 'http://localhost:3000'
 import './Post.css'
 import { formatDistanceToNow } from 'date-fns';
 import postLogo from '../images/sendLogo.svg';
+import HeartButton from '../HeartButton/HeartBtn';
 
 // eslint-disable-next-line react/prop-types
 const Post = ({userInfo, friendInfo}) => {
@@ -209,18 +210,17 @@ const Post = ({userInfo, friendInfo}) => {
             )) : <p key={index}>no comments</p>}
           </div>} 
 
-            
           <div>
             <div className='like-comment-btn-container'>
               {isPostLiked(post.likes) ? 
               <button onClick={() => handlePostUnlike(post._id)} className='liked-button'>
                  <span id='like-logo' className="material-symbols-outlined"> thumb_up </span>
                    Like
-              </button> : 
-              <button  onClick={() => handlePostLike(post._id)}>
-                <span className="material-symbols-outlined"> thumb_up </span>
-                 Like
-              </button>}
+              </button> : <HeartButton onClick={() => handlePostLike(post._id)}/> }
+              {/* // <button  onClick={() => handlePostLike(post._id)}>
+              //   <span className="material-symbols-outlined"> thumb_up </span>
+              //    Like
+              // </button> */}
 
               <button onClick={() => handleCommentInput(post)}>
               <span id='comment-logo' className="material-symbols-outlined"> mode_comment </span> Comment</button>

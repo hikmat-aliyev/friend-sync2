@@ -8,9 +8,10 @@ const API_BASE = 'http://localhost:3000'
 
 const ProfilePage = () => {
   const location = useLocation();
-  const friend = location.state && location.state.friend; 
+  const [friend, setFriend] = useState(location.state && location.state.friend); 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [requestSend, setRequestSend] = useState(false);
 
   useEffect(() => {
     const jwt = AuthService.getToken();
@@ -32,20 +33,35 @@ const ProfilePage = () => {
 
   async function handleAddFriend(friend) {
     try{
-      const response = await axios.post(`${API_BASE}/friends/add`, {
+       await axios.post(`${API_BASE}/friends/add`, {
         user, friend
       }, {
         headers: {
           'Content-Type': 'application/json',
         }
       })
-
-      const data = response.data;
-      console.log(data)
+      setRequestSend(true);
     }catch(err){
       console.log(err)
     }
   } 
+
+  async function handleCancelRequest(friend) {
+    try{
+     await axios.post(`${API_BASE}/friends/cancel/request`, {
+        user, friend
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      setRequestSend(false);
+    }catch(err){
+      console.log(err)
+    }
+  } 
+
+  console.log(requestSend)
 
   return (
     <div>
@@ -58,8 +74,12 @@ const ProfilePage = () => {
         </div>
         <div>
           <div> 
-            <h1>{friend.fullName}</h1>
-            <button onClick={() => handleAddFriend(friend)}>Add friend</button>
+            <h1>{friend.first_name + friend.last_name}</h1>
+
+            {requestSend == false ? 
+            <button onClick={() => handleAddFriend(friend)}>Add friend</button> :
+            <button onClick={() => handleCancelRequest(friend)}>Cancel request</button>}
+
           </div>
           <Post userInfo={user} friendInfo={friend}/>
         </div>

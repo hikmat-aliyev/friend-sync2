@@ -35,7 +35,7 @@ const FriendList = () => {
     <h1>New users</h1>
     {friends.length > 0 && 
     <div className='friends-list'>{friends.map((friend, key) => 
-      <button onClick={() => handleFriendPage(friend)} key={key}>{friend.fullName}</button>)} </div>}
+      <button onClick={() => handleFriendPage(friend)} key={key}>{friend.first_name + ' ' + friend.last_name}</button>)} </div>}
    </div> 
   );
 };
