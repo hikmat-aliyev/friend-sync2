@@ -1,17 +1,34 @@
 import Navbar from '../Navbar/Navbar';
 import { useLocation } from 'react-router-dom';
 import Post from '../Post/Post';
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useCallback} from 'react'
 import AuthService from '../Authentication/AuthService';
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 
 const ProfilePage = () => {
   const location = useLocation();
-  const [friend, setFriend] = useState(location.state && location.state.friend); 
+  const friend = location.state && location.state.friend; 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [requestSend, setRequestSend] = useState(false);
+  const [requestSend, setRequestSend] = useState(null);
+
+  const haveRequestSended = useCallback(async () => {
+    try {
+      const response = await axios.post(`${API_BASE}/friends/check/request`, {
+        user,
+        friend,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      //set boolean value based on response.data
+      setRequestSend(response.data)
+    } catch (err) {
+      console.log(err);
+    }
+  }, [user, friend]);
 
   useEffect(() => {
     const jwt = AuthService.getToken();
@@ -30,6 +47,14 @@ const ProfilePage = () => {
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      haveRequestSended(); // Call haveRequestSended() here
+    }
+  });
+
+
 
   async function handleAddFriend(friend) {
     try{
@@ -61,8 +86,6 @@ const ProfilePage = () => {
     }
   } 
 
-  console.log(requestSend)
-
   return (
     <div>
     {loading ? (
@@ -74,7 +97,7 @@ const ProfilePage = () => {
         </div>
         <div>
           <div> 
-            <h1>{friend.first_name + friend.last_name}</h1>
+            <h1>{friend.first_name + ' ' + friend.last_name}</h1>
 
             {requestSend == false ? 
             <button onClick={() => handleAddFriend(friend)}>Add friend</button> :
@@ -91,4 +114,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+  export default ProfilePage;

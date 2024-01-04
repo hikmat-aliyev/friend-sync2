@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './HeartBtn.css'
 
-const HeartButton = () => {
+const HeartButton = ({set}) => {
   const [isActive, setIsActive] = useState(false);
 
   const handleLikeClick = () => {
