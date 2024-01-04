@@ -4,14 +4,16 @@ const API_BASE = 'http://localhost:3000'
 import './ProfilesList.css'
 import { useNavigate } from 'react-router-dom';
 
-const FriendList = () => {
+const ProfileList = (user) => {
   const [friends, setFriends] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(`${API_BASE}/friends`, {
+        const response = await axios.post(`${API_BASE}/friends`,{
+             user
+        }, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -23,7 +25,7 @@ const FriendList = () => {
     };
   
     fetchData();
-  }, []);
+  }, [user]);
 
 
   function handleFriendPage(friend) {
@@ -40,4 +42,4 @@ const FriendList = () => {
   );
 };
 
-export default FriendList;
+export default ProfileList;

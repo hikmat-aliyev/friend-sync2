@@ -41,7 +41,7 @@ const UserHomepage = () => {
             <Post userInfo={user}/>
           </div>
           <div>
-            <ProfilesList />
+            <ProfilesList user={user}/>
           </div>
         </div>
       ) : (

@@ -1,30 +1,57 @@
-import {useState, useEffect} from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
+import AuthService from '../Authentication/AuthService';
 
-function FriendRequests(user) {
-
-  async function getFriendRequests() {
-    try{
-      const response = await axios.post(`${API_BASE}/friends/requests`, {
-          user
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-      console.log(response.data)
-    }catch(err){
-      console.log(err)
-    }
-  }
+function FriendRequests() {
+  const [user, setUser] = useState(null);
+  const [requests, setRequests] = useState([])
 
   useEffect(() => {
-    getFriendRequests()
-  })
+    const jwt = AuthService.getToken();
+    if (jwt) {
+      AuthService.getUserInfo(jwt)
+        .then((userData) => {
+          setUser(userData);
+        })
+        .catch((error) => {
+          console.error('Error fetching user info:', error.message);
+        }) 
+    }
+  }, []);
+
+  useEffect(() => {
+    async function getFriendRequests() {
+      try {
+        if (user) {
+          const response = await axios.post(
+            `${API_BASE}/friends/requests`,
+            {
+              user,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+          console.log(response.data)
+          setRequests(response.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getFriendRequests();
+  }, [user]); // Dependency on user, so it runs when user changes
 
   return(
-    <div></div>
+    <div>
+      {requests.map((request, key) => (
+        <button key={key}>{request.fullName}</button>
+      ))}
+    </div>
   )
 }
 
