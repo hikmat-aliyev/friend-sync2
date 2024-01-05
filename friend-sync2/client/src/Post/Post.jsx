@@ -15,7 +15,6 @@ const Post = ({userInfo, profileInfo}) => {
   const user = userInfo;
   // set postOwner to profile data if we are in friend page
   const postOwner = profileInfo ? profileInfo : userInfo;
-  console.log(postOwner)
   const [commentInputToggle, setToggle] = useState(false);
   const [commentText, setCommentText] = useState(" ");
   const [showLikeList, setShowLikeList] = useState(false);
@@ -183,7 +182,7 @@ const Post = ({userInfo, profileInfo}) => {
               <h2>{post.username}</h2>
               <p>posted {formatDistanceToNow(post.date, {addSuffix: true})}</p>
             </div>
-            {/* show delete btn if the we are not in friend's page */}
+            {/* show delete btn if we are not in friend's page */}
             {!profileInfo ? <button className='post-delete-button' onClick={() => handlePostDelete(post._id)}>
             <span id='delete-logo' className="material-symbols-outlined"> delete </span>
               </button> : null}
@@ -192,10 +191,12 @@ const Post = ({userInfo, profileInfo}) => {
           <p className='post-text'>{post.text}</p>
 
           <div className='like-comment-list-container'>
-            { post.like_number == 1 ? <button onClick={() => handleLikeList(post)}>{post.like_number} like</button> : <p> </p>}
-            { post.like_number > 1 ? <button onClick={() => handleLikeList(post)}>{post.like_number} likes</button> :  <p> </p>}
-            { post.comment_number == 1 ? <button className='comment-number' onClick={() => handleCommentList(post)}>{post.comment_number} comment</button> : <p  className='comment-number' > </p>}
-            { post.comment_number > 1 ? <button className='comment-number'  onClick={() => handleCommentList(post)}>{post.comment_number} comments</button> : <p  className='comment-number' > </p>}
+            { post.like_number == 1 ? <button onClick={() => handleLikeList(post)}>{post.like_number} like</button> : <p></p>}
+            { post.like_number > 1 ? <button onClick={() => handleLikeList(post)}>{post.like_number} likes</button> :  null}
+            { post.comment_number == 1 ? <button className='comment-number' 
+              onClick={() => handleCommentList(post)}>{post.comment_number} comment</button> : null}
+            { post.comment_number > 1 ? <button className='comment-number'  
+              onClick={() => handleCommentList(post)}>{post.comment_number} comments</button> : null}
           </div>
 
           {showLikeList && <div className='list-of-likes'>
@@ -212,11 +213,18 @@ const Post = ({userInfo, profileInfo}) => {
 
           {showCommentList && <div className='list-of-comments'>
             {commentList.length > 0 ? commentList.map((comment, index) => (
-              <div onClick={() => {
-                handleProfilePage(comment.userId, navigate)
-                setShowCommentList(false)
-                }} key={index}>
-                <h3>{comment.username}</h3>
+              <div key={index}>
+                <h3 onClick={() => {handleProfilePage(comment.userId, navigate)
+                                    setShowCommentList(false)}}>
+                  {comment.username}
+                </h3>
+                {/* show delete btn if the comment belongs to the current user */}
+                {comment.email == user.email ? 
+                <button onClick={() => {
+                  handleCommentDelete(post._id, comment._id)
+                  }}>
+                    Delete
+                </button> : null}
                 <p>posted {formatDistanceToNow(comment.date, {addSuffix: true})}</p>
                 <p>{comment.text}</p>
               </div>
@@ -250,15 +258,19 @@ const Post = ({userInfo, profileInfo}) => {
               
               {/* limit number of shown comments to 3 */}
             {post.comments.slice(-3).map((comment, id) => (
-                <div key={id}>
-                  <h3 onClick={() => handleProfilePage(comment.userId, navigate)} className='comment-username'>
-                    {comment.username}
-                  </h3>
-                  <p>posted {formatDistanceToNow(comment.date, {addSuffix: true})}</p>
+                <div className='comment-container' key={id}>
+                  <div className='single-comment-header'>
+                    <h3 onClick={() => handleProfilePage(comment.userId, navigate)} className='comment-username'>
+                      {comment.username}
+                    </h3>
+                     {/* show delete btn if the comment belongs to the current user */}
+                     {comment.email == user.email ? <button 
+                      onClick={() => handleCommentDelete(post._id, comment._id)}>
+                        <span className="material-symbols-outlined"> delete </span>
+                      </button> : null}
+                  </div>
+                  <p className='comment-date'>{formatDistanceToNow(comment.date)} ago</p>
                   <p>{comment.text}</p>
-                  {/* show delete btn if the comment belongs to the current user */}
-                  {comment.email == user.email ? <button 
-                  onClick={() => handleCommentDelete(post._id, comment._id)}>Delete</button> : null}
                 </div>
               ))}
 

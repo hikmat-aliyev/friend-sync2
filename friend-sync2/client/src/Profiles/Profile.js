@@ -13,7 +13,6 @@
         }
       })
       const profile = response.data;
-      console.log(profile)
       //navigate to proper profile homepage by passing proper arguments
       navigate('/profile-homepage', { state: { profile: profile } });
     }catch(err){

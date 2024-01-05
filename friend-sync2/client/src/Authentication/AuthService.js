@@ -108,15 +108,11 @@ const AuthService = {
       });
   
       const data = response.data;
-      console.log(data)
       if (!data.token) {
         throw new Error('Authentication failed');
       }
   
       localStorage.setItem('token', data.token);
-      const jwt = localStorage.getItem('token');
-      console.log(`jwt: ${jwt}`);
-  
       return data;
     } catch (error) {
       console.error('Error during authentication:', error.message);

@@ -19,7 +19,7 @@ function Navbar () {
 
   return (
     <div className='navbar-container'>
-      <button>FriendSync</button>
+      <button onClick={() => navigate('/homepage')}>FriendSync</button>
       <div className='right-side'>
         <img src="" alt="" />
         <button>username</button>

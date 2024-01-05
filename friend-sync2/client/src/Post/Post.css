@@ -119,8 +119,12 @@
 
 .post-delete-button > span {
   font-size: 2.1rem;
-  color: red;
+  color: gray;
   cursor: pointer;
+}
+
+.post-delete-button > span:hover {
+  color: rgb(222, 4, 4);
 }
 
 .like-comment-list-container{
@@ -180,8 +184,36 @@
   color: blue;
 }
 
-
 .comment-username:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+.comment-container {
+  border-radius: 1rem 2rem 1rem 2rem;
+  background-color: rgba(128, 128, 128, 0.211);
+  width: max-content;
+  height: max-content;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.single-comment-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.single-comment-header > button {
+  background-color: transparent;
+  border: none;
+  margin-left: 1.5rem;
+}
+
+.single-comment-header > button > span:hover {
+  color: rgb(222, 4, 4);
+}
+
+.comment-date {
+  margin: -0.5rem 0 1rem 0;
+  font-size: 0.8rem;
 }
