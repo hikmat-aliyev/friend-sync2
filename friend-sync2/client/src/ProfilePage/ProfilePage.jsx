@@ -8,27 +8,28 @@ const API_BASE = 'http://localhost:3000'
 
 const ProfilePage = () => {
   const location = useLocation();
-  const friend = location.state && location.state.friend; 
+  const profile = location.state && location.state.profile;   
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [requestSend, setRequestSend] = useState(null);
+  const [requestSend, setRequestSend] = useState(true);
 
   const haveRequestSended = useCallback(async () => {
-    try {
-      const response = await axios.post(`${API_BASE}/friends/check/request`, {
-        user,
-        friend,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      //set boolean value based on response.data
-      setRequestSend(response.data)
-    } catch (err) {
-      console.log(err);
+    if(user){
+      try {
+        const response = await axios.post(`${API_BASE}/friends/check/request`, {
+          user,
+          profile,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+        setRequestSend(response.data)
+      } catch (err) {
+        console.log(err);
+      }
     }
-  }, [user, friend]);
+  }, [user, profile]);
 
   useEffect(() => {
     const jwt = AuthService.getToken();
@@ -52,35 +53,36 @@ const ProfilePage = () => {
     if (user) {
       haveRequestSended(); // Call haveRequestSended() here
     }
-  });
+  }, [user, haveRequestSended]);
 
 
 
-  async function handleAddFriend(friend) {
+  async function handleAddFriend(profile) {
     try{
-       await axios.post(`${API_BASE}/friends/add`, {
-        user, friend
+      
+      await axios.post(`${API_BASE}/friends/add`, {
+        user, profile
       }, {
         headers: {
           'Content-Type': 'application/json',
         }
       })
-      setRequestSend(true);
+      setRequestSend(true)
     }catch(err){
       console.log(err)
     }
   } 
 
-  async function handleCancelRequest(friend) {
+  async function handleCancelRequest(profile) {
     try{
      await axios.post(`${API_BASE}/friends/cancel/request`, {
-        user, friend
+        user, profile
       }, {
         headers: {
           'Content-Type': 'application/json',
         }
       })
-      setRequestSend(false);
+      setRequestSend(false)
     }catch(err){
       console.log(err)
     }
@@ -93,18 +95,20 @@ const ProfilePage = () => {
     ) : user ? (
       <div className='user-homepage'>
         <div>
-          <Navbar/>
+          <Navbar />
         </div>
         <div>
           <div> 
-            <h1>{friend.first_name + ' ' + friend.last_name}</h1>
+            <h1>{profile.first_name + ' ' + profile.last_name}</h1>
 
+          {profile._id != user._id && <div>
             {requestSend == false ? 
-            <button onClick={() => handleAddFriend(friend)}>Add friend</button> :
-            <button onClick={() => handleCancelRequest(friend)}>Cancel request</button>}
+              <button onClick={() => handleAddFriend(profile)}>Add friend</button> :
+              <button onClick={() => handleCancelRequest(profile)}>Cancel request</button>}
+           </div>}
 
           </div>
-          <Post userInfo={user} friendInfo={friend}/>
+          <Post userInfo={user} profileInfo={profile}/>
         </div>
       </div>
     ) : (

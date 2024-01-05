@@ -21,7 +21,6 @@ function GoogleSignIn() {
             }
           },
         )
-        console.log(res.data)
         setFullName(res.data.name)
         setEmail(res.data.email)
         await AuthService.googleSignIn(res.data.email);

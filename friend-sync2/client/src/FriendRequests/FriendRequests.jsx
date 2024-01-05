@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react'
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 import AuthService from '../Authentication/AuthService';
+import { handleProfilePage } from '../Profiles/Profile';
+import { useNavigate } from 'react-router-dom';
 
 function FriendRequests() {
   const [user, setUser] = useState(null);
   const [requests, setRequests] = useState([])
+  const navigate = useNavigate();
 
   useEffect(() => {
     const jwt = AuthService.getToken();
@@ -35,7 +38,6 @@ function FriendRequests() {
               },
             }
           );
-          console.log(response.data)
           setRequests(response.data);
         }
       } catch (err) {
@@ -49,7 +51,7 @@ function FriendRequests() {
   return(
     <div>
       {requests.map((request, key) => (
-        <button key={key}>{request.fullName}</button>
+        <button onClick={() => handleProfilePage(request.userId, navigate)} key={key}>{request.fullName}</button>
       ))}
     </div>
   )

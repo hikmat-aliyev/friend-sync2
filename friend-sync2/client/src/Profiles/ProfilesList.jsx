@@ -3,9 +3,10 @@ import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 import './ProfilesList.css'
 import { useNavigate } from 'react-router-dom';
+import { handleProfilePage } from '../Profiles/Profile';
 
 const ProfileList = (user) => {
-  const [friends, setFriends] = useState([]);
+  const [profiles, setProfiles] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const ProfileList = (user) => {
             'Content-Type': 'application/json',
           },
         });
-        setFriends(response.data);
+        setProfiles(response.data);
       } catch (err) {
         console.log(err);
       }
@@ -27,17 +28,12 @@ const ProfileList = (user) => {
     fetchData();
   }, [user]);
 
-
-  function handleFriendPage(friend) {
-    navigate('/friend-homepage', { state: { friend: friend } });
-  }
-
   return (
    <div>
     <h1>New users</h1>
-    {friends.length > 0 && 
-    <div className='friends-list'>{friends.map((friend, key) => 
-      <button onClick={() => handleFriendPage(friend)} key={key}>{friend.first_name + ' ' + friend.last_name}</button>)} </div>}
+    {profiles.length > 0 && 
+    <div className='friends-list'>{profiles.map((profile, key) => 
+      <button onClick={() => handleProfilePage(profile._id, navigate)} key={key}>{profile.first_name + ' ' + profile.last_name}</button>)} </div>}
    </div> 
   );
 };

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './HeartBtn.css'
 
-const HeartButton = ({set}) => {
-  const [isActive, setIsActive] = useState(false);
+const HeartButton = (isLiked) => {
+  const [isActive, setIsActive] = useState(isLiked.isLiked);
 
   const handleLikeClick = () => {
     setIsActive(!isActive);
@@ -12,7 +12,7 @@ const HeartButton = ({set}) => {
     <div className={`heart-btn ${isActive ? 'heart-active' : ''}`}>
       <div className="content" onClick={handleLikeClick}>
         <span className={`heart ${isActive ? 'heart-active' : ''}`}></span>
-        <span className="text">Like</span>
+        {!isActive ? <span className="text">Like</span> : null }
       </div>
     </div>
   );

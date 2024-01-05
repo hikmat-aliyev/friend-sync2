@@ -35,7 +35,7 @@ const UserHomepage = () => {
       ) : user ? (
         <div className='user-homepage'>
           <div>
-            <Navbar/>
+            <Navbar />
           </div>
           <div>
             <Post userInfo={user}/>
