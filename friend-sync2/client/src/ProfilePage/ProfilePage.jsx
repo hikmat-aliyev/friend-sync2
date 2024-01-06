@@ -12,11 +12,13 @@ const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [requestSend, setRequestSend] = useState(true);
+  const [requestReceived, setRequestReceived] = useState(null);
+  const [requestAccepted, setRequestAccepted] = useState(null);
 
   const haveRequestSended = useCallback(async () => {
     if(user){
       try {
-        const response = await axios.post(`${API_BASE}/friends/check/request`, {
+        const response = await axios.post(`${API_BASE}/profiles/check/request`, {
           user,
           profile,
         }, {
@@ -24,12 +26,14 @@ const ProfilePage = () => {
             'Content-Type': 'application/json',
           }
         });
-        setRequestSend(response.data)
+        setRequestSend(response.data.isRequestSent);
+        setRequestReceived(response.data.isRequestReceived);
       } catch (err) {
         console.log(err);
       }
     }
   }, [user, profile]);
+
 
   useEffect(() => {
     const jwt = AuthService.getToken();
@@ -60,7 +64,7 @@ const ProfilePage = () => {
   async function handleAddFriend(profile) {
     try{
       
-      await axios.post(`${API_BASE}/friends/add`, {
+      await axios.post(`${API_BASE}/profiles/add`, {
         user, profile
       }, {
         headers: {
@@ -75,7 +79,7 @@ const ProfilePage = () => {
 
   async function handleCancelRequest(profile) {
     try{
-     await axios.post(`${API_BASE}/friends/cancel/request`, {
+     await axios.post(`${API_BASE}/profiles/cancel/request`, {
         user, profile
       }, {
         headers: {
@@ -83,6 +87,56 @@ const ProfilePage = () => {
         }
       })
       setRequestSend(false)
+    }catch(err){
+      console.log(err)
+    }
+  } 
+
+  async function handleAcceptRequest(profile) {
+    try{
+      const response = await axios.post(`${API_BASE}/profiles/accept/request`, {
+        user, profile
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      setRequestAccepted(response.data);
+    }catch(err){
+      console.log(err)
+    }
+  } 
+
+  async function handleRemoveRequest(profile) {
+    try{
+      const response = await axios.post(`${API_BASE}/profiles/remove/request`, {
+        user, profile
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      //set like this to show Add friend button
+     setRequestSend(!response.data)
+     setRequestReceived(!response.data)
+    }catch(err){
+      console.log(err)
+    }
+  } 
+
+  async function handleRemoveFriend(profile) {
+    try{
+      const response = await axios.post(`${API_BASE}/profiles/remove/friend`, {
+        user, profile
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      //reset requests
+      setRequestAccepted(!response.data);
+      setRequestSend(!response.data);
+      setRequestReceived(!response.data);
     }catch(err){
       console.log(err)
     }
@@ -101,11 +155,16 @@ const ProfilePage = () => {
           <div> 
             <h1>{profile.first_name + ' ' + profile.last_name}</h1>
 
-          {profile._id != user._id && <div>
-            {requestSend == false ? 
-              <button onClick={() => handleAddFriend(profile)}>Add friend</button> :
-              <button onClick={() => handleCancelRequest(profile)}>Cancel request</button>}
-           </div>}
+            <div>  
+              {!requestSend && !requestReceived && <button onClick={() => handleAddFriend(profile)}>Add friend</button>}
+                {!requestSend && requestReceived && !requestAccepted &&
+                <div>
+                  <button onClick={() => handleAcceptRequest(profile)}>Accept request</button>
+                  <button onClick={() => handleRemoveRequest(profile)}>Remove request</button>
+                </div>}
+              {requestSend && !requestReceived && <button onClick={() => handleCancelRequest(profile)}>Cancel request</button>}
+              {requestAccepted && <button onClick={() => handleRemoveFriend(profile)}>Friends</button>}
+            </div>
 
           </div>
           <Post userInfo={user} profileInfo={profile}/>

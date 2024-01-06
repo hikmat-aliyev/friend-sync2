@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 function FriendRequests() {
   const [user, setUser] = useState(null);
-  const [requests, setRequests] = useState([])
+  const [receivedRequests, setReceivedRequests] = useState([])
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function FriendRequests() {
       try {
         if (user) {
           const response = await axios.post(
-            `${API_BASE}/friends/requests`,
+            `${API_BASE}/profiles/requests`,
             {
               user,
             },
@@ -38,7 +38,7 @@ function FriendRequests() {
               },
             }
           );
-          setRequests(response.data);
+          setReceivedRequests(response.data);
         }
       } catch (err) {
         console.log(err);
@@ -50,7 +50,7 @@ function FriendRequests() {
 
   return(
     <div>
-      {requests.map((request, key) => (
+      {receivedRequests.map((request, key) => (
         <button onClick={() => handleProfilePage(request.userId, navigate)} key={key}>{request.fullName}</button>
       ))}
     </div>

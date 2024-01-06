@@ -12,7 +12,7 @@ const ProfileList = (user) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(`${API_BASE}/friends`,{
+        const response = await axios.post(`${API_BASE}/profiles`,{
              user
         }, {
           headers: {

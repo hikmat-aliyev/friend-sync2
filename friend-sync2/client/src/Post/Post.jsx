@@ -20,7 +20,6 @@ const Post = ({userInfo, profileInfo}) => {
   const [showLikeList, setShowLikeList] = useState(false);
   const [likeList, setLikeList] = useState([]);
   const [showCommentList, setShowCommentList] = useState(false);
-  const [commentList, setCommentList] = useState([]);
   const navigate = useNavigate();
 
   //get all posts
@@ -141,8 +140,7 @@ const Post = ({userInfo, profileInfo}) => {
     setShowLikeList(true)
   }
 
-  function handleCommentList(post) {
-    setCommentList(post.comments)
+  function handleCommentList() {
     setShowCommentList(true)
   }
 
@@ -164,7 +162,8 @@ const Post = ({userInfo, profileInfo}) => {
 
   return (
     <div className='post-container'>
-      {!profileInfo && <div className='create-post-container'>
+      {!profileInfo && 
+      <div className='create-post-container'>
         <form onSubmit={handlePostSubmit}>
           <textarea type="text" placeholder="What's on your mind?" 
           value={post} onChange= {(e) => setPost(e.target.value)}/>
@@ -191,12 +190,15 @@ const Post = ({userInfo, profileInfo}) => {
           <p className='post-text'>{post.text}</p>
 
           <div className='like-comment-list-container'>
-            { post.like_number == 1 ? <button onClick={() => handleLikeList(post)}>{post.like_number} like</button> : <p></p>}
-            { post.like_number > 1 ? <button onClick={() => handleLikeList(post)}>{post.like_number} likes</button> :  null}
-            { post.comment_number == 1 ? <button className='comment-number' 
-              onClick={() => handleCommentList(post)}>{post.comment_number} comment</button> : null}
-            { post.comment_number > 1 ? <button className='comment-number'  
-              onClick={() => handleCommentList(post)}>{post.comment_number} comments</button> : null}
+            { post.like_number > 0 ? 
+            <button onClick={() => handleLikeList(post)}>
+              {post.like_number} {post.like_number ==1 ? 'like' : 'likes'}
+            </button> : <p></p>}
+              
+            { post.comment_number > 0 ? 
+            <button className='comment-number' onClick={() => handleCommentList(post)}>
+              {post.comment_number} {post.comment_number == 1 ? 'comment' : 'comments'}
+            </button> : <p></p>}
           </div>
 
           {showLikeList && <div className='list-of-likes'>
@@ -212,7 +214,7 @@ const Post = ({userInfo, profileInfo}) => {
           </div>} 
 
           {showCommentList && <div className='list-of-comments'>
-            {commentList.length > 0 ? commentList.map((comment, index) => (
+            {post.comments.length > 0 ? post.comments.map((comment, index) => (
               <div key={index}>
                 <h3 onClick={() => {handleProfilePage(comment.userId, navigate)
                                     setShowCommentList(false)}}>
@@ -220,15 +222,13 @@ const Post = ({userInfo, profileInfo}) => {
                 </h3>
                 {/* show delete btn if the comment belongs to the current user */}
                 {comment.email == user.email ? 
-                <button onClick={() => {
-                  handleCommentDelete(post._id, comment._id)
-                  }}>
+                <button onClick={() => {handleCommentDelete(post._id, comment._id)}}>
                     Delete
                 </button> : null}
                 <p>posted {formatDistanceToNow(comment.date, {addSuffix: true})}</p>
                 <p>{comment.text}</p>
               </div>
-            )) : <p key={index}>no comments</p>}
+            )) : <p key={index}>No comments</p>}
           </div>} 
 
           <div>
