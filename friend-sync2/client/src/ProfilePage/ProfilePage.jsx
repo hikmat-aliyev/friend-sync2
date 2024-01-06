@@ -5,6 +5,7 @@ import {useState, useEffect, useCallback} from 'react'
 import AuthService from '../Authentication/AuthService';
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
+import Friends from '../Friends/Friends';
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -14,6 +15,7 @@ const ProfilePage = () => {
   const [requestSend, setRequestSend] = useState(true);
   const [requestReceived, setRequestReceived] = useState(null);
   const [requestAccepted, setRequestAccepted] = useState(null);
+  const [isFriend, setIsFriend] = useState(null);
 
   const haveRequestSended = useCallback(async () => {
     if(user){
@@ -28,6 +30,24 @@ const ProfilePage = () => {
         });
         setRequestSend(response.data.isRequestSent);
         setRequestReceived(response.data.isRequestReceived);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [user, profile]);
+
+  const handleIsFriend = useCallback(async () => {
+    if(user){
+      try {
+        const response = await axios.post(`${API_BASE}/profiles/check/friend`, {
+          user,
+          profile,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+        setIsFriend(response.data)
       } catch (err) {
         console.log(err);
       }
@@ -56,8 +76,9 @@ const ProfilePage = () => {
   useEffect(() => {
     if (user) {
       haveRequestSended(); // Call haveRequestSended() here
+      handleIsFriend();
     }
-  }, [user, haveRequestSended]);
+  }, [user, haveRequestSended, handleIsFriend]);
 
 
 
@@ -102,6 +123,7 @@ const ProfilePage = () => {
         }
       })
       setRequestAccepted(response.data);
+      setIsFriend(response.data)
     }catch(err){
       console.log(err)
     }
@@ -137,6 +159,7 @@ const ProfilePage = () => {
       setRequestAccepted(!response.data);
       setRequestSend(!response.data);
       setRequestReceived(!response.data);
+      setIsFriend(false);
     }catch(err){
       console.log(err)
     }
@@ -156,18 +179,22 @@ const ProfilePage = () => {
             <h1>{profile.first_name + ' ' + profile.last_name}</h1>
 
             <div>  
-              {!requestSend && !requestReceived && <button onClick={() => handleAddFriend(profile)}>Add friend</button>}
+              {!isFriend && !requestSend && !requestReceived && 
+              <button onClick={() => handleAddFriend(profile)}>Add friend</button>}
+
                 {!requestSend && requestReceived && !requestAccepted &&
                 <div>
                   <button onClick={() => handleAcceptRequest(profile)}>Accept request</button>
                   <button onClick={() => handleRemoveRequest(profile)}>Remove request</button>
                 </div>}
+
               {requestSend && !requestReceived && <button onClick={() => handleCancelRequest(profile)}>Cancel request</button>}
-              {requestAccepted && <button onClick={() => handleRemoveFriend(profile)}>Friends</button>}
+              {(requestAccepted || isFriend) && <button onClick={() => handleRemoveFriend(profile)}>Friends</button>}
             </div>
 
           </div>
           <Post userInfo={user} profileInfo={profile}/>
+           <Friends user={profile}/>
         </div>
       </div>
     ) : (

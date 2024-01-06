@@ -4,11 +4,11 @@ import Post from '../Post/Post';
 import Navbar from '../Navbar/Navbar';
 import './UserHomepage.css'
 import ProfilesList from "../Profiles/ProfilesList";
+import Friends from '../Friends/Friends';
 
 const UserHomepage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const jwt = AuthService.getToken();
     if (jwt) {
