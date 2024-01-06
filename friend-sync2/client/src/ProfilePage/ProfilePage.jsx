@@ -6,6 +6,7 @@ import AuthService from '../Authentication/AuthService';
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 import Friends from '../Friends/Friends';
+import ProfilePictureUpload from '../ProfilePic/ProfilePic';
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -172,10 +173,15 @@ const ProfilePage = () => {
     ) : user ? (
       <div className='user-homepage'>
         <div>
-          <Navbar />
+          <Navbar user={user}/>
         </div>
         <div>
           <div> 
+            {/* show profile picture onChange only for main user */}
+            {user._id == profile._id && <div>
+              <ProfilePictureUpload user={user}/>
+            </div>}
+
             <h1>{profile.first_name + ' ' + profile.last_name}</h1>
 
             <div>  
@@ -194,7 +200,7 @@ const ProfilePage = () => {
 
           </div>
           <Post userInfo={user} profileInfo={profile}/>
-           <Friends user={profile}/>
+          <Friends user={profile}/>
         </div>
       </div>
     ) : (

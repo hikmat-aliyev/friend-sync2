@@ -51,7 +51,14 @@ function FriendRequests() {
   return(
     <div>
       {receivedRequests.map((request, key) => (
-        <button onClick={() => handleProfilePage(request.userId, navigate)} key={key}>{request.fullName}</button>
+        <div key={key}>
+           <button onClick={() => handleProfilePage(request.userId, navigate)}>{request.fullName}</button>
+           <button>
+            <span className="material-symbols-outlined">
+                notifications
+              </span>
+           </button>
+        </div>    
       ))}
     </div>
   )
