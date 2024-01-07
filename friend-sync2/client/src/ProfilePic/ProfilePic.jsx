@@ -1,52 +1,89 @@
-/* eslint-disable react/prop-types */
-import { useState } from 'react';
+import './ProfilePic.css'
+import ProfileImg from '../images/default-profile.svg'
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 
-// ... (previous imports)
+// eslint-disable-next-line react/prop-types
+const ProfilePictureUpload = ({user}) => {
 
-const ProfilePictureUpload = ({ user }) => {
-  const [file, setFile] = useState(null);
+  const [postImage, setPostImage] = useState({ myFile: '' })
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-  };
-
-  const handleUpload = async () => {
-    const formData = new FormData();
-    formData.append('profilePicture', file);
-    console.log(formData);
-
-    try {
-      // Send the formData and user ID to your server
-      const response = await axios.post(
-        `${API_BASE}/picture/upload/profile-pic`,
-        formData,
-        {
+  useEffect(() => {
+    const fetchImage = async () => {
+      try{
+        const response = await axios.post(`${API_BASE}/find/profile/image`, {
+          user
+        }, {
           headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          params: {
-            userId: user._id,
-          },
-        }
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error uploading profile picture:', error);
+            'Content-Type': 'application/json',
+          }
+        })
+        setPostImage({ ...postImage, myFile: response.data })
+      }catch(err){
+        console.log(err)
+      }
     }
-  };
+    fetchImage()
+  }, [])
+
+  const createPost = async (newImage) => {
+    try{
+      await axios.post(`${API_BASE}/picture/upload/profile`, {
+        newImage, user
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  const handleImageSubmit = (e) => {
+    e.preventDefault();
+    createPost(postImage.myFile);
+    console.log('uploaded')
+  }
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+    setPostImage({ ...postImage, myFile: base64 })
+  }
 
   return (
     <div>
-      <span className="material-symbols-outlined">
-        person
-      </span>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload Profile Picture</button>
+      <form onSubmit={handleImageSubmit}>
+        <label htmlFor='file-upload'>
+          <img className='profile-image' src={postImage.myFile || ProfileImg} alt='' />
+        </label>
+        <input type='file' 
+               label = 'Image'
+               name='myFile'
+               id='file-upload'
+               accept='.jpeg, .png, .jpg'
+               onChange={(e) => handleFileUpload(e)}/>
+
+        <button type='submit'>Submit</button>
+      </form>
     </div>
   );
 };
+
+function convertToBase64(file){
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  })
+}
 
 export default ProfilePictureUpload;
 

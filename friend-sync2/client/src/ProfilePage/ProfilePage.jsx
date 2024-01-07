@@ -177,7 +177,7 @@ const ProfilePage = () => {
         </div>
         <div>
           <div> 
-            {/* show profile picture onChange only for main user */}
+            {/* show profile picture change only for main user */}
             {user._id == profile._id && <div>
               <ProfilePictureUpload user={user}/>
             </div>}

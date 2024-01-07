@@ -1,0 +1,11 @@
+input[type="file"] {
+  display: none;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 50%;
+  background-color: rgba(128, 128, 128, 0);
+}
