@@ -5,7 +5,8 @@ import './ProfilesList.css'
 import { useNavigate } from 'react-router-dom';
 import { handleProfilePage } from '../Profiles/Profile';
 
-const ProfileList = (user) => {
+// eslint-disable-next-line react/prop-types
+const ProfileList = ({user}) => {
   const [profiles, setProfiles] = useState([]);
   const navigate = useNavigate();
 

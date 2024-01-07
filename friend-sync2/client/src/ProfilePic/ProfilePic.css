@@ -1,10 +1,39 @@
+.picture-upload-page {
+  border: 2px solid green;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+}
+
 input[type="file"] {
   display: none;
 }
 
 .profile-image {
+  cursor: pointer;
   width: 150px;
   height: 150px;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 50%;
+  background-color: rgba(128, 128, 128, 0);
+}
+
+.profile-image-disabled {
+  pointer-events: none;
+  width: 150px;
+  height: 150px;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 50%;
+  background-color: rgba(128, 128, 128, 0);
+}
+
+.updated-image {
+  width: 250px;
+  height: 250px;
   border: 2px solid rgb(0, 0, 0);
   border-radius: 50%;
   background-color: rgba(128, 128, 128, 0);

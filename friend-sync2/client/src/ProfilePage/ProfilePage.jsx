@@ -172,31 +172,31 @@ const ProfilePage = () => {
       <p>Loading...</p>
     ) : user ? (
       <div className='user-homepage'>
+
         <div>
           <Navbar user={user}/>
         </div>
+        
         <div>
           <div> 
-            {/* show profile picture change only for main user */}
-            {user._id == profile._id && <div>
-              <ProfilePictureUpload user={user}/>
-            </div>}
+            <ProfilePictureUpload user={user} profile={profile}/>
 
             <h1>{profile.first_name + ' ' + profile.last_name}</h1>
 
+            {user._id !== profile._id ? 
             <div>  
               {!isFriend && !requestSend && !requestReceived && 
               <button onClick={() => handleAddFriend(profile)}>Add friend</button>}
 
-                {!requestSend && requestReceived && !requestAccepted &&
-                <div>
-                  <button onClick={() => handleAcceptRequest(profile)}>Accept request</button>
-                  <button onClick={() => handleRemoveRequest(profile)}>Remove request</button>
-                </div>}
+              {!requestSend && requestReceived && !requestAccepted &&
+              <div>
+                <button onClick={() => handleAcceptRequest(profile)}>Accept request</button>
+                <button onClick={() => handleRemoveRequest(profile)}>Remove request</button>
+              </div>}
 
               {requestSend && !requestReceived && <button onClick={() => handleCancelRequest(profile)}>Cancel request</button>}
               {(requestAccepted || isFriend) && <button onClick={() => handleRemoveFriend(profile)}>Friends</button>}
-            </div>
+            </div> : null}
 
           </div>
           <Post userInfo={user} profileInfo={profile}/>
