@@ -21,7 +21,8 @@ function Navbar ({user}) {
 
   return (
     <div className='navbar-container'>
-      <button className='navbar-logo' onClick={() => navigate('/homepage')}>FriendSync</button>
+      <button className='navbar-logo' onClick={() =>{
+        navigate('/homepage')}}>FriendSync</button>
       <div className='right-side'>
         <img src="" alt="" />
         <button onClick={() => handleProfilePage(user._id, navigate)}>{user.firstName + ' ' + user.lastName}</button>

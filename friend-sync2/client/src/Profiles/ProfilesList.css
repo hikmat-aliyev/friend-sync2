@@ -1,4 +1,6 @@
 .friends-list {
   display: flex;
   flex-direction: column;
+  height: 80vh;
+  border: 2px solid green;
 }

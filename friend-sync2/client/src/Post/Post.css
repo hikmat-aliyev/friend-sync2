@@ -31,13 +31,23 @@
   text-decoration: underline;
 }
 
+.create-post-container {
+  display: grid;
+  border: 1px solid grey;
+  border-radius: 10px;
+  min-height: 200px;
+  max-height: fit-content;
+  width: 700px;
+  padding: 3px;
+  background-color: white;
+}
+
 .create-post-container > form {
   display: flex;
   flex-direction: column;
-  height: 200px;
-  width: 700px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid gray;
+  height: 100%;
+  width: 100%;
+  border: none;
   background-color: white;
 }
 
@@ -48,6 +58,45 @@
   outline: none;
   resize: none;
   font-size: var(--fs-l);
+  background-color: white;
+}
+
+.post-create-image-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-create-image-container > span {
+  align-self: flex-end;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.post-create-image-container > span:hover {
+  transform: scale(1.1);
+}
+
+.post-create-image {
+  max-height: 400px;
+  width: 100%;
+}
+
+.upload-and-image-button-container {
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.upload-and-image-button-container > label > span {
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;  
+}
+
+.upload-and-image-button-container > label > span:hover {
+  transform: scale(1.1);
+  color: blue;
 }
 
 
@@ -69,8 +118,8 @@
 .disabled-postBtn, .postBtn {
   font-weight: bold;
   border: none;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 3rem;
+  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,8 +129,8 @@
 }
 
 .postLogo {
-  width: 2.7rem;
-  height: 2.7rem; 
+  width: 2.5rem;
+  height: 2.5rem; 
 }
 
 /* single post info style */
@@ -94,6 +143,8 @@
   border: 2px solid green;
   background-color: white;
   margin-top: 20px;
+  min-height: 200px;
+  max-height: fit-content;
 }
 
 .post-header {
@@ -160,6 +211,7 @@
   border: 1px solid gray;
   border-left: none;
   border-right: none;
+  height: fit-content;
 }
 
 .like-comment-btn-container > button {
@@ -216,4 +268,9 @@
 .comment-date {
   margin: -0.5rem 0 1rem 0;
   font-size: 0.8rem;
+}
+
+.single-post-picture {
+  max-height: 400px;
+  width: 100%;
 }

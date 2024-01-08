@@ -1,45 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-:root {
-  font-size: 16px;
-  --fs-xl: 3rem;
-  --fs-l: 1.3rem;
-  --fs-m: 0.5rem;
-  --main-color: rgb(55, 55, 94);
-  --index-backgroundColor: rgba(113, 113, 172, 0.209);
-  --body-backgroundColor: rgba(94, 94, 139, 0.482);
-}
-
-@media (max-width: 800px) {
-  :root {
-    font-size: 10px;
-    --fs-xl: 3rem;
-    --fs-l: 1.3rem;
-    --fs-m: 0.5rem;
-  }
-}
-
-body {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f5f5f5;
-}
-
-@media (max-width: 800px) {
-  .index-container {
-    width: 80vw;
-    height: 60vh;
-  }
-}
-
 .navbar-container {
   display: flex;
   align-items: center;
@@ -51,8 +9,8 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background-color: #0d79f48d; /* Optionally, set a background color */
-  z-index: 1000; /* Ensure the navbar is above other elements */
+  background-color: #0d79f48d; 
+  /* z-index: 1000; */
   box-shadow: 0 0 10px rgb(55, 55, 94);
 }
 

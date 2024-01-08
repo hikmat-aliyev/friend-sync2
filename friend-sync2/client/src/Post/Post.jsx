@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 import './Post.css'
@@ -6,6 +6,7 @@ import { formatDistanceToNow } from 'date-fns';
 import postLogo from '../images/sendLogo.svg';
 import { useNavigate } from 'react-router-dom';
 import { handleProfilePage } from '../Profiles/Profile';
+import { convertToBase64 } from '../Picture/Picture';
 // import HeartButton from '../HeartButton/HeartBtn';
 
 // eslint-disable-next-line react/prop-types
@@ -20,6 +21,8 @@ const Post = ({userInfo, profileInfo}) => {
   const [showLikeList, setShowLikeList] = useState(false);
   const [likeList, setLikeList] = useState([]);
   const [showCommentList, setShowCommentList] = useState(false);
+  const [postImage, setPostImage] = useState(null);
+  const imageInputRef = useRef(null);
   const navigate = useNavigate();
 
   //get all posts
@@ -46,7 +49,7 @@ const Post = ({userInfo, profileInfo}) => {
       e.preventDefault();
       try{
         const response = await axios.post(`${API_BASE}/post/submit`, {
-          post, user
+          post, user, postImage
         }, {
           headers: {
             'Content-Type': 'application/json',
@@ -55,6 +58,8 @@ const Post = ({userInfo, profileInfo}) => {
 
         const data = response.data;
         setPosts(data);
+        setPost('');
+        setPostImage(null)
       }catch(err){
         console.log(err)
       }
@@ -160,6 +165,17 @@ const Post = ({userInfo, profileInfo}) => {
     }
   }
 
+  const handleFileUpload = async (e) => {
+    setPostImage(null)
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+    setPostImage(base64);
+    //change value of image input to null as when it is not reset, 
+    //and when we want to add the same image it does not trigger onChange function 
+    //as it is the same image, meaning there is no change
+    imageInputRef.current.value = null;
+  }
+
   return (
     <div className='post-container'>
       {!profileInfo && 
@@ -167,10 +183,30 @@ const Post = ({userInfo, profileInfo}) => {
         <form onSubmit={handlePostSubmit}>
           <textarea type="text" placeholder="What's on your mind?" 
           value={post} onChange= {(e) => setPost(e.target.value)}/>
-          <button className={post.trim() == "" ? 'disabled-postBtn' : 'postBtn'}  type='submit'>
+        </form>
+
+         <div className='post-create-image-container'>
+
+         {postImage && <span onClick={() => setPostImage(null)} className="material-symbols-outlined">close</span>}
+
+          <img src={postImage} className='post-create-image'/>
+
+        </div> 
+        <input ref={imageInputRef} type='file' label ='Image' name='post_picture' id='post-pic-upload'
+            accept='.jpeg, .png, .jpg' onChange={(e) => handleFileUpload(e)}/>
+
+        <div className='upload-and-image-button-container'>
+          <label htmlFor="post-pic-upload">
+            <span className="material-symbols-outlined">
+            image
+            </span>
+          </label>
+
+          <button onClick={handlePostSubmit} className={post.trim() == "" ? 'disabled-postBtn' : 'postBtn'}  type='submit'>
             <img className='postLogo .material-symbols-outlined' src={postLogo} />
           </button>
-        </form>
+        </div>
+
       </div>}
 
       {posts && posts.map((post, index) => (
@@ -188,6 +224,7 @@ const Post = ({userInfo, profileInfo}) => {
           </div>
 
           <p className='post-text'>{post.text}</p>
+          <img className='single-post-picture' src={post.post_picture}/>
 
           <div className='like-comment-list-container'>
             { post.like_number > 0 ? 

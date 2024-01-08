@@ -6,7 +6,7 @@ import AuthService from '../Authentication/AuthService';
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 import Friends from '../Friends/Friends';
-import ProfilePictureUpload from '../ProfilePic/ProfilePic';
+import ProfilePictureUpload from '../Picture/ProfilePic';
 
 const ProfilePage = () => {
   const location = useLocation();
