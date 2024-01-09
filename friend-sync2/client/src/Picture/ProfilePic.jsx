@@ -13,9 +13,11 @@ const ProfilePictureUpload = ({user, profile}) => {
   const [currentImage, setCurrentImage] = useState({ myFile: null });
   const [updatedImage, setUpdatedImage] = useState({ myFile: null });
   const [showPictureUploadPage, setShowPictureUploadPage] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchImage = async () => {
     try{
+      setLoading(true)
       const response = await axios.post(`${API_BASE}/find/profile/image`, {
         profile
       }, {
@@ -30,6 +32,8 @@ const ProfilePictureUpload = ({user, profile}) => {
     }catch(err){
       setCurrentImage({ ...currentImage, myFile: null })
       console.log(err)
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -91,36 +95,35 @@ const ProfilePictureUpload = ({user, profile}) => {
   }
 
   return (
-    <div>
+    <div> {loading ? <div> <img className='profile-default-pic' src={null} /> </div> :
+      <div>
+        <img onClick={handlePictureUploadPage}  className={isMainUserProfile ? 'profile-image' : 'profile-image-disabled' }
+        src={currentImage.myFile == null ? ProfileImg : currentImage.myFile }/>
 
-      <img onClick={handlePictureUploadPage}  className={isMainUserProfile ? 'profile-image' : 'profile-image-disabled' }
-      src={currentImage.myFile == null ? ProfileImg : currentImage.myFile }/>
+        {showPictureUploadPage && <div className='picture-upload-page'>
+          <form onSubmit={handleImageSubmit}>
+            <p onClick={() => {
+              setShowPictureUploadPage(false);
+              setUpdatedImage({ ...updatedImage, myFile: null})
+            }}>x</p>
+          <img onClick={handlePictureUploadPage}  className='updated-image' 
+          src={updatedImage.myFile == null ? currentImage.myFile : updatedImage.myFile}/>
 
-      {showPictureUploadPage && <div className='picture-upload-page'>
-        <form onSubmit={handleImageSubmit}>
-          <p onClick={() => {
-            setShowPictureUploadPage(false);
-            setUpdatedImage({ ...updatedImage, myFile: null})
-          }}>x</p>
-        <img onClick={handlePictureUploadPage}  className='updated-image' 
-        src={updatedImage.myFile == null ? currentImage.myFile : updatedImage.myFile}/>
+            <input type='file' 
+                  label = 'Image'
+                  name='myFile'
+                  id='file-upload'
+                  accept='.jpeg, .png, .jpg'
+                  onChange={(e) => handleFileUpload(e)}/>
 
-          <input type='file' 
-                label = 'Image'
-                name='myFile'
-                id='file-upload'
-                accept='.jpeg, .png, .jpg'
-                onChange={(e) => handleFileUpload(e)}/>
-
-          {updatedImage.myFile !== null && <button type='submit'>Submit</button>}
-          <div>
-            <label htmlFor='file-upload'>Upload photo</label>
-            {currentImage.myFile !== null && <button onClick={handleRemovePhoto}>Remove photo</button>}
-          </div>
-        </form>
+            {updatedImage.myFile !== null && <button type='submit'>Submit</button>}
+            <div>
+              <label htmlFor='file-upload'>Upload photo</label>
+              {currentImage.myFile !== null && <button onClick={handleRemovePhoto}>Remove photo</button>}
+            </div>
+          </form>
+        </div>}
       </div>}
-      
-
     </div>
   );
 };

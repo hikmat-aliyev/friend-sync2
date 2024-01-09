@@ -9,8 +9,6 @@ import { handleProfilePage } from '../Profiles/Profile';
 import { convertToBase64 } from '../Picture/Picture';
 import Loader from '../Loader/Loader';
 
-// import HeartButton from '../HeartButton/HeartBtn';
-
 // eslint-disable-next-line react/prop-types
 const Post = ({userInfo, profileInfo}) => {
   const [posts, setPosts] = useState(null);

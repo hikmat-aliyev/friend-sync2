@@ -1,0 +1,23 @@
+.friend-name {
+  cursor: pointer;
+  word-wrap: wrap;
+  width: 120px;
+}
+
+.friend-profile-picture {
+  width: 120px;
+  height: 120px;
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.friends-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.single-friend-container{
+  width: fit-content;
+  height: fit-content;
+}

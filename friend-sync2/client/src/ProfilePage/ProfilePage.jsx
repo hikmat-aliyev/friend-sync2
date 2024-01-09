@@ -1,12 +1,14 @@
 import Navbar from '../Navbar/Navbar';
 import { useLocation } from 'react-router-dom';
 import Post from '../Post/Post';
+import './ProfilePage.css'
 import {useState, useEffect, useCallback} from 'react'
 import AuthService from '../Authentication/AuthService';
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 import Friends from '../Friends/Friends';
 import ProfilePictureUpload from '../Picture/ProfilePic';
+import AboutMe from '../AboutMe/AboutMe';
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -76,8 +78,8 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (user) {
-      haveRequestSended(); // Call haveRequestSended() here
-      handleIsFriend();
+        haveRequestSended(); // Call haveRequestSended() here
+        handleIsFriend();
     }
   }, [user, haveRequestSended, handleIsFriend]);
 
@@ -171,38 +173,44 @@ const ProfilePage = () => {
     {loading ? (
       <p>Loading...</p>
     ) : user ? (
-      <div className='user-homepage'>
+      <div className='profile-page'>
 
-        <div>
+        <div className='profile-page-navbar'>
           <Navbar user={user}/>
         </div>
         
-        <div>
-          <div> 
+        <div className='profile-header-container'> 
+          <div className='profile-pic-username-container'>
             <ProfilePictureUpload user={user} profile={profile}/>
-
             <h1>{profile.first_name + ' ' + profile.last_name}</h1>
-
-            {user._id !== profile._id ? 
-            <div>  
-              {!isFriend && !requestSend && !requestReceived && 
-              <button onClick={() => handleAddFriend(profile)}>Add friend</button>}
-
-              {!requestSend && requestReceived && !requestAccepted &&
-              <div>
-                <button onClick={() => handleAcceptRequest(profile)}>Accept request</button>
-                <button onClick={() => handleRemoveRequest(profile)}>Remove request</button>
-              </div>}
-
-              {requestSend && !requestReceived && <button onClick={() => handleCancelRequest(profile)}>Cancel request</button>}
-              {(requestAccepted || isFriend) && <button onClick={() => handleRemoveFriend(profile)}>Friends</button>}
-            </div> : null}
-
           </div>
+
+          {user._id !== profile._id ? 
+          <div className='profile-is-friend-container'>  
+            {!isFriend && !requestSend && !requestReceived && 
+            <button onClick={() => handleAddFriend(profile)}>Add friend</button>}
+
+            {!requestSend && requestReceived && !requestAccepted &&
+            <div className='add-cancel-friend-btn-container'>
+              <button onClick={() => handleAcceptRequest(profile)}>Accept request</button>
+              <button onClick={() => handleRemoveRequest(profile)}>Remove request</button>
+            </div>}
+
+            {requestSend && !requestReceived && <button onClick={() => handleCancelRequest(profile)}>Cancel request</button>}
+            {(requestAccepted || isFriend) && <button onClick={() => handleRemoveFriend(profile)}>Friends</button>}
+          </div> : <p></p>}
+        </div>
+
+        <div className='profile-posts-container'>
           <Post userInfo={user} profileInfo={profile}/>
+        </div>   
+
+        <div className='profile-aboutMe-friends-container'>
+          <AboutMe />
           <Friends user={profile}/>
         </div>
-      </div>
+          
+        </div>
     ) : (
       <p>User not found</p>
     )}

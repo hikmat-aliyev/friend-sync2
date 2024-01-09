@@ -15,17 +15,19 @@ input[type="file"] {
 
 .profile-image {
   cursor: pointer;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   border: 2px solid rgb(0, 0, 0);
   border-radius: 50%;
   background-color: rgba(128, 128, 128, 0);
 }
 
-.profile-image-disabled {
+
+
+.profile-image-disabled, .profile-default-pic {
   pointer-events: none;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   border: 2px solid rgb(0, 0, 0);
   border-radius: 50%;
   background-color: rgba(128, 128, 128, 0);

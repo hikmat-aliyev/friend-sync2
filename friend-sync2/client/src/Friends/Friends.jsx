@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 const API_BASE = 'http://localhost:3000'
 import { useNavigate } from 'react-router-dom';
 import { handleProfilePage } from '../Profiles/Profile';
+import './Friends.css'
 
 /* eslint-disable react/prop-types */
 function Friends({user}) {
@@ -30,19 +31,21 @@ function Friends({user}) {
   }, [user])
 
   return(
-    <div>
-      {friends && friends.map((friend, index) => ( 
-        <div key={index}>
-          <div>
-            <h1>Friends</h1>
-            <p>{friends.length} friend</p>
-          </div>
-            
-          <h3 onClick={() => handleProfilePage(friend.profileId, navigate)}>
-            {friend.fullName}
-          </h3>
-        </div>))}
-    </div>
+    <>
+      <div>
+        <h1>Friends</h1>
+        <p>{friends.length} friend</p>
+      </div>
+      <div className="friends-container">
+        {friends && friends.map((friend, index) => ( 
+          <div className="single-friend-container" key={index}>
+              <img onClick={() => handleProfilePage(friend.profileId, navigate)} className="friend-profile-picture" src={friend.picture} alt="" />
+              <h3 className="friend-name" onClick={() => handleProfilePage(friend.profileId, navigate)}>
+                {friend.fullName}
+              </h3>
+          </div>))}
+      </div>
+    </>
   )
 }
 
