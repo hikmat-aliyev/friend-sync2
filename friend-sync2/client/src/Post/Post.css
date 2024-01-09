@@ -274,3 +274,16 @@
   max-height: 400px;
   width: 100%;
 }
+
+
+.loading-spinnerr {
+  width: 100%;
+  border: 2px solid red;
+  display: flex;
+  justify-content: center;
+}
+
+.post-page {
+  border: 1px solid green;
+  height: 100vh;
+}
