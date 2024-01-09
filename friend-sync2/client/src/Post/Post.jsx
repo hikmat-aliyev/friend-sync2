@@ -23,6 +23,7 @@ const Post = ({userInfo, profileInfo}) => {
   const [showCommentList, setShowCommentList] = useState(false);
   const [postImage, setPostImage] = useState(null);
   const imageInputRef = useRef(null);
+  const [comments, setComments] = useState([]);
   const navigate = useNavigate();
 
   //get all posts
@@ -135,6 +136,11 @@ const Post = ({userInfo, profileInfo}) => {
     }
   }
 
+  async function handleCommentList(post) {
+    setComments(post.comments)
+    setShowCommentList(true);
+  }
+
   function handleCommentInput(post) {
     post.showCommentInput = true;
     setToggle(!commentInputToggle);
@@ -145,10 +151,6 @@ const Post = ({userInfo, profileInfo}) => {
     setShowLikeList(true)
   }
 
-  function handleCommentList() {
-    setShowCommentList(true)
-  }
-
   async function handleCommentDelete(postId, commentId) {
     try{
       const response = await axios.post(`${API_BASE}/post/comment/delete`, {
@@ -156,7 +158,7 @@ const Post = ({userInfo, profileInfo}) => {
       },{
         headers: {
           'Content-Type': 'application/json',
-        }
+        },
       })
       const data = response.data;
       setPosts(data);
@@ -251,7 +253,7 @@ const Post = ({userInfo, profileInfo}) => {
           </div>} 
 
           {showCommentList && <div className='list-of-comments'>
-            {post.comments.length > 0 ? post.comments.map((comment, index) => (
+            {comments.length > 0 ? comments.map((comment, index) => (
               <div key={index}>
                 <h3 onClick={() => {handleProfilePage(comment.userId, navigate)
                                     setShowCommentList(false)}}>
@@ -273,25 +275,20 @@ const Post = ({userInfo, profileInfo}) => {
               {isPostLiked(post.likes) ? 
               <button onClick={() => handlePostUnlike(post._id)} className='liked-button'>
                  <span id='like-logo' className="material-symbols-outlined"> thumb_up </span>
-                   Like
+                  Like
               </button> : <button  onClick={() => handlePostLike(post._id)}>
                  <span className="material-symbols-outlined"> thumb_up </span>
-                 Like
+                  Like
               </button> }
-
-              {/* {isPostLiked(post.likes) ? 
-              <button onClick={() => handlePostUnlike(post._id)}>
-                 <HeartButton isLiked={true}/>
-              </button> : <button  onClick={() => handlePostLike(post._id)}>
-                             <HeartButton isLiked={false}/>
-                          </button> } */}
 
               <button onClick={() => handleCommentInput(post)}>
               <span id='comment-logo' className="material-symbols-outlined"> mode_comment </span> Comment</button>
             </div>
                 
-            {post.comments.length > 3 && <button className='see-all-comments' onClick={() => handleCommentList(post)}>
-              See all comments</button>}
+            {post.comments.length > 3 && 
+            <button className='see-all-comments' onClick={() => handleCommentList(post)}>
+              See all comments
+            </button>}
               
               {/* limit number of shown comments to 3 */}
             {post.comments.slice(-3).map((comment, id) => (
