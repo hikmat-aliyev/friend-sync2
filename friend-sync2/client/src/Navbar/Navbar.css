@@ -4,12 +4,11 @@
   justify-content: space-between;
   width: 100vw;
   height: 12vh;
-  padding: 2rem 5rem 2rem 3rem;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background-color: #0d79f48d; 
+  background-color: rgb(250, 250, 247); 
   /* z-index: 1000; */
   box-shadow: 0 0 10px rgb(55, 55, 94);
 }
@@ -21,19 +20,32 @@
 
 .right-side > * {
   font-weight: bold;
+  font-size: var(--fs-l);
+  color: var(--main-color);
+}
+
+.right-side > button, .friends-icon-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-side > button:hover, .friends-icon-btn:hover {
+  background-color: var(--hoveredBtn-background-color)
 }
 
 
-.navbar-container > button, .right-side > button {
+.navbar-container > button, .right-side > button, .friends-icon-btn {
   cursor: pointer;
   border: none;
   background-color: transparent;
 }
 
 .navbar-logo {
-  font-family: monospace;;
+  font-family: 'Inter', sans-serif;
   font-size: var(--fs-xl);
   font-weight: bold;
+  color: var(--main-color);
   transition: transform 0.5s ease-in-out;
 }
 
@@ -41,7 +53,13 @@
   transform: scale(1.05);
 }
 
-.log-out-logo {
+.log-out-icon, .settings-icon {
   font-weight: bold;
   font-size: 2rem;
+  color: var(--main-color);
+}
+
+#friends-icon {
+  color: var(--main-color);
+  font-size: 3rem;
 }

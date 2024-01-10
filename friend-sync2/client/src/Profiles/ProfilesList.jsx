@@ -31,10 +31,22 @@ const ProfileList = ({user}) => {
 
   return (
    <div>
+
     <h1>New users</h1>
+
     {profiles.length > 0 && 
-    <div className='friends-list'>{profiles.map((profile, key) => 
-      <button onClick={() => handleProfilePage(profile._id, navigate)} key={key}>{profile.first_name + ' ' + profile.last_name}</button>)} </div>}
+
+      <div className='profiles-list'>
+        {profiles.map((profile, key) => 
+        <div key={key}>
+          <img src={profile.profile_pic}/>
+          <button onClick={() => handleProfilePage(profile._id, navigate)}>{
+          profile.first_name + ' ' + profile.last_name}
+          </button>
+        </div>
+        )}
+      </div>}
+
    </div> 
   );
 };

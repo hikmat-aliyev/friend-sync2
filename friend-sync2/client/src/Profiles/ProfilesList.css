@@ -1,6 +1,12 @@
-.friends-list {
+.profiles-list {
   display: flex;
   flex-direction: column;
   height: 80vh;
   border: 2px solid green;
+}
+
+
+.profiles-list > div > img {
+  width: 4rem;
+  height: 4rem;
 }

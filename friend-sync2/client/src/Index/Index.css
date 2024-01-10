@@ -1,37 +1,10 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-:root {
-  font-size: 16px;
-  --fs-xl: 3rem;
-  --fs-l: 1.3rem;
-  --fs-m: 0.5rem;
-  --main-color: rgb(55, 55, 94);
-  --index-backgroundColor: rgba(113, 113, 172, 0.209);
-  --body-backgroundColor: rgba(94, 94, 139, 0.482);
-}
-
-@media (max-width: 800px) {
-  :root {
-    font-size: 10px;
-    --fs-xl: 3rem;
-    --fs-l: 1.3rem;
-    --fs-m: 0.5rem;
-  }
-}
-
 body {
-  border: 2px solid red;
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f5f5f5;
+  background: #ebebeb;
   color: rgb(39, 39, 39);
 }
 
@@ -55,7 +28,6 @@ body {
 
 .index-container > h1 {
   font-size: var(--fs-xl);
-  color: var(--main-color);
   margin-bottom: 5rem;
 }
 

@@ -3,7 +3,6 @@ import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 import './Post.css'
 import { formatDistanceToNow } from 'date-fns';
-import postLogo from '../images/sendLogo.svg';
 import { useNavigate } from 'react-router-dom';
 import { handleProfilePage } from '../Profiles/Profile';
 import { convertToBase64 } from '../Picture/Picture';
@@ -202,7 +201,10 @@ const Post = ({userInfo, profileInfo}) => {
 
           <div className='post-create-image-container'>
 
-          {postImage && <span onClick={() => setPostImage(null)} className="material-symbols-outlined">close</span>}
+          {postImage && 
+          <span onClick={() => setPostImage(null)} className="material-symbols-outlined x-close-button">
+            close
+          </span>}
 
             <img src={postImage} className='post-create-image'/>
 
@@ -212,13 +214,15 @@ const Post = ({userInfo, profileInfo}) => {
 
           <div className='upload-and-image-button-container'>
             <label htmlFor="post-pic-upload">
-              <span className="material-symbols-outlined">
+              <span className="material-symbols-outlined post-create-image-icon">
               image
               </span>
             </label>
 
             <button onClick={handlePostSubmit} className={createdPost.trim() == "" ? 'disabled-postBtn' : 'postBtn'}  type='submit'>
-              <img className='postLogo .material-symbols-outlined' src={postLogo} />
+              <span className="material-symbols-outlined post-submit-icon">
+                send
+              </span>
             </button>
           </div>
 
@@ -231,7 +235,7 @@ const Post = ({userInfo, profileInfo}) => {
               <div>
                 <h2>{post.username}</h2>
                 <p>posted {formatDistanceToNow(post.date, {addSuffix: true})}</p>
-              </div>
+              </div>  
               {/* show delete btn if we are not in friend's page */}
               {!profileInfo ? <button className='post-delete-button' onClick={() => handlePostDelete(post._id)}>
               <span id='delete-logo' className="material-symbols-outlined"> delete </span>
@@ -310,20 +314,30 @@ const Post = ({userInfo, profileInfo}) => {
                 
                 {/* limit number of shown comments to 3 */}
               {post.comments.slice(-3).map((comment, id) => (
-                  <div className='comment-container' key={id}>
+                <div className='comment-container' key={id}>
+
+                  <div className='comment-info-container'>
                     <div className='single-comment-header'>
                       <h3 onClick={() => handleProfilePage(comment.userId, navigate)} className='comment-username'>
                         {comment.username}
                       </h3>
-                      {/* show delete btn if the comment belongs to the current user */}
-                      {comment.email == user.email ? <button 
-                        onClick={() => handleCommentDelete(post._id, comment._id)}>
-                          <span className="material-symbols-outlined"> delete </span>
-                        </button> : null}
+                      <p className='comment-date'>{formatDistanceToNow(comment.date)} ago</p>
                     </div>
-                    <p className='comment-date'>{formatDistanceToNow(comment.date)} ago</p>
                     <p>{comment.text}</p>
                   </div>
+
+                  <div className='comment-like-edit-delete-container'>
+                      <button>
+                        <span className="material-symbols-outlined"> thumb_up </span>
+                        Like
+                      </button>
+                      <div className='comment-edit-delete-container'>
+                        <button id='hey'>Edit</button>
+                        <button>Delete</button>
+                      </div>
+                  </div>
+
+                </div>
                 ))}
 
               {post.showCommentInput &&

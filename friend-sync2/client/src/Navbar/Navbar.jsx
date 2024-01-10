@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import './Navbar.css'
+import '../main.css'
 import AuthService from '../Authentication/AuthService';
 import { useNavigate } from 'react-router-dom';
 import FriendRequests from '../FriendRequests/FriendRequests';
@@ -21,26 +22,37 @@ function Navbar ({user}) {
 
   return (
     <div className='navbar-container'>
+
       <button className='navbar-logo' onClick={() =>{
-        navigate('/homepage')}}>FriendSync</button>
+        navigate('/homepage')}}>friendSync
+      </button>
+
       <div className='right-side'>
         <img src="" alt="" />
         <button onClick={() => handleProfilePage(user._id, navigate)}>{user.firstName + ' ' + user.lastName}</button>
         <div> 
-           <button onClick={showFriendRequests}>
-              <span className="material-symbols-outlined">
-                notifications
-              </span>
-           </button>
-           {showRequests && <div className='friend-requests-list'> <FriendRequests /> </div>}
+          <button className='friends-icon-btn'>
+            <span id='friends-icon' onClick={showFriendRequests} className="material-symbols-outlined">
+              group
+            </span>
+          </button>
+          {showRequests && <div className='friend-requests-list'> <FriendRequests /> </div>}
         </div>
-        <button>Settings</button>
-        <button onClick={handleLogOut}>
-        <span className="material-symbols-outlined log-out-logo">
-          logout
-        </span>
+
+        <button>
+          <span className="material-symbols-outlined settings-icon">
+           settings
+          </span>
         </button>
+
+        <button onClick={handleLogOut}>
+          <span className="material-symbols-outlined log-out-icon">
+            logout
+          </span>
+        </button>
+
       </div>
+
     </div>
   )
 }
