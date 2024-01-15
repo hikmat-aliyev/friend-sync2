@@ -2,10 +2,6 @@
   color: rgba(0, 0, 0, 0.849);
 }
 
-.liked-button {
-  color: blue;
-}
-
 .list-of-likes, .list-of-comments {
   position: fixed;
   top: 50%;
@@ -19,6 +15,47 @@
   max-height: 300px;
   overflow-y: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.like-list-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid grey;
+  padding: 1rem 0 1rem 0;
+}
+
+.like-list-header > span:nth-child(1) {
+  display: flex;
+  color: var(--liked-color);
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  width: fit-content;
+}
+
+.like-list-header > span:nth-child(2) {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.like-list-header > span > p {
+  color: var(--liked-color);
+}
+
+.like-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.liked-username {
+  font-size: var(--fs-l);
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .see-all-comments {
@@ -143,6 +180,14 @@
   max-height: fit-content;
 }
 
+.post-owner-profile-pic {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  border: 1px solid grey; 
+  padding: 1px;
+}
+
 .post-header {
   display: flex;
   width: 100%;
@@ -151,27 +196,43 @@
 
 .post-header > div {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .post-header > div > p {
   color: rgb(43, 43, 43);
 }
 
-.post-delete-button {
-  border: none;
-  background-color: transparent;
-  width: 2.2rem;
-}
-
-.post-delete-button > span {
-  font-size: 2.1rem;
-  color: gray;
+.more-horiz {
   cursor: pointer;
+  font-weight: bold;
+  font-size: 2rem;
 }
 
-.post-delete-button > span:hover {
-  color: rgb(222, 4, 4);
+.post-dele-edit-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  background-color: white; 
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); 
+  z-index: 1;
+}
+
+.post-dele-edit-btn-container > button {
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: var(--fs-l);
+}
+
+.post-dele-edit-btn-container > button:hover, .more-horiz:hover {
+  background-color: var(--hoveredBtn-background-color)
 }
 
 .like-comment-list-container{
@@ -230,9 +291,18 @@
   background-color: rgba(128, 128, 128, 0.153);
 }
 
+:root {
+  --liked-color: rgb(210, 46, 5);
+}
+
 #like-logo {
-  color: rgb(7, 73, 241);
+  color: var(--liked-color);
   font-weight: bold;
+  fill: aqua;
+}
+
+.liked-button {
+  color: var(--liked-color);
 }
 
 .comment-username:hover {
@@ -297,6 +367,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding: 0 1rem 0 1rem;
   gap: 1rem;
   align-self: center;
 }
@@ -317,7 +388,12 @@
   gap: 1rem;
 }
 
-button:hover, button:focus {
-  outline: none;
-  border-style: none;
+.comment-like-edit-delete-container > button > span {
+  font-size: 1rem;
+}
+
+.comment-like-btn {
+  display: flex;
+  gap: 0.5rem;
+  width: max-content;
 }

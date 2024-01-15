@@ -182,7 +182,10 @@ const ProfilePage = () => {
         <div className='profile-header-container'> 
           <div className='profile-pic-username-container'>
             <ProfilePictureUpload user={user} profile={profile}/>
-            <h1>{profile.first_name + ' ' + profile.last_name}</h1>
+            <div>
+              <h1>{profile.first_name + ' ' + profile.last_name}</h1>
+              <h3>{profile.friends.length} friends</h3>
+            </div>
           </div>
 
           {user._id !== profile._id ? 

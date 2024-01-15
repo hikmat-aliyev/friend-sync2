@@ -37,7 +37,7 @@ function Index() {
  
   return (
       <div className='index-container'>
-        <h1>FriendSync</h1>
+        <h1>friendSync</h1>
 
         <form className='log-in-form' onSubmit={handleLogin}>
 

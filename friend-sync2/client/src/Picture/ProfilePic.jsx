@@ -99,7 +99,7 @@ const ProfilePictureUpload = ({user, profile}) => {
       <div>
         <img onClick={handlePictureUploadPage}  className={isMainUserProfile ? 'profile-image' : 'profile-image-disabled' }
         src={currentImage.myFile == null ? ProfileImg : currentImage.myFile }/>
-
+        <span className="material-symbols-outlined">photo_camera</span>
         {showPictureUploadPage && <div className='picture-upload-page'>
           <form onSubmit={handleImageSubmit}>
             <p onClick={() => {

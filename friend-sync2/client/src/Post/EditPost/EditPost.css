@@ -1,0 +1,12 @@
+.edit-post-section {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  z-index: 9999999;
+}
+
+.edit-post-header {
+  display: flex;
+}

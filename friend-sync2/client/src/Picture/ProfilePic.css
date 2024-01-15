@@ -15,9 +15,8 @@ input[type="file"] {
 
 .profile-image {
   cursor: pointer;
-  width: 200px;
-  height: 200px;
-  border: 2px solid rgb(0, 0, 0);
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
   background-color: rgba(128, 128, 128, 0);
 }
@@ -26,9 +25,8 @@ input[type="file"] {
 
 .profile-image-disabled, .profile-default-pic {
   pointer-events: none;
-  width: 200px;
-  height: 200px;
-  border: 2px solid rgb(0, 0, 0);
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
   background-color: rgba(128, 128, 128, 0);
 }

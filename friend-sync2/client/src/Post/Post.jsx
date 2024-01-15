@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { handleProfilePage } from '../Profiles/Profile';
 import { convertToBase64 } from '../Picture/Picture';
 import Loader from '../Loader/Loader';
+import EditPost from './EditPost/EditPost';
+import defaultProfilePic from '../images/default-profile.svg'
 
 // eslint-disable-next-line react/prop-types
 const Post = ({userInfo, profileInfo}) => {
@@ -24,6 +26,8 @@ const Post = ({userInfo, profileInfo}) => {
   const [postImage, setPostImage] = useState(null);
   const imageInputRef = useRef(null);
   const [loading, setLoading] = useState(true);
+  const [editMode, setEditMode] = useState(false);
+  const [activePostIndex, setActivePostIndex] = useState(null);
 
   const navigate = useNavigate();
 
@@ -39,6 +43,7 @@ const Post = ({userInfo, profileInfo}) => {
             'Content-Type': 'application/json',
           },
         });
+        console.log(response.data)
         setPosts(response.data);
       } catch (err) {
         console.log(err);
@@ -48,7 +53,7 @@ const Post = ({userInfo, profileInfo}) => {
     };
   
     fetchData();
-  }, [postOwner]);
+  }, [postOwner, setActivePostIndex]);
 
   async function handlePostSubmit(e) {
       e.preventDefault();
@@ -71,7 +76,7 @@ const Post = ({userInfo, profileInfo}) => {
       
   }
 
-  async function handlePostDelete (postId) {
+  async function handlePostDelete (postId,) {
     try{
       const response = await axios.post(`${API_BASE}/post/delete`, {
         postId, user
@@ -87,33 +92,48 @@ const Post = ({userInfo, profileInfo}) => {
     }
   }
 
-  async function handlePostLike (postId) {
+  async function handlePostLike (postId, index) {
     try{
-      const response = await axios.post(`${API_BASE}/post/like`, {
+      axios.post(`${API_BASE}/post/like`, {
         postId, user, postOwner
       },{
         headers: {
           'Content-Type': 'application/json',
         }
       })
-      const data = response.data;
-      setPosts(data);
+      console.log(user)
+      //change the posts locally to avoid waiting to fetch posts from database
+      const newPosts  = [...posts];
+      newPosts[index].likes.push({
+        userId: user._id,
+        username: user.firstName + ' ' + user.lastName,
+        email: user.email
+      });
+      newPosts[index].like_number = newPosts[index].like_number + 1;
+      setPosts(newPosts)
     }catch(err){
       console.log(err)
     }
   }
+  
 
-  async function handlePostUnlike (postId) {
+  async function handlePostUnlike (postId ,index) {
     try{
-      const response = await axios.post(`${API_BASE}/post/unlike`, {
+      axios.post(`${API_BASE}/post/unlike`, {
         postId, postOwner, user
       },{
         headers: {
           'Content-Type': 'application/json',
         }
       })
-      const data = response.data;
-      setPosts(data);
+      //change the posts locally to avoid waiting to fetch posts from database
+
+        const newPosts  = [...posts];
+        const post = newPosts[index];
+        const newLikesArray = post.likes.filter(like => like.email != user.email);
+        post.likes = newLikesArray;
+        post.like_number = post.like_number - 1;
+        setPosts(newPosts); 
     }catch(err){
       console.log(err)
     }
@@ -187,6 +207,7 @@ const Post = ({userInfo, profileInfo}) => {
     //as it is the same image, meaning there is no change
     imageInputRef.current.value = null;
   }
+  
 
   return (
     <div className='post-page'>
@@ -200,15 +221,14 @@ const Post = ({userInfo, profileInfo}) => {
           </form>
 
           <div className='post-create-image-container'>
-
-          {postImage && 
-          <span onClick={() => setPostImage(null)} className="material-symbols-outlined x-close-button">
-            close
-          </span>}
+            {postImage && 
+            <span onClick={() => setPostImage(null)} className="material-symbols-outlined x-close-button">
+              close
+            </span>}
 
             <img src={postImage} className='post-create-image'/>
-
           </div> 
+          
           <input ref={imageInputRef} type='file' label ='Image' name='post_picture' id='post-pic-upload'
               accept='.jpeg, .png, .jpg' onChange={(e) => handleFileUpload(e)}/>
 
@@ -233,14 +253,45 @@ const Post = ({userInfo, profileInfo}) => {
 
             <div className='post-header'>
               <div>
-                <h2>{post.username}</h2>
-                <p>posted {formatDistanceToNow(post.date, {addSuffix: true})}</p>
-              </div>  
-              {/* show delete btn if we are not in friend's page */}
-              {!profileInfo ? <button className='post-delete-button' onClick={() => handlePostDelete(post._id)}>
-              <span id='delete-logo' className="material-symbols-outlined"> delete </span>
-                </button> : null}
+                <img className='post-owner-profile-pic'
+                     src={post.user.profile_pic ? post.user.profile_pic : defaultProfilePic} alt="" />
+                <div>
+                  <h2>{post.username}</h2>
+                  <p>posted {formatDistanceToNow(post.date, {addSuffix: true})}</p>
+                </div> 
+              </div> 
+             
+             {/* show if we are not in friend's page */}
+              {!profileInfo &&
+                <span onClick={() => setActivePostIndex((prevIndex) => (prevIndex === index ? null : index))} className="more-horiz material-symbols-outlined">
+                more_horiz
+                {activePostIndex === index ? (
+                  <div className='post-dele-edit-btn-container'>
+                    <button onClick={() => {
+                      console.log(activePostIndex)
+                      setActivePostIndex((prevIndex) => (prevIndex === index ? null : index))  // Set the index first
+                      setEditMode(true);
+                    }} className='post-edit-button'>
+                      Edit
+                    </button>
+                    <button className='post-delete-button' onClick={() => handlePostDelete(post._id)}>
+                      Delete
+                    </button>
+                  </div>) : null}
+              </span>}
+
             </div>
+
+            {editMode && activePostIndex === index &&
+              <EditPost
+                setPosts={setPosts}
+                index={activePostIndex}
+                setEditMode={setEditMode}
+                post={posts[activePostIndex]}
+                setActivePostIndex={setActivePostIndex}
+                editMode={editMode}
+              />
+            }
 
             <p className='post-text'>{post.text}</p>
             <img className='single-post-picture' src={post.post_picture}/>
@@ -258,14 +309,24 @@ const Post = ({userInfo, profileInfo}) => {
             </div>
 
             {showLikeList && <div className='list-of-likes'>
+              <div className='like-list-header'>
+                <span className="material-symbols-outlined">
+                  favorite <p>{likeList.length}</p>
+                </span>
+                <span className="material-symbols-outlined" onClick={() => {setShowLikeList(false)}}>close</span>
+              </div>
               {likeList.length > 0 ? likeList.map((like, index) => (
-                <p key={index} 
-                  onClick={() => {
-                    handleProfilePage(like.userId, navigate)
-                    setShowLikeList(false)
-                    }}>
-                  {like.username}
+                <div className='like-item' key={index}>
+                  <img className='post-owner-profile-pic'
+                     src={post.user.profile_pic ? post.user.profile_pic : defaultProfilePic} alt="" />
+                  <p className='liked-username' key={index} 
+                    onClick={() => {
+                      handleProfilePage(like.userId, navigate)
+                      setShowLikeList(false)
+                      }}>
+                    {like.username}
                   </p>
+                </div>
               )) : <p key={index}>no likes</p>}
             </div>} 
 
@@ -297,12 +358,12 @@ const Post = ({userInfo, profileInfo}) => {
             <div>
               <div className='like-comment-btn-container'>
                 {isPostLiked(post.likes) ? 
-                <button onClick={() => handlePostUnlike(post._id)} className='liked-button'>
-                  <span id='like-logo' className="material-symbols-outlined"> thumb_up </span>
-                    Like
-                </button> : <button  onClick={() => handlePostLike(post._id)}>
-                  <span className="material-symbols-outlined"> thumb_up </span>
+                <button onClick={() => handlePostUnlike(post._id, index)} className='liked-button'>
+                   Liked
+                  <span id='like-logo' className="material-symbols-outlined"> favorite </span>
+                </button> : <button  onClick={() => handlePostLike(post._id, index)}>
                   Like
+                  <span className="material-symbols-outlined"> favorite </span>
                 </button> }
 
                 <button onClick={() => handleCommentInput(post)}>
@@ -326,15 +387,16 @@ const Post = ({userInfo, profileInfo}) => {
                     <p>{comment.text}</p>
                   </div>
 
-                  <div className='comment-like-edit-delete-container'>
-                      <button>
-                        <span className="material-symbols-outlined"> thumb_up </span>
+                   <div className='comment-like-edit-delete-container'>
+                      <button className='comment-like-btn'>
                         Like
+                        <span className="material-symbols-outlined"> favorite </span>
                       </button>
-                      <div className='comment-edit-delete-container'>
-                        <button id='hey'>Edit</button>
-                        <button>Delete</button>
-                      </div>
+                      {comment.email == user.email ?
+                        <div className='comment-edit-delete-container'>
+                          <button>Edit</button>
+                          <button onClick={() => handleCommentDelete(post._id, comment._id)}>Delete</button>
+                        </div> : <p></p>}
                   </div>
 
                 </div>
