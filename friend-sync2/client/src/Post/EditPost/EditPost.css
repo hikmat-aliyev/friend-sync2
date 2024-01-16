@@ -5,6 +5,8 @@
   transform: translate(-50%, -50%);
   background-color: white;
   z-index: 9999999;
+  width: 500px;
+  height: 500px;
 }
 
 .edit-post-header {

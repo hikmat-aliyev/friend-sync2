@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import './EditPost.css';
 import '../Post.css'
 import { convertToBase64 } from "../../Picture/Picture";
@@ -38,7 +38,6 @@ function EditPost ({setPosts, index, setEditMode, post, setActivePostIndex, edit
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
     setEditedImage(base64);
-    // editedImageInput.current.value = null;
   }
 
   return (

@@ -22,12 +22,15 @@ const Post = ({userInfo, profileInfo}) => {
   const [commentText, setCommentText] = useState(" ");
   const [showLikeList, setShowLikeList] = useState(false);
   const [likeList, setLikeList] = useState([]);
-  const [showCommentList, setShowCommentList] = useState(false);
+  const [shownCommentNumber, setShownCommentNumber] = useState(-2);
   const [postImage, setPostImage] = useState(null);
   const imageInputRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [activePostIndex, setActivePostIndex] = useState(null);
+  const [commentEdit, setCommentEdit] = useState(false);
+  const [editedComment, setEditedComment] = useState(null);
+  const [editedCommentText, setEditedCommentText] = useState(null);
 
   const navigate = useNavigate();
 
@@ -43,7 +46,6 @@ const Post = ({userInfo, profileInfo}) => {
             'Content-Type': 'application/json',
           },
         });
-        console.log(response.data)
         setPosts(response.data);
       } catch (err) {
         console.log(err);
@@ -170,10 +172,6 @@ const Post = ({userInfo, profileInfo}) => {
     setShowLikeList(true)
   }
 
-  function handleCommentList(post) {
-    setUserPost(post);
-    setShowCommentList(true)
-  }
 
   async function handleCommentDelete(postId, commentId) {
     try{
@@ -207,7 +205,29 @@ const Post = ({userInfo, profileInfo}) => {
     //as it is the same image, meaning there is no change
     imageInputRef.current.value = null;
   }
-  
+
+  function handleCommentEdit(comment) {
+    setEditedComment(comment);
+    setEditedCommentText(comment.text);
+    setCommentEdit(true);
+  }
+
+
+  function handleCommentEditSubmit(postInfo, commentInfo) {
+    try{
+        axios.post(`${API_BASE}/post/update/comment`, {
+        postInfo, commentInfo, editedCommentText
+      },{
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      commentInfo.text = editedCommentText;
+      setCommentEdit(false)
+    }catch(err) {
+      console.log(err)
+    }
+  }
 
   return (
     <div className='post-page'>
@@ -303,7 +323,7 @@ const Post = ({userInfo, profileInfo}) => {
               </button> : <p></p>}
                 
               { post.comment_number > 0 ? 
-              <button className='comment-number' onClick={() => handleCommentList(post)}>
+              <button className='comment-number' onClick={() => setShownCommentNumber(-post.comments.length)}>
                 {post.comment_number} {post.comment_number == 1 ? 'comment' : 'comments'}
               </button> : <p></p>}
             </div>
@@ -330,31 +350,6 @@ const Post = ({userInfo, profileInfo}) => {
               )) : <p key={index}>no likes</p>}
             </div>} 
 
-            {showCommentList && <div className='list-of-comments'>
-
-              <span className="material-symbols-outlined" onClick={() => {
-                      setShowCommentList(false)
-                      setUserPost(null)
-                    }}>close</span>
-
-              {userPost.comments.length > 0 ? userPost.comments.map((comment, index) => (
-                <div key={index}>
-
-                  <h3 onClick={() => {handleProfilePage(comment.userId, navigate)
-                                      setShowCommentList(false)}}>
-                    {comment.username}
-                  </h3>
-                  {/* show delete btn if the comment belongs to the current user */}
-                  {comment.email == user.email ? 
-                  <button onClick={() => {handleCommentDelete(userPost._id, comment._id)}}>
-                      Delete
-                  </button> : null}
-                  <p>posted {formatDistanceToNow(comment.date, {addSuffix: true})}</p>
-                  <p>{comment.text}</p>
-                </div>
-              )) : <p key={index}>No comments</p>}
-            </div>} 
-
             <div>
               <div className='like-comment-btn-container'>
                 {isPostLiked(post.likes) ? 
@@ -370,33 +365,45 @@ const Post = ({userInfo, profileInfo}) => {
                 <span id='comment-logo' className="material-symbols-outlined"> mode_comment </span> Comment</button>
               </div>
                   
-              {post.comments.length > 3 && <button className='see-all-comments' onClick={() => handleCommentList(post)}>
-                See all comments</button>}
+              {post.comments.length > 3 && 
+              <button className='see-all-comments' onClick={() => setShownCommentNumber(-post.comments.length)}>
+                See all comments
+              </button>}
                 
-                {/* limit number of shown comments to 3 */}
-              {post.comments.slice(-3).map((comment, id) => (
-                <div className='comment-container' key={id}>
+                {/* limit number of shown comments to 2 as default*/}
+              {post.comments.slice(shownCommentNumber).map((comment, index) => (
+                
+                <div className='comment-container' key={index}>
 
-                  <div className='comment-info-container'>
-                    <div className='single-comment-header'>
-                      <h3 onClick={() => handleProfilePage(comment.userId, navigate)} className='comment-username'>
-                        {comment.username}
-                      </h3>
-                      <p className='comment-date'>{formatDistanceToNow(comment.date)} ago</p>
+                  <img className='comment-profile-pic' src={comment.userId.profile_pic} alt="" />
+                  
+                  <div>
+                    <div className='comment-info-container'>
+                      <div className='single-comment-header'>
+                        <h3 onClick={() => handleProfilePage(comment.userId, navigate)} className='comment-username'>
+                          {comment.username}
+                        </h3>
+                        <p className='comment-date'>{formatDistanceToNow(comment.date)} ago</p>
+                      </div>
+                      {commentEdit && editedComment._id == comment._id ?
+                      <div>
+                        <textarea value={editedCommentText} onChange= {(e) => setEditedCommentText(e.target.value)}></textarea>
+                        <button onClick={() => handleCommentEditSubmit(post, comment)}>Save</button>
+                      </div> : 
+                      <p>{comment.text}</p>} 
                     </div>
-                    <p>{comment.text}</p>
-                  </div>
 
-                   <div className='comment-like-edit-delete-container'>
-                      <button className='comment-like-btn'>
-                        Like
-                        <span className="material-symbols-outlined"> favorite </span>
-                      </button>
-                      {comment.email == user.email ?
+                    <div className='comment-like-edit-delete-container'>
+                        <button className='comment-like-btn'>
+                          Like
+                          <span className="material-symbols-outlined"> favorite </span>
+                        </button>
+                        {comment.email == user.email ?
                         <div className='comment-edit-delete-container'>
-                          <button>Edit</button>
+                          <button onClick={() => {handleCommentEdit(comment)}}>Edit</button>
                           <button onClick={() => handleCommentDelete(post._id, comment._id)}>Delete</button>
                         </div> : <p></p>}
+                      </div>
                   </div>
 
                 </div>
