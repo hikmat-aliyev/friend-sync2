@@ -131,4 +131,8 @@
   color: var(--main-color);
 }
 
+#google-sign-up-button {
+  margin-top: 1.5rem;
+}
+
 

@@ -37,7 +37,7 @@
               <Navbar user={user}/>
             </div>
             <div className='post-section'>
-              <Post userInfo={user}/>
+              <Post userInfo={user} />
             </div>
             <div className='profiles-list-section'>
               <ProfilesList user={user}/>

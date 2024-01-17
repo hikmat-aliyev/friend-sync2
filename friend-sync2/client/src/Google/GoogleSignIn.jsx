@@ -42,7 +42,7 @@ function GoogleSignIn() {
   return(
     <div>
       
-     <button id='google-sing-in-button' onClick={() => login()} className="gsi-material-button">
+     <button id='google-sign-in-button' onClick={() => login()} className="gsi-material-button">
         <div className="gsi-material-button-state"></div>
         <div className="gsi-material-button-content-wrapper">
           <div className="gsi-material-button-icon">

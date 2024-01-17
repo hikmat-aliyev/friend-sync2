@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../Authentication/AuthService';
 import GoogleSignUp from '../Google/GoogleSignUp';
+import './SignUp.css'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const isValidBirthDate = (birthDate, minAge, maxAge) => {
@@ -17,7 +18,7 @@ export const isValidBirthDate = (birthDate, minAge, maxAge) => {
   );
 };
 
-function Index() {
+function SignUp() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -53,8 +54,9 @@ function Index() {
   };
 
   return (
-    <>
-      <form onSubmit={handleSignUp}>
+    <div className='sign-up-container'>
+      <h1>friendSync</h1>
+      <form className='sign-up-form' onSubmit={handleSignUp}>
         <label htmlFor="firstName">First Name</label>
         <input type="text" name="firstName"
         value={firstName} onChange= {(e) => setFirstName(e.target.value)}  />
@@ -79,15 +81,15 @@ function Index() {
         <input type="password" name="confirmPassword" 
         value={confirmPassword} onChange= {(e) => setConfirmPassword(e.target.value)}/>
 
-        {error && <p>{error}</p>}
-        <button type="submit">Sign up</button>
+        {error && <p className='sign-up-error-text'>{error}</p>}
+        <button className='sign-up-button' type="submit">Sign up</button>
     
       </form>
      <p>Or</p>
      <GoogleSignUp />
-   </>
+    </div>
   )
 }
 
-export default Index
+export default SignUp
 

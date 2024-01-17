@@ -29,6 +29,7 @@ body {
 .index-container > h1 {
   font-size: var(--fs-xl);
   margin-bottom: 5rem;
+  color: var(--main-color);
 }
 
 .log-in-form {

@@ -16,8 +16,10 @@ const Post = ({userInfo, profileInfo}) => {
   const [createdPost, setCreatedPost] = useState('');
   const [userPost, setUserPost] = useState(null);
   const user = userInfo;
+
   // set postOwner to profile data if we are in friend page
   const postOwner = profileInfo ? profileInfo : userInfo;
+
   const [commentInputToggle, setToggle] = useState(false);
   const [commentText, setCommentText] = useState(" ");
   const [showLikeList, setShowLikeList] = useState(false);
@@ -103,13 +105,16 @@ const Post = ({userInfo, profileInfo}) => {
           'Content-Type': 'application/json',
         }
       })
-      console.log(user)
       //change the posts locally to avoid waiting to fetch posts from database
       const newPosts  = [...posts];
       newPosts[index].likes.push({
-        userId: user._id,
+        userId: {
+          _id: user._id,
+          profile_pic: user.profile_pic,
+        },
         username: user.firstName + ' ' + user.lastName,
-        email: user.email
+        email: user.email,
+        profile_pic: user.profile_pic
       });
       newPosts[index].like_number = newPosts[index].like_number + 1;
       setPosts(newPosts)
@@ -338,7 +343,7 @@ const Post = ({userInfo, profileInfo}) => {
               {likeList.length > 0 ? likeList.map((like, index) => (
                 <div className='like-item' key={index}>
                   <img className='post-owner-profile-pic'
-                     src={post.user.profile_pic ? post.user.profile_pic : defaultProfilePic} alt="" />
+                     src={like.userId.profile_pic } alt="" />
                   <p className='liked-username' key={index} 
                     onClick={() => {
                       handleProfilePage(like.userId, navigate)
@@ -376,7 +381,7 @@ const Post = ({userInfo, profileInfo}) => {
                 <div className='comment-container' key={index}>
 
                   <img className='comment-profile-pic' src={comment.userId.profile_pic} alt="" />
-                  
+
                   <div>
                     <div className='comment-info-container'>
                       <div className='single-comment-header'>
