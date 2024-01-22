@@ -22,7 +22,6 @@ function Friends({user}) {
           'Content-Type': 'application/json',
         }
       });
-      console.log(response.data);
       setFriends(response.data)
     }catch(err){
       console.log(err)

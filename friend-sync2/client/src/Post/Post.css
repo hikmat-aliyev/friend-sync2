@@ -175,6 +175,7 @@
   padding: 1.5rem;
   width: 700px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   background-color: white;
   margin-top: 20px;
   min-height: 200px;
@@ -411,4 +412,29 @@
   display: flex;
   gap: 0.5rem;
   width: max-content;
+}
+
+.comment-send-container {
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+
+.comment-send-container  > input {
+  border-radius: 5px;
+  border: 1px solid grey;
+  padding: 5px;
+}
+
+.disabled-comment-postBtn {
+  pointer-events: none;
+  cursor: none;
+  color: var(--main-color);
+  font-weight: bold;
+}
+
+.comment-post-btn {
+  background-color: var(--main-color);
+  color: white;
+  font-weight: bold;
 }

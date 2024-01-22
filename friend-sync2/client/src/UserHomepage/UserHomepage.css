@@ -4,7 +4,6 @@
   grid-template-rows: 1fr 5fr; /* 1st row takes a minimum of 10% height */
   grid-template-columns: 2fr 1fr; /* 2 columns */
   height: 100vh; /* 100% of the viewport height */
-  /* Optional: Adjust gap between grid items */
   gap: 10px;
   padding: 2rem;
   color: var(--text-color);
@@ -19,12 +18,15 @@
   grid-row: 2; /* Post spans 1 row */
   grid-column: 1; /* Post spans 1 column */
   margin-top: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profiles-list-section {
   grid-row: 2; /* ProfilesList spans 1 row */
   grid-column: 2; /* ProfilesList spans 1 column */
   margin-top: 150px;
-  width: 40%;
-  justify-self: flex-end
+  width: 80%;
+  justify-self: flex-start;
 }

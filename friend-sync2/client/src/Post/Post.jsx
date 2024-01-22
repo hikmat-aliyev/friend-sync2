@@ -11,7 +11,7 @@ import EditPost from './EditPost/EditPost';
 import defaultProfilePic from '../images/default-profile.svg'
 
 // eslint-disable-next-line react/prop-types
-const Post = ({userInfo, profileInfo}) => {
+const Post = ({userInfo, profileInfo, path}) => {
   const [posts, setPosts] = useState(null);
   const [createdPost, setCreatedPost] = useState('');
   const [userPost, setUserPost] = useState(null);
@@ -41,7 +41,7 @@ const Post = ({userInfo, profileInfo}) => {
     setLoading(true);
     const fetchData = async () => {
       try {
-        const response = await axios.post(`${API_BASE}/post/get-posts`, {
+        const response = await axios.post(`${API_BASE}/post/${path}/get-posts`, {
           postOwner
         }, {
           headers: {
@@ -57,7 +57,7 @@ const Post = ({userInfo, profileInfo}) => {
     };
   
     fetchData();
-  }, [postOwner, setActivePostIndex]);
+  }, [postOwner, setActivePostIndex, path]);
 
   async function handlePostSubmit(e) {
       e.preventDefault();
@@ -286,8 +286,8 @@ const Post = ({userInfo, profileInfo}) => {
                 </div> 
               </div> 
              
-             {/* show if we are not in friend's page */}
-              {!profileInfo &&
+             {/* show if we are not in friend's page and if it is not our friend's post */}
+              {(!profileInfo && post.user._id == user._id) &&
                 <span onClick={() => setActivePostIndex((prevIndex) => (prevIndex === index ? null : index))} className="more-horiz material-symbols-outlined">
                 more_horiz
                 {activePostIndex === index ? (
@@ -415,10 +415,10 @@ const Post = ({userInfo, profileInfo}) => {
                 ))}
 
               {post.showCommentInput &&
-              <div> 
+              <div className='comment-send-container'>  
                 <input type="text" placeholder='Write a comment...' value={commentText} onChange= {(e) => setCommentText(e.target.value)}/>
                 <button onClick={() => handleCommentPost(post._id)}
-                  className={commentText.trim() == "" ? 'disabled-postBtn' : ''}
+                  className={commentText.trim() == "" ? 'disabled-comment-postBtn' : 'comment-post-btn'}
                 >Post</button>
               </div>}
             </div>

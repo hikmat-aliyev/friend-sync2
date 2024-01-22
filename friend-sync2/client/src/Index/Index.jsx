@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 import AuthService from '../Authentication/AuthService';
 import GoogleSignIn from '../Google/GoogleSignIn';
+import image2 from '../images/index-image.png'
 
 function Index() {
   const [email, setEmail] = useState('');
@@ -36,7 +37,9 @@ function Index() {
   };
  
   return (
-      <div className='index-container'>
+    <div className='index-container'>
+      <img src={image2} />
+        <div className='login-container'>
         <h1>friendSync</h1>
 
         <form className='log-in-form' onSubmit={handleLogin}>
@@ -70,6 +73,7 @@ function Index() {
         </div>
 
       </div>
+    </div>
   )
 }
 

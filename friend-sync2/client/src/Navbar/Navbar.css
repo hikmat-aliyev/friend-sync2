@@ -8,6 +8,7 @@
   top: 0;
   left: 0;
   right: 0;
+  z-index: 100;
   background-color: rgb(250, 250, 247); 
   /* z-index: 1000; */
   box-shadow: 0 0 10px rgb(55, 55, 94);
@@ -18,10 +19,27 @@
   gap: 2rem;
 }
 
-.right-side > * {
+.right-side > *, .navbar-username-btn {
   font-weight: bold;
   font-size: var(--fs-l);
   color: var(--main-color);
+}
+
+.navbar-profile-info-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.navbar-profile-pic{
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  border: 1px solid grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .right-side > button, .friends-icon-btn {
@@ -30,12 +48,12 @@
   align-items: center;
 }
 
-.right-side > button:hover, .friends-icon-btn:hover {
+.right-side > button:hover, .friends-icon-btn:hover, .navbar-username-btn:hover {
   background-color: var(--hoveredBtn-background-color)
 }
 
 
-.navbar-container > button, .right-side > button, .friends-icon-btn {
+.navbar-container > button, .right-side > button, .friends-icon-btn, .navbar-username-btn {
   cursor: pointer;
   border: none;
   background-color: transparent;
@@ -62,4 +80,10 @@
 #friends-icon {
   color: var(--main-color);
   font-size: 3rem;
+}
+
+.friend-requests-list {
+  border: 1px solid red;  
+  position: absolute;
+  background-color: white;
 }

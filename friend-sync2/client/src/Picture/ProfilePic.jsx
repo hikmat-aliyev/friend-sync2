@@ -5,8 +5,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 import { convertToBase64 } from './Picture';
+import cameraImg from '../images/camera.svg'
 
-const ProfilePictureUpload = ({user, profile}) => {
+const ProfilePictureUpload = ({user, profile, setBackgroundShadow}) => {
   //check if we are in other person profile page or in our own profile page
   const isMainUserProfile = user._id == profile._id
 
@@ -95,19 +96,35 @@ const ProfilePictureUpload = ({user, profile}) => {
   }
 
   return (
-    <div> {loading ? <div> <img className='profile-default-pic' src={null} /> </div> :
+    <div> {loading ?
+       <div> 
+          <img className='profile-default-pic' src={null} />
+      </div>
+        :
       <div>
-        <img onClick={handlePictureUploadPage}  className={isMainUserProfile ? 'profile-image' : 'profile-image-disabled' }
-        src={currentImage.myFile == null ? ProfileImg : currentImage.myFile }/>
-        <span className="material-symbols-outlined">photo_camera</span>
-        {showPictureUploadPage && <div className='picture-upload-page'>
-          <form onSubmit={handleImageSubmit}>
+        <div className='profile-image-container'>
+          <img className= 'profile-image-disabled' 
+          src={currentImage.myFile == null ? ProfileImg : currentImage.myFile }/>
+          {isMainUserProfile && <img onClick={() => {
+            handlePictureUploadPage()
+            setBackgroundShadow(true)
+          }} className='camera-svg' src={cameraImg}/>}
+        </div>
+  
+        {showPictureUploadPage && 
+        <div className='picture-upload-page'>
+          <div className='picture-upload-header'>
+            <h1>Edit profile image</h1>
             <p onClick={() => {
-              setShowPictureUploadPage(false);
-              setUpdatedImage({ ...updatedImage, myFile: null})
-            }}>x</p>
-          <img onClick={handlePictureUploadPage}  className='updated-image' 
-          src={updatedImage.myFile == null ? currentImage.myFile : updatedImage.myFile}/>
+                setShowPictureUploadPage(false);
+                setUpdatedImage({ ...updatedImage, myFile: null})
+                setBackgroundShadow(false)
+              }}>x</p>
+          </div>
+
+          <form onSubmit={handleImageSubmit}>
+            <img onClick={handlePictureUploadPage}  className='updated-image' 
+            src={updatedImage.myFile == null ? currentImage.myFile : updatedImage.myFile}/>
 
             <input type='file' 
                   label = 'Image'
@@ -116,10 +133,14 @@ const ProfilePictureUpload = ({user, profile}) => {
                   accept='.jpeg, .png, .jpg'
                   onChange={(e) => handleFileUpload(e)}/>
 
-            {updatedImage.myFile !== null && <button type='submit'>Submit</button>}
-            <div>
+  
+            <div className='upload-remove-photo-container'>
               <label htmlFor='file-upload'>Upload photo</label>
-              {currentImage.myFile !== null && <button onClick={handleRemovePhoto}>Remove photo</button>}
+              {currentImage.myFile !== null && <button onClick={() => {
+                handleRemovePhoto()
+                setBackgroundShadow(false)
+              }}>Remove photo</button>}
+               {updatedImage.myFile !== null && <button onClick={() => setBackgroundShadow(false)} type='submit'>Submit</button>}
             </div>
           </form>
         </div>}

@@ -4,6 +4,7 @@ const API_BASE = 'http://localhost:3000'
 import AuthService from '../Authentication/AuthService';
 import { handleProfilePage } from '../Profiles/Profile';
 import { useNavigate } from 'react-router-dom';
+import './FriendRequests.css'
 
 function FriendRequests() {
   const [user, setUser] = useState(null);
@@ -49,15 +50,10 @@ function FriendRequests() {
   }, [user]); // Dependency on user, so it runs when user changes
 
   return(
-    <div>
+    <div className='friend-requests-container'>
       {receivedRequests.map((request, key) => (
         <div key={key}>
            <button onClick={() => handleProfilePage(request.userId, navigate)}>{request.fullName}</button>
-           <button>
-            <span className="material-symbols-outlined">
-                notifications
-              </span>
-           </button>
         </div>    
       ))}
     </div>

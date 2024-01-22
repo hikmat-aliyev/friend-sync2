@@ -4,6 +4,7 @@ const API_BASE = 'http://localhost:3000'
 import './ProfilesList.css'
 import { useNavigate } from 'react-router-dom';
 import { handleProfilePage } from '../Profiles/Profile';
+import defaultProfilePic from '../images/default-profile.svg'
 
 // eslint-disable-next-line react/prop-types
 const ProfileList = ({user}) => {
@@ -30,19 +31,19 @@ const ProfileList = ({user}) => {
   }, [user]);
 
   return (
-   <div>
+   <div className='profile-list-container'>
 
     <h1>New users</h1>
 
     {profiles.length > 0 && 
 
-      <div className='profiles-list'>
+      <div className='profiles-container'>
         {profiles.map((profile, key) => 
         <div key={key}>
-          <img src={profile.profile_pic}/>
-          <button onClick={() => handleProfilePage(profile._id, navigate)}>{
+          <img src={profile.profile_pic ? profile.profile_pic : defaultProfilePic}/>
+          <p onClick={() => handleProfilePage(profile._id, navigate)}>{
           profile.first_name + ' ' + profile.last_name}
-          </button>
+          </p>
         </div>
         )}
       </div>}

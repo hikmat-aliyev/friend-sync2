@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import FriendRequests from '../FriendRequests/FriendRequests';
 import { useState } from 'react';
 import { handleProfilePage } from '../Profiles/Profile';
+import defaultProfilePic from '../images/default-profile.svg'
 
 function Navbar ({user}) {
   const [showRequests, setShowRequests] = useState(false)
@@ -28,8 +29,11 @@ function Navbar ({user}) {
       </button>
 
       <div className='right-side'>
-        <img src="" alt="" />
-        <button onClick={() => handleProfilePage(user._id, navigate)}>{user.firstName + ' ' + user.lastName}</button>
+        <div className='navbar-profile-info-container'>
+          <img src={user.profile_pic ? user.profile_pic : defaultProfilePic} className='navbar-profile-pic' />
+          <button className='navbar-username-btn' onClick={() => handleProfilePage(user._id, navigate)}>{user.firstName + ' ' + user.lastName}</button>
+        </div>
+
         <div> 
           <button className='friends-icon-btn'>
             <span id='friends-icon' onClick={showFriendRequests} className="material-symbols-outlined">

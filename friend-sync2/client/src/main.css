@@ -21,6 +21,7 @@
   --fs-m: 0.9rem;
   --main-color: rgb(68, 71, 103);
   --hoveredBtn-background-color: rgba(167, 167, 167, 0.108);
+  --background-color:  #ebebeb;
 }
 
 body {
@@ -29,6 +30,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--background-color);
 }
 
 h1 {

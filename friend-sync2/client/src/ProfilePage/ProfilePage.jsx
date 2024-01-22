@@ -19,6 +19,7 @@ const ProfilePage = () => {
   const [requestReceived, setRequestReceived] = useState(null);
   const [requestAccepted, setRequestAccepted] = useState(null);
   const [isFriend, setIsFriend] = useState(null);
+  const [backgroundShadow, setBackgroundShadow] = useState(null);
 
   const haveRequestSended = useCallback(async () => {
     if(user){
@@ -169,19 +170,22 @@ const ProfilePage = () => {
   } 
 
   return (
-    <div>
+    <div className='total-profile-page'>
     {loading ? (
       <p>Loading...</p>
     ) : user ? (
       <div className='profile-page'>
 
+        {backgroundShadow && <div className='background-shadow'></div>}
+
         <div className='profile-page-navbar'>
           <Navbar user={user}/>
         </div>
         
-        <div className='profile-header-container'> 
+        <div className='profile-header-container'>
+          
           <div className='profile-pic-username-container'>
-            <ProfilePictureUpload user={user} profile={profile}/>
+            <ProfilePictureUpload user={user} profile={profile} setBackgroundShadow={setBackgroundShadow}/>
             <div>
               <h1>{profile.first_name + ' ' + profile.last_name}</h1>
               <h3>{profile.friends.length} friends</h3>
@@ -205,7 +209,7 @@ const ProfilePage = () => {
         </div>
 
         <div className='profile-posts-container'>
-          <Post userInfo={user} profileInfo={profile}/>
+          <Post userInfo={user} profileInfo={profile} path={'profile-homepage'}/>
         </div>   
 
         <div className='profile-aboutMe-friends-container'>

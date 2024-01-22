@@ -1,0 +1,13 @@
+.friend-requests-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.friend-requests-container > div > button {
+  font-size: var(--fs-l);
+  font-weight: bold;
+  color: var(--main-color);
+  margin-top: 1rem;
+  width: fit-content;
+  background-color: transparent;
+}

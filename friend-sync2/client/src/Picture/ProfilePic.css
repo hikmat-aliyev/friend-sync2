@@ -3,24 +3,92 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 50%;
-  height: 50%;
+  width: 40%;
+  height: max-content;
   transform: translate(-50%, -50%);
   background-color: white;
+  z-index: 9999;
+  padding: 2rem;
+}
+
+.picture-upload-header{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border-bottom: 1px solid grey;
+  padding: 1rem 0 1rem 0;
+}
+
+.picture-upload-header>p{
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.picture-upload-header>h1 {
+  font-size: var(--fs-xl);
+}
+
+.picture-upload-page > form {
+  padding: 1rem 0 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-image-container {
+  position: relative;
+  display: inline-block; 
+  z-index: 10;
+}
+
+.upload-remove-photo-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+}
+
+.upload-remove-photo-container > * {
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: transparent;
+  color: var(--main-color);
+  font-size: var(--fs-l);
+  font-weight: bold;
+  width: max-content;
+  padding: 1rem;
+}
+
+.upload-remove-photo-container > *:hover{
+  background-color: var(--hoveredBtn-background-color);
+}
+
+.camera-svg {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  width: 3.7rem;
+  height: 3.7rem;
+  background-color: rgb(226, 225, 225);
+  padding: 0.5rem;
+  border-radius: 50%;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); 
+}
+
+.camera-svg:hover {
+  background-color: rgb(178, 178, 178);
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: none;
 }
 
 input[type="file"] {
   display: none;
 }
-
-.profile-image {
-  cursor: pointer;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background-color: rgba(128, 128, 128, 0);
-}
-
 
 
 .profile-image-disabled, .profile-default-pic {
@@ -32,8 +100,8 @@ input[type="file"] {
 }
 
 .updated-image {
-  width: 250px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
   border: 2px solid rgb(0, 0, 0);
   border-radius: 50%;
   background-color: rgba(128, 128, 128, 0);

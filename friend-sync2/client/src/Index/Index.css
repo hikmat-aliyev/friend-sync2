@@ -4,29 +4,45 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ebebeb;
   color: rgb(39, 39, 39);
 }
 
 .index-container {
+  display: flex;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  width: max-content;
+  align-items: center;
+}
+
+.index-container > img {
+  width:512px;
+  height: 512px;
+}
+
+
+.login-container {
   height: 80vh;
   width: 30vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 800px) {
-  .index-container {
+  .login-container {
     width: 80vw;
     height: 60vh;
   }
+
+  .index-container > img{
+    display: none;
+  }
+
 }
 
-.index-container > h1 {
+.login-container > h1 {
   font-size: var(--fs-xl);
   margin-bottom: 5rem;
   color: var(--main-color);
