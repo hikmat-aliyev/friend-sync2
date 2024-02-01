@@ -6,9 +6,9 @@ import { formatDistanceToNow } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { handleProfilePage } from '../Profiles/Profile';
 import { convertToBase64 } from '../Picture/Picture';
-import Loader from '../Loader/Loader';
 import EditPost from './EditPost/EditPost';
 import defaultProfilePic from '../images/default-profile.svg'
+import PostsSkeleton from '../PostsSkeleton/PostsSkeleton';
 
 // eslint-disable-next-line react/prop-types
 const Post = ({userInfo, profileInfo, path}) => {
@@ -27,7 +27,7 @@ const Post = ({userInfo, profileInfo, path}) => {
   const [shownCommentNumber, setShownCommentNumber] = useState(-2);
   const [postImage, setPostImage] = useState(null);
   const imageInputRef = useRef(null);
-  const [loading, setLoading] = useState(true);
+  const [postsLoading, setPostsLoading] = useState(true)
   const [editMode, setEditMode] = useState(false);
   const [activePostIndex, setActivePostIndex] = useState(null);
   const [commentEdit, setCommentEdit] = useState(false);
@@ -38,7 +38,7 @@ const Post = ({userInfo, profileInfo, path}) => {
 
   //get all posts
   useEffect(() => {
-    setLoading(true);
+    setPostsLoading(true);
     const fetchData = async () => {
       try {
         const response = await axios.post(`${API_BASE}/post/${path}/get-posts`, {
@@ -52,7 +52,7 @@ const Post = ({userInfo, profileInfo, path}) => {
       } catch (err) {
         console.log(err);
       }finally {
-        setLoading(false);
+        setPostsLoading(false);
       }
     };
   
@@ -234,10 +234,11 @@ const Post = ({userInfo, profileInfo, path}) => {
     }
   }
 
+
   return (
     <div className='post-page'>
-      {loading ? <div className="loading-spinner"><Loader /></div>
-      : <div className='post-container'>
+      {editMode && <div className="background-layer"></div>}
+       <div className='post-container'>
         {!profileInfo && 
         <div className='create-post-container'>
           <form onSubmit={handlePostSubmit}>
@@ -272,8 +273,8 @@ const Post = ({userInfo, profileInfo, path}) => {
           </div>
 
         </div>}
-
-        {posts && posts.map((post, index) => (
+        
+        {(posts && !postsLoading) ? posts.map((post, index) => (
           <div className='single-post-container' key={index}>
 
             <div className='post-header'>
@@ -293,7 +294,6 @@ const Post = ({userInfo, profileInfo, path}) => {
                 {activePostIndex === index ? (
                   <div className='post-dele-edit-btn-container'>
                     <button onClick={() => {
-                      console.log(activePostIndex)
                       setActivePostIndex((prevIndex) => (prevIndex === index ? null : index))  // Set the index first
                       setEditMode(true);
                     }} className='post-edit-button'>
@@ -424,8 +424,8 @@ const Post = ({userInfo, profileInfo, path}) => {
             </div>
 
           </div>
-        ))}
-      </div> }
+        ))  : <PostsSkeleton />}
+      </div>
     </div>
   )
 };

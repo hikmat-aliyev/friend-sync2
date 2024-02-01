@@ -1,14 +1,72 @@
-.edit-post-section {
+.edit-section {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
   z-index: 9999999;
-  width: 500px;
-  height: 500px;
+  width: 700px;
+  height: fit-content;
+  padding: 1.2rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-radius: 5px;
+  z-index: 999;
 }
 
-.edit-post-header {
+.section-header {
   display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  padding: 1rem 0 1rem 0;
+}
+
+.section-header > h1 {
+  font-size: 2rem;
+}
+
+.edited-post-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+.edited-post-header > img {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  border: 1px solid grey; 
+}
+
+
+.edit-section > form > textarea {
+  width: 100%;
+  border: 1px solid gray;
+  resize: none;
+}
+
+.post-image-edited {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.post-image-edited > img {
+  max-height: 500px;
+  max-width: 650px;
+}
+
+.disabled-edit-save-btn {
+  pointer-events: none;
+  font-weight: bold;
+}
+
+.enabled-edit-save-btn {
+  cursor: pointer;
+  background-color: var( --main-color);
+  color: white;
+  font-weight: bold;
 }

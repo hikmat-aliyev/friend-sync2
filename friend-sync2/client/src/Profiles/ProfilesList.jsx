@@ -35,7 +35,7 @@ const ProfileList = ({user}) => {
 
     <h1>New users</h1>
 
-    {profiles.length > 0 && 
+    {profiles.length > 0 ?
 
       <div className='profiles-container'>
         {profiles.map((profile, key) => 
@@ -46,7 +46,22 @@ const ProfileList = ({user}) => {
           </p>
         </div>
         )}
-      </div>}
+      </div> : <div className='profile-list-skeleton'>
+                <div>
+                  <img className='skeleton'/>
+                  <p className='skeleton'></p>
+                </div>
+
+                <div>
+                  <img className='skeleton'/>
+                  <p className='skeleton'></p>
+                </div>
+
+                <div>
+                  <img className='skeleton'/>
+                  <p className='skeleton'></p>
+                </div>
+              </div>}
 
    </div> 
   );
