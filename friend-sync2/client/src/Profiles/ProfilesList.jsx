@@ -39,7 +39,7 @@ const ProfileList = ({user}) => {
 
       <div className='profiles-container'>
         {profiles.map((profile, key) => 
-        <div key={key}>
+        <div className='single-profile-items' key={key}>
           <img src={profile.profile_pic ? profile.profile_pic : defaultProfilePic}/>
           <p onClick={() => handleProfilePage(profile._id, navigate)}>{
           profile.first_name + ' ' + profile.last_name}

@@ -8,7 +8,6 @@
 .profiles-container, .profile-list-skeleton {
   display: flex;
   flex-direction: column;
-  /* height: 80vh; */
   background-color: white;
   padding: 2rem;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); 
@@ -28,7 +27,24 @@
   color: var(--main-color);
   font-weight: bold;
   cursor: pointer;
+  word-wrap: break-word;
 }
+
+.single-profile-items {
+  border: 1px solid red;
+  width: max-content
+}
+
+@media (max-width: 821px) {
+  .profile-list-container > h1{
+    font-size: 2rem;
+  }
+
+  .profiles-container > div > p  {
+    font-size: 1rem;
+  }
+}
+
 
 .profiles-container > div > p:hover {
   border-bottom: 2px solid var(--main-color);
@@ -39,6 +55,13 @@
   height: 5rem;
   border-radius: 50%;
   border: 1px solid grey;
+}
+
+@media (max-width: 821px) {
+  .profiles-container > div > img {
+    width: 3rem;
+    height: 3rem;
+  }
 }
 
 /* skeleton style */

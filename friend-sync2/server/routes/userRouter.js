@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt');
 
 router.post('/sign-in', async (req, res) => {
   const { email, password } = req.body;
-  console.log(email)
   try {
     const user = await User.findOne({ email: email });
     if (!user) {
@@ -29,7 +28,7 @@ router.post('/sign-in', async (req, res) => {
     // If authentication is successful, generate a JWT
     const token = jwt.sign(
       {
-        userId: user._id,
+        _id: user._id,
         email: user.email,
         firstName: user.first_name,
         lastName: user.last_name,
@@ -59,7 +58,7 @@ router.post('/google/sign-in', async (req, res) => {
       //if authentication successful, generate a JWT
       const token = jwt.sign(
         {
-          userId: user._id,
+          _id: user._id,
           email: user.email,
           firstName: user.first_name,
           lastName: user.last_name,
@@ -98,24 +97,24 @@ const verifyToken = (req, res, next) => {
 };
 
 // Protected route to fetch user information
-router.post('/', verifyToken, (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
   // Access the user information from the request object
   const user = req.user;
+  const userFromDatabase = await User.findById(user._id)
 
   // Respond with the user information
   res.json({
-    userId: user.userId,
+    _id: user._id,
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
+    profile_pic: userFromDatabase.profile_pic
   });
 });
 
 router.post('/sign-up', async (req, res) => {
   const {firstName, lastName, email, birthDate, password} = req.body;
-  console.log(password)
   hashedPassword = await bcrypt.hash(password, 10)
-  console.log(hashedPassword);
   try{
     const existUser = await User.findOne({email: email});
     if(existUser) {
@@ -135,7 +134,7 @@ router.post('/sign-up', async (req, res) => {
     const expiresIn = '30d';
     const token = jwt.sign(
       {
-        userId: user._id,
+        _id: user._id,
         email: user.email,
         firstName: user.first_name,
         lastName: user.last_name,
@@ -153,7 +152,6 @@ router.post('/sign-up', async (req, res) => {
 router.post('/google/sign-up', async (req, res) => {
   const data = req.body;
   const userInfo = data.userData;
-  console.log(userInfo);
 
   try{
     let user = await User.findOne({email: userInfo.email});
@@ -172,7 +170,7 @@ router.post('/google/sign-up', async (req, res) => {
     //if authentication successful, generate a JWT
     const token = jwt.sign(
       {
-        userId: user._id,
+        _id: user._id,
         email: user.email,
         firstName: user.first_name,
         lastName: user.last_name,

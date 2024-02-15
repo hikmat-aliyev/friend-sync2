@@ -5,10 +5,27 @@ const { DateTime } = require("luxon");
 const PostSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   username: { type: String, required: true},
-  text: { type: String, required: true, maxLength: 200 },
+  post_picture: {type: String},
+  text: { type: String, required: true },
   date: { type: Date, default: Date.now() },
-  likes: [{ username: {type: String}, email: {type: String}}],
-  like_number: { type: Number, default: 0 }
+  likes: [{ userId: {type: Schema.Types.ObjectId, ref: 'User'},
+            username: {type: String}, 
+            email: {type: String}},
+         ],
+  like_number: { type: Number, default: 0 },
+  comments: [{ userId: {type: Schema.Types.ObjectId, ref: 'User'},
+               text: {type: String},
+               username: {type: String}, 
+               email: {type: String}, 
+               date: { type: Date, default: Date.now },}
+            ],
+  comment_number: { type: Number, default: 0 },
+});
+
+// When querying posts or comments, populate the 'user' field to get the user details.
+PostSchema.pre('find', function (next) {
+  this.populate('user', 'profile_pic');
+  next();
 });
 
 // Virtual for User's URL

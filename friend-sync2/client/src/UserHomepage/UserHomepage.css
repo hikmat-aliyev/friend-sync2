@@ -26,7 +26,13 @@
 .profiles-list-section {
   grid-row: 2; /* ProfilesList spans 1 row */
   grid-column: 2; /* ProfilesList spans 1 column */
-  margin-top: 150px;
+  margin-top: 200px;
   width: 80%;
   justify-self: flex-start;
+}
+
+@media (max-width: 821px) {
+  .profiles-list-section {
+    width: 26vw;
+  }
 }

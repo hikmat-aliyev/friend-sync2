@@ -5,9 +5,19 @@ const { DateTime } = require("luxon");
 const UserSchema = new Schema({
   first_name: { type: String, required: true, maxLength: 100 },
   last_name: { type: String, required: true, maxLength: 100 },
+  profile_pic: {type: String, default: null},
   birth_date: { type: Date },
   email: { type: String, required: true, maxLength: 100 },
   password: { type: String, minLength: 3 },
+  allPosts: [{postId: {type: Schema.Types.ObjectId, ref: 'Post'}}],
+  friends: [{ profileId: {type: Schema.Types.ObjectId, ref: 'User'},
+              fullName: {type: String}, 
+              email: {type: String}, 
+              birthDate: { type: Date},}],
+  receivedRequests: [{ userId: {type: Schema.Types.ObjectId},
+                       fullName: {type: String}, 
+                       email: {type: String}, 
+                       birthDate: { type: Date},}],         
 });
 
 // Virtual for User's full name

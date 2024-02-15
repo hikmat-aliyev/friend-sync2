@@ -10,13 +10,18 @@
   right: 0;
   z-index: 100;
   background-color: rgb(250, 250, 247); 
-  /* z-index: 1000; */
   box-shadow: 0 0 10px rgb(55, 55, 94);
 }
 
 .right-side {
   display: flex;
   gap: 2rem;
+}
+
+@media (max-width: 821px) {
+  .right-side{
+    gap: 0.5rem;
+  }
 }
 
 .right-side > *, .navbar-username-btn {
@@ -42,18 +47,38 @@
   justify-content: center;
 }
 
-.right-side > button, .friends-icon-btn {
+@media (max-width: 821px) {
+  .navbar-profile-pic{
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+.settings-log-out-buttons-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.right-side > button:hover, .friends-icon-btn:hover, .navbar-username-btn:hover {
+.right-side > button, .friends-icon-btn  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-side > button:hover, 
+.friends-icon-btn:hover, 
+.navbar-username-btn:hover,
+.settings-log-out-buttons-container > button:hover, 
+.menu-container > button:hover {
   background-color: var(--hoveredBtn-background-color)
 }
 
 
-.navbar-container > button, .right-side > button, .friends-icon-btn, .navbar-username-btn {
+.navbar-container > button, .right-side > button, 
+.friends-icon-btn, .navbar-username-btn,
+.settings-log-out-buttons-container > button, 
+.menu-container > button {
   cursor: pointer;
   border: none;
   background-color: transparent;
@@ -82,8 +107,18 @@
   font-size: 3rem;
 }
 
+@media (max-width: 821px) {
+  #friends-icon {
+    font-size: 2rem;
+  }
+}
+
 .friend-requests-list {
   border: 1px solid red;  
   position: absolute;
   background-color: white;
+}
+
+.menu-container > button > span{
+  font-size: 2rem
 }

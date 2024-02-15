@@ -5,15 +5,6 @@
   font-family: 'Inter', sans-serif;
 }
 
-@media (max-width: 800px) {
-  :root {
-    font-size: 10px;
-    --fs-xl: 3rem;
-    --fs-l: 1.3rem;
-    --fs-m: 0.5rem;
-  }
-}
-
 :root {
   font-size: 16px;
   --fs-xl: 3rem;
@@ -22,6 +13,15 @@
   --main-color: rgb(68, 71, 103);
   --hoveredBtn-background-color: rgba(167, 167, 167, 0.108);
   --background-color:  #ebebeb;
+}
+
+@media (max-width: 821px) {
+  :root {
+    font-size: 10px;
+    --fs-xl: 2.5rem;
+    --fs-l: 1.3rem;
+    --fs-m: 0.5rem;
+  }
 }
 
 body {
