@@ -120,5 +120,20 @@
 }
 
 .menu-container > button > span{
-  font-size: 2rem
+  font-size: 2rem;
+  color: var(--main-color);
+}
+
+.settings-log-out-container {
+  position: absolute;
+  margin-left: -25px;
+  translate: (-50% -50%);
+  background-color: white;
+}
+
+.settings-log-out-container > button {
+  border: none;
+  color: var(--main-color);
+  background-color: transparent;
+  font-weight: bold;
 }

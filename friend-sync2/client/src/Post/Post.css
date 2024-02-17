@@ -94,7 +94,7 @@
 
 @media (max-width: 821px) {
   .create-post-container {
-    width: 65vw;
+    width: 60vw;
     height: fit-content;
   }
 }
@@ -211,7 +211,7 @@
 @media (max-width: 821px) {
 
   .single-post-container {
-    width: 65vw;
+    width: 60vw;
   }
 }
 
@@ -333,12 +333,21 @@
 #like-logo {
   color: var(--liked-color);
   font-weight: bold;
-  fill: aqua;
 }
+
+@media (max-width: 821px) {
+  #like-logo, #comment-logo {
+    font-size: 1.8rem;
+  }
+}
+
+
 
 .liked-button {
   color: var(--liked-color);
 }
+
+
 
 .comment-username:hover {
   cursor: pointer;
@@ -464,6 +473,7 @@
   border-radius: 5px;
   border: 1px solid grey;
   padding: 5px;
+  width: 90%;
 }
 
 .disabled-comment-postBtn {

@@ -1,5 +1,4 @@
 .picture-upload-page {
-  border: 2px solid green;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -9,6 +8,12 @@
   background-color: white;
   z-index: 9999;
   padding: 2rem;
+}
+
+@media (max-width: 821px) {
+  .picture-upload-page {
+    width: 80vw;
+  }
 }
 
 .picture-upload-header{
@@ -26,6 +31,12 @@
 
 .picture-upload-header>h1 {
   font-size: var(--fs-xl);
+}
+
+@media (max-width: 821px) {
+  .picture-upload-header>h1{
+    font-size: var(--fs-l);
+  }
 }
 
 .picture-upload-page > form {
@@ -99,10 +110,29 @@ input[type="file"] {
   background-color: rgba(128, 128, 128, 0);
 }
 
+@media (max-width: 821px) {
+  .profile-image-disabled, .profile-default-pic {
+    width: 100px;
+    height: 100px;
+  }
+
+  .camera-svg {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+}
+
 .updated-image {
   width: 300px;
   height: 300px;
   border: 2px solid rgb(0, 0, 0);
   border-radius: 50%;
   background-color: rgba(128, 128, 128, 0);
+}
+
+@media (max-width: 821px) {
+  .updated-image {
+    width: 200px;
+    height: 200px;
+  }
 }

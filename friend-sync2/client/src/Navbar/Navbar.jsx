@@ -11,8 +11,8 @@ import defaultProfilePic from '../images/default-profile.svg'
 function Navbar ({user}) {
   const [showRequests, setShowRequests] = useState(false)
   const navigate = useNavigate();
-  const windowWidth = window.innerWidth;
-  console.log(windowWidth)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [showMenu, setShowMenu] = useState(false);
 
   function handleLogOut() {
     AuthService.logout();
@@ -21,6 +21,10 @@ function Navbar ({user}) {
 
   function showFriendRequests() {
     setShowRequests(!showRequests);
+  }
+
+   function handleSettingsPage() {
+    navigate('/settings', { state: { user } }); // Pass the user data via location state
   }
 
   return (
@@ -33,7 +37,7 @@ function Navbar ({user}) {
       <div className='right-side'>
         <div className='navbar-profile-info-container'>
           <img onClick={() => handleProfilePage(user._id, navigate)} src={user.profile_pic ? user.profile_pic : defaultProfilePic} className='navbar-profile-pic' />
-          {windowWidth > 821 && <button className='navbar-username-btn' onClick={() => handleProfilePage(user._id, navigate)}>{user.firstName + ' ' + user.lastName}</button>}
+          {windowWidth > 831 && <button className='navbar-username-btn' onClick={() => handleProfilePage(user._id, navigate)}>{user.firstName + ' ' + user.lastName}</button>}
         </div>
 
         <div> 
@@ -45,9 +49,9 @@ function Navbar ({user}) {
           {showRequests && <div className='friend-requests-list'> <FriendRequests /> </div>}
         </div>
 
-        {windowWidth > 821 ? 
+        {windowWidth > 831 ? 
         <div className='settings-log-out-buttons-container'>
-          <button>
+          <button onClick={handleSettingsPage}>
             <span className="material-symbols-outlined settings-icon">
             settings
             </span>
@@ -61,9 +65,15 @@ function Navbar ({user}) {
         </div> :
 
         <div className='menu-container'>
-          <button>
+          <button onClick={() => {setShowMenu(!showMenu)}}>
             <span className="material-symbols-outlined"> menu</span>
           </button>
+          {showMenu &&
+            <div className='settings-log-out-container'>
+              <button onClick={handleSettingsPage}>Settings</button>
+              <button onClick={handleLogOut}>Log out</button>
+            </div>
+          }
         </div>}
 
       </div>

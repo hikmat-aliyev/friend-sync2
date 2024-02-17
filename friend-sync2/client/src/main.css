@@ -54,3 +54,9 @@ button:hover, button:focus {
   outline: none;
   border-style: none;
 }
+
+@media (max-width: 821px) {
+  body {
+    overflow-x: hidden;
+  }
+}

@@ -37,7 +37,7 @@ function Friends({user}) {
     <>
       {friends && !loading && <div>
         <div>
-          <h1>Friends</h1>
+          <h1 className="friends-h1">Friends</h1>
           <p>{friends.length} friend</p>
         </div>
         <div className="friends-container">

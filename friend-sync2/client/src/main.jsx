@@ -7,6 +7,7 @@ import SignUp from "./SignUp/SignUp"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import TellUsAboutYourself from "./TellAboutYourself/TellUsAboutYourself";
 import ProfilePage from './ProfilePage/ProfilePage'
+import Settings from "./Settings/Settings";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "profile-homepage",
     element: <ProfilePage />,
+  },
+  {
+    path: "settings",
+    element: <Settings />,
   },
 ]);
 

@@ -4,12 +4,29 @@
   width: 120px;
 }
 
+@media (max-width: 821px) {
+  .friends-h1 {
+    font-size: 1.8rem;
+  }
+}
+
 .friend-profile-picture {
   width: 120px;
   height: 120px;
   border: 1px solid black;
   border-radius: 10px;
   cursor: pointer;
+}
+
+@media (max-width: 821px) {
+  .friend-profile-picture {
+    width: 50px;
+    height: 50px;
+  }
+
+  .friend-name {
+    width: 50px;
+  }
 }
 
 .friends-container {
