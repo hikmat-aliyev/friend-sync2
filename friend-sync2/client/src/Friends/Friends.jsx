@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-const API_BASE = 'http://localhost:3000'
+import { API_BASE } from "../Authentication/AuthService";
 import { useNavigate } from 'react-router-dom';
 import { handleProfilePage } from '../Profiles/Profile';
 import './Friends.css'

@@ -5,7 +5,7 @@ import './ProfilePage.css'
 import {useState, useEffect, useCallback} from 'react'
 import AuthService from '../Authentication/AuthService';
 import axios from 'axios';
-const API_BASE = 'http://localhost:3000'
+import { API_BASE } from '../Authentication/AuthService';
 import Friends from '../Friends/Friends';
 import ProfilePictureUpload from '../Picture/ProfilePic';
 

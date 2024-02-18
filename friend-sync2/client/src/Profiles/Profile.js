@@ -1,5 +1,5 @@
-  import axios from 'axios'
-  const API_BASE = 'http://localhost:3000'
+import axios from 'axios'
+import { API_BASE } from '../Authentication/AuthService';
   
   //function for navigating to comment owner profile page
   export async function handleProfilePage(profileId, navigate) {

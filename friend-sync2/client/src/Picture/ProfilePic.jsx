@@ -3,7 +3,7 @@ import './ProfilePic.css'
 import ProfileImg from '../images/default-profile.svg'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-const API_BASE = 'http://localhost:3000'
+import { API_BASE } from '../Authentication/AuthService';
 import { convertToBase64 } from './Picture';
 import cameraImg from '../images/camera.svg'
 

@@ -3,7 +3,7 @@ import './EditPost.css';
 import '../Post.css'
 import { convertToBase64 } from "../../Picture/Picture";
 import axios from "axios";
-const API_BASE = 'http://localhost:3000';
+import { API_BASE } from "../../Authentication/AuthService";
 
 /* eslint-disable react/prop-types */
 function EditPost ({setPosts, index, setEditMode, post, setActivePostIndex, editMode}) {
