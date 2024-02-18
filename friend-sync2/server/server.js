@@ -18,8 +18,8 @@ server.use(express.json());
 server.use(cors());
 //set up mongoose
 const mongoose = require("mongoose");
-// const mongoDb = process.env.DATABASE_STRING;
-const mongoDb = `mongodb+srv://${process.env.ACCOUNT_DETAILS}@cluster2.r3cdcce.mongodb.net/friendSync?retryWrites=true&w=majority`
+const mongoDb = `mongodb+srv://hikmataliyevm:6423857hiko@cluster2.r3cdcce.mongodb.net/friendSync?retryWrites=true&w=majority`
+// const mongoDb = `mongodb+srv://${process.env.ACCOUNT_DETAILS}@cluster2.r3cdcce.mongodb.net/friendSync?retryWrites=true&w=majority`
 mongoose.connect(mongoDb);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
