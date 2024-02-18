@@ -23,10 +23,6 @@ function Navbar ({user}) {
     setShowRequests(!showRequests);
   }
 
-   function handleSettingsPage() {
-    navigate('/settings', { state: { user } }); // Pass the user data via location state
-  }
-
   return (
     <div className='navbar-container'>
 
@@ -51,7 +47,7 @@ function Navbar ({user}) {
 
         {windowWidth > 831 ? 
         <div className='settings-log-out-buttons-container'>
-          <button onClick={handleSettingsPage}>
+          <button>
             <span className="material-symbols-outlined settings-icon">
             settings
             </span>
@@ -70,7 +66,6 @@ function Navbar ({user}) {
           </button>
           {showMenu &&
             <div className='settings-log-out-container'>
-              <button onClick={handleSettingsPage}>Settings</button>
               <button onClick={handleLogOut}>Log out</button>
             </div>
           }

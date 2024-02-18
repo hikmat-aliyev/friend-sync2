@@ -8,7 +8,6 @@ import axios from 'axios';
 const API_BASE = 'http://localhost:3000'
 import Friends from '../Friends/Friends';
 import ProfilePictureUpload from '../Picture/ProfilePic';
-import AboutMe from '../AboutMe/AboutMe';
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -213,7 +212,6 @@ const ProfilePage = () => {
         </div>   
 
         <div className='profile-aboutMe-friends-container'>
-          <AboutMe />
           <Friends user={profile}/>
         </div>
           

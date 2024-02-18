@@ -12,7 +12,9 @@ body {
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   width: max-content;
+  justify-content: center;
   align-items: center;
+  padding: 5rem;
 }
 
 .index-container > img {
@@ -22,7 +24,6 @@ body {
 
 
 .login-container {
-  height: 80vh;
   width: 30vw;
   display: flex;
   flex-direction: column;
@@ -30,10 +31,10 @@ body {
   justify-content: center;
 } 
 
-@media (max-width: 800px) {
+@media (max-width: 821px) {
   .login-container {
-    width: 90vw;
-    height: 90vh;
+    width: 60vw;
+    height: max-content;
   }
 
   .index-container > img{
@@ -70,9 +71,8 @@ body {
 }
 
 .log-in-form > div > input {
-  height: 50%;
   border-radius: 5px;
-  padding: 1rem;
+  padding: 0.5rem;
   text-align: start;
   border: 1px gray solid;
   font-size: var(--fs-l);
@@ -136,4 +136,12 @@ body {
 .other-info-container > h2 {
   display: inline-block;
   color: var(--main-color);
+}
+
+.default-account-login {
+  color: white;
+  background-color: rgb(143, 2, 2);
+  font-weight: bold;
+  font-size: var(--fs-l);
+  width: max-content;
 }

@@ -37,6 +37,7 @@ router.post('/submit', async (req, res) => {
                             .populate('user')
                             .populate('comments.userId')
                             .populate('likes.userId')
+                            .sort({ date: -1 })
                             .exec()
       totalPosts.push(post)
     }
@@ -113,6 +114,7 @@ router.post('/delete', async (req, res) => {
                             .populate('user')
                             .populate('comments.userId')
                             .populate('likes.userId')
+                            .sort({ date: -1 })
                             .exec()
       allPostsToSend.push(post) 
     }

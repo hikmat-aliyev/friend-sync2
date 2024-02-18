@@ -142,7 +142,7 @@
   align-items: flex-end;
 }
 
-.post-create-image-icon, .post-submit-icon {
+.post-create-image-icon {
   font-size: 2.5rem;
   cursor: pointer;
   color: var(--main-color);
@@ -151,23 +151,25 @@
 .postBtn {
   background-color: var(--main-color);
   cursor: pointer;
+  width: max-content;
 }
 
 .postBtn  > span {
   color: white;
+  width: fit-content;
+  font-weight: bold;
 }
 
 .disabled-postBtn {
   pointer-events: none;
   color: var(--main-color);
   background-color: rgba(128, 128, 128, 0.175);
+  width: max-content;
 }
 
 .disabled-postBtn, .postBtn {
   font-weight: bold;
   border: none;
-  width: 3rem;
-  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -33,6 +33,7 @@ const Post = ({userInfo, profileInfo, path}) => {
   const [commentEdit, setCommentEdit] = useState(false);
   const [editedComment, setEditedComment] = useState(null);
   const [editedCommentText, setEditedCommentText] = useState(null);
+  const [posting, setPosting] = useState(false);
 
   const navigate = useNavigate();
 
@@ -62,6 +63,7 @@ const Post = ({userInfo, profileInfo, path}) => {
   async function handlePostSubmit(e) {
       e.preventDefault();
       try{
+        setPosting(true);
         const response = await axios.post(`${API_BASE}/post/submit`, {
           createdPost, user, postImage
         }, {
@@ -73,24 +75,24 @@ const Post = ({userInfo, profileInfo, path}) => {
         const data = response.data;
         setPosts(data);
         setCreatedPost('');
-        setPostImage(null)
+        setPostImage(null);
+        setPosting(false);
       }catch(err){
         console.log(err)
-      }
-      
+      }  
   }
 
   async function handlePostDelete (postId,) {
     try{
-      const response = await axios.post(`${API_BASE}/post/delete`, {
+      const newPosts = posts.filter(post => post._id != postId)
+       axios.post(`${API_BASE}/post/delete`, {
         postId, user
       },{
         headers: {
           'Content-Type': 'application/json',
         }
       })
-      const data = response.data;
-      setPosts(data);
+      setPosts(newPosts)
     }catch(err){
       console.log(err)
     }
@@ -266,8 +268,8 @@ const Post = ({userInfo, profileInfo, path}) => {
             </label>
 
             <button onClick={handlePostSubmit} className={createdPost.trim() == "" ? 'disabled-postBtn' : 'postBtn'}  type='submit'>
-              <span className="material-symbols-outlined post-submit-icon">
-                send
+              <span className="post-submit-icon">
+                {posting ? 'Posting...' : 'Post'}
               </span>
             </button>
           </div>

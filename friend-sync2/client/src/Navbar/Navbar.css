@@ -114,9 +114,9 @@
 }
 
 .friend-requests-list {
-  border: 1px solid red;  
   position: absolute;
   background-color: white;
+  box-shadow: 0 0 10px rgb(55, 55, 94);
 }
 
 .menu-container > button > span{

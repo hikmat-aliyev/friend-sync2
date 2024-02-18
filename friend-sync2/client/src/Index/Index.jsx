@@ -28,13 +28,26 @@ function Index() {
       await AuthService.login(email, password);
       setError(null);
       navigate('/homepage')
-
     } catch (error) {
       setError('Incorrect email or password')
       console.error('Login failed:', error.message);
       // Handle login failure, show an error message, etc.
     }
   };
+
+  async function handleDefaultLogin(e) {
+    e.preventDefault(); // Prevent the default form submission behavior
+    try {
+      // Use await to wait for the login to complete before proceeding
+      await AuthService.login('default@gmail.com', '12345');
+      setError(null);
+      navigate('/homepage')
+    } catch (error) {
+      setError('Incorrect email or password')
+      console.error('Login failed:', error.message);
+      // Handle login failure, show an error message, etc.
+    }
+  }
  
   return (
     <div className='index-container'>
@@ -71,6 +84,8 @@ function Index() {
 
           <p>Don't have an account? <Link to='sign-up'>Sign up</Link></p>
         </div>
+
+          <button onClick={handleDefaultLogin} className='default-account-login'>Continue with a default account</button>
 
       </div>
     </div>
