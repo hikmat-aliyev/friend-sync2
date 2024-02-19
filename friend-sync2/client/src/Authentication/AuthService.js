@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_BASE = 'http://localhost:3000'
+export const API_BASE = 'https://friend-sync2-production.up.railway.app'
 
 const AuthService = {
   login: async (email, password) => {
