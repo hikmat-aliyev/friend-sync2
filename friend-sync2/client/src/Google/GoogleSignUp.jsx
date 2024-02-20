@@ -17,7 +17,6 @@ function GoogleSignUp() {
             }
           },
         )
-        console.log(res.data.email);
         await AuthService.googleSignUp(res.data);
         navigate('/homepage')
       }catch(err){
