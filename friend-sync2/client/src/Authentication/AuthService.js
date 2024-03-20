@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_BASE = 'https://friend-sync2-production.up.railway.app'
+export const API_BASE = 'https://friend-sync-server-production.up.railway.app'
 
 const AuthService = {
   login: async (email, password) => {
@@ -19,7 +19,7 @@ const AuthService = {
       if (!data || !data.token) {
         throw new Error('Authentication failed');
       }
-  
+      
       localStorage.setItem('token', data.token);
       return data;
     } catch (error) {
@@ -87,9 +87,6 @@ const AuthService = {
       }
   
       localStorage.setItem('token', data.token);
-      const jwt = localStorage.getItem('token');
-      console.log(jwt);
-  
       return data;
     } catch (error) {
       console.error('Error during authentication:', error.message);
@@ -113,6 +110,7 @@ const AuthService = {
       }
   
       localStorage.setItem('token', data.token);
+;
       return data;
     } catch (error) {
       console.error('Error during authentication:', error.message);
@@ -131,16 +129,12 @@ const AuthService = {
       });
   
       const data = response.data;
-      console.log(data)
       if (!data.token) {
         console.log('no user')
         throw new Error('Authentication failed');
       }
   
       localStorage.setItem('token', data.token);
-      const jwt = localStorage.getItem('token');
-      console.log(`jwt: ${jwt}`);
-  
       return data;
     } catch (error) {
       console.error('Error during authentication:', error.message);

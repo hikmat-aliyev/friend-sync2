@@ -14,7 +14,6 @@
         AuthService.getUserInfo(jwt)
           .then((userData) => {
             setUser(userData);
-            localStorage.setItem('user', JSON.stringify(userData)); // Convert userData to a string before storing
           })
           .catch((error) => {
             console.error('Error fetching user info:', error.message);
