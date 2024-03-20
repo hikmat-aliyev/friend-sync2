@@ -9,12 +9,13 @@ body {
 
 .index-container {
   display: flex;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.976);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
   width: max-content;
   justify-content: center;
   align-items: center;
   padding: 5rem;
+  border-radius: 15px;
 }
 
 .index-container > img {
