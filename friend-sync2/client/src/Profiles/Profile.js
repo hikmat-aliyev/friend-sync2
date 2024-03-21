@@ -14,7 +14,7 @@ import { API_BASE } from '../Authentication/AuthService';
       })
       const profile = response.data;
       //navigate to proper profile homepage by passing proper arguments
-      navigate('/profile-homepage', { state: { profile: profile } });
+      navigate(`/profile-homepage/${profile.first_name + profile.last_name}`, { state: { profile: profile } });
     }catch(err){
       console.log(err)
     }

@@ -42,9 +42,9 @@ function Friends({user}) {
         </div>
         <div className="friends-container">
           {friends && friends.map((friend, index) => ( 
-            <div className="single-friend-container" key={index}>
-                <img onClick={() => handleProfilePage(friend.profileId, navigate)} className="friend-profile-picture" src={friend.picture} alt="" />
-                <h3 className="friend-name" onClick={() => handleProfilePage(friend.profileId, navigate)}>
+            <div onClick={() => handleProfilePage(friend.profileId, navigate)} className="single-friend-container" key={index}>
+                <img className="friend-profile-picture" src={friend.picture} alt="" />
+                <h3 className="friend-name">
                   {friend.fullName}
                 </h3>
             </div>))}

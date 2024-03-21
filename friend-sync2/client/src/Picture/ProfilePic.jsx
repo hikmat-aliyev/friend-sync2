@@ -38,9 +38,10 @@ const ProfilePictureUpload = ({user, profile, setBackgroundShadow}) => {
     }
   }
 
+  //fetch image when profile id changes
   useEffect(() => {
     fetchImage()
-  }, [isMainUserProfile])
+  }, [profile._id])
 
   const createPost = async (newImage) => {
     try{
