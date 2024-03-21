@@ -4,8 +4,12 @@
   align-items: center;
   flex-direction: column;
   padding: 1rem;
-  min-width: 200px;
+  min-width: max-content;
   background-color: var(--background-color);
+}
+
+.friend-requests-container > p {
+  font-size: 1rem;
 }
 
 .friend-requests-container > div > button {

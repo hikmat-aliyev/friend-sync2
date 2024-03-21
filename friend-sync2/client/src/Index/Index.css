@@ -1,3 +1,7 @@
+:root {
+  --main-color-index: rgb(68, 71, 103);
+}
+
 body {
   width: 100vw;
   height: 100vh;
@@ -47,7 +51,7 @@ body {
 .login-container > h1 {
   font-size: var(--fs-xl);
   margin-bottom: 5rem;
-  color: var(--main-color);
+  color: var(--main-color-index);
 }
 
 .log-in-form {
@@ -68,7 +72,7 @@ body {
 .log-in-form > div > label {
   margin: 0;
   font-size: var(--fs-l);
-  color: var(--main-color);
+  color: var(--main-color-index);
 }
 
 .log-in-form > div > input {
@@ -84,17 +88,17 @@ body {
   border-style: none;
   padding: 0.5rem;
   margin-top: 1rem;
-  background-color: var(--main-color);
+  background-color: var(--main-color-index);
   color: white;
-  border: 1px solid var(--main-color);
+  border: 1px solid var(--main-color-index);
   font-weight: bold;
   font-size: var(--fs-l);
 }
 
 .log-in-form > button:hover {
   background-color: white;
-  color: var(--main-color);
-  border: 1px solid var(--main-color);
+  color: var(--main-color-index);
+  border: 1px solid var(--main-color-index);
 }
 
 .white {
@@ -116,11 +120,11 @@ body {
 
 .other-info-container > p {
   font-size: var(--fs-l);
-  color: var(--main-color);
+  color: var(--main-color-index);
 }
 
 .other-info-container > p > * {
-  color: var(--main-color);
+  color: var(--main-color-index);
   text-decoration: none;
   font-weight: 600;
 }
@@ -130,13 +134,13 @@ body {
   content: "";
   display: inline-block;
   width: 7vw; 
-  border-top: 1px solid var(--main-color); 
+  border-top: 1px solid var(--main-color-index); 
   margin: 0 10px; 
 }
 
 .other-info-container > h2 {
   display: inline-block;
-  color: var(--main-color);
+  color: var(--main-color-index);
 }
 
 .default-account-login {
