@@ -16,9 +16,13 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [requestSend, setRequestSend] = useState(null);
   const [requestReceived, setRequestReceived] = useState(null);
-  const [requestAccepted, setRequestAccepted] = useState(null);
   const [isFriend, setIsFriend] = useState(null);
   const [backgroundShadow, setBackgroundShadow] = useState(null);
+
+  console.log(requestSend)
+  console.log(requestReceived)
+  console.log(isFriend)
+
 
   const haveRequestSended = useCallback(async () => {
     if(user){
@@ -51,7 +55,6 @@ const ProfilePage = () => {
           }
         });
         setIsFriend(response.data)
-        setRequestAccepted(response.data)
       } catch (err) {
         console.log(err);
       }
@@ -193,19 +196,19 @@ const ProfilePage = () => {
           </div>
 
           {(user._id !== profile._id && isFriend !== null && requestSend !== null 
-          && requestAccepted !== null && requestReceived !== null ) ? 
+            && requestReceived !== null ) ? 
           <div className='profile-is-friend-container'>  
             {(!isFriend && !requestSend && !requestReceived) && 
             <button onClick={() => handleAddFriend(profile)}>Add friend</button>}
 
-            {!requestSend && requestReceived && !requestAccepted &&
+            {!requestSend && requestReceived && !isFriend &&
             <div className='add-cancel-friend-btn-container'>
               <button onClick={() => handleAcceptRequest(profile)}>Accept request</button>
               <button onClick={() => handleRemoveRequest(profile)}>Remove request</button>
             </div>}
 
             {(requestSend && !requestReceived) && <button onClick={() => handleCancelRequest(profile)}>Cancel request</button>}
-            {(requestAccepted || isFriend) && <button onClick={() => handleRemoveFriend(profile)}>Friends</button>}
+            {(isFriend) && <button onClick={() => handleRemoveFriend(profile)}>Friends</button>}
           </div> : <p></p>}
         </div>
 
