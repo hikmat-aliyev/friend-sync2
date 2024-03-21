@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useEffect } from 'react';
 import './Navbar.css'
 import '../main.css'
 import AuthService from '../Authentication/AuthService';
@@ -13,12 +14,21 @@ function Navbar ({user}) {
   const navigate = useNavigate();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [showMenu, setShowMenu] = useState(false);
-  const [bgColor, setBgColor] = useState('white')
+  const [bgColor, setBgColor] = useState('black');
+  const [bodyBgColor, setBodyBgColor] = useState('black');
+  const [mainColor,setMainColor] = useState('white');
 
   function handleColorChange() {
-    bgColor == 'black' ? setBgColor('white') : setBgColor('black')
-    document.documentElement.style.setProperty('--background-color', bgColor);
+    bgColor == 'black' ? setBgColor('white') : setBgColor('black');
+    bodyBgColor == 'black' ? setBodyBgColor('#ebebeb') : setBodyBgColor('black');
+    mainColor == 'white' ? setMainColor('rgb(68, 71, 103)') : setMainColor('white');
   }
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--background-color', bgColor);
+    document.documentElement.style.setProperty('--body-background-color', bodyBgColor);
+    document.documentElement.style.setProperty('--main-color', mainColor)
+  }, [bgColor, bodyBgColor, mainColor]);
 
   function handleLogOut() {
     AuthService.logout();
@@ -50,8 +60,15 @@ function Navbar ({user}) {
           </button>
           {showRequests && <div className='friend-requests-list'> <FriendRequests /> </div>}
         </div>
-        
-        <button onClick={handleColorChange}>Change Color</button>
+
+        <button className='change-color' onClick={handleColorChange}>
+          {bgColor =='white' && <span className="material-symbols-outlined">
+            light_mode
+          </span>}
+          {bgColor =='black' && <span className="material-symbols-outlined">
+            dark_mode
+          </span>}
+        </button>
 
         {windowWidth > 831 ? 
         <div className='settings-log-out-buttons-container'>
@@ -78,6 +95,7 @@ function Navbar ({user}) {
             </div>
           }
         </div>}
+
 
       </div>
 

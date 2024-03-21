@@ -21,13 +21,14 @@
 }
 
 .post-skeleton {
-  background-color: white;
+  background-color: var(--background-color);
   border-radius: 5px;
   width: 700px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(128, 128, 128, 0.612);
 }
 
 @media (max-width: 821px) {

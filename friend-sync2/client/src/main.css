@@ -10,8 +10,9 @@
   --fs-xl: 3rem;
   --fs-l: 1.3rem;
   --fs-m: 0.9rem;
-  --main-color: rgb(68, 71, 103);
-  --background-color:  #ebebeb;
+  --main-color: white;
+  --background-color: black;
+  --body-background-color: black;
   --hoveredBtn-background-color: rgba(167, 167, 167, 0.108);
   --white-border: rgba(255, 255, 255, 0.254);
 }
@@ -31,7 +32,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--background-color);
+  background-color: var(--body-background-color);
 }
 
 h1 {

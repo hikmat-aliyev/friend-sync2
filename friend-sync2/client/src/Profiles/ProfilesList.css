@@ -8,7 +8,8 @@
 .profiles-container, .profile-list-skeleton {
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: var(--background-color);
+  border: 1px solid var(--white-border);
   padding: 2rem;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); 
   border-radius: 10px;
@@ -59,7 +60,6 @@
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
-  border: 1px solid grey;
 }
 
 /* skeleton style */

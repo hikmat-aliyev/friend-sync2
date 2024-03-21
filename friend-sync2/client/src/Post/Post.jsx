@@ -393,9 +393,10 @@ const Post = ({userInfo, profileInfo, path}) => {
                         <p className='comment-date'>{formatDistanceToNow(comment.date)} ago</p>
                       </div>
                       {commentEdit && editedComment._id == comment._id ?
-                      <div>
+                      <div className='comment-edit-container'>
                         <textarea value={editedCommentText} onChange= {(e) => setEditedCommentText(e.target.value)}></textarea>
-                        <button onClick={() => handleCommentEditSubmit(post, comment)}>Save</button>
+                        <button className={editedCommentText.length > 0 ? '' : 'disabledEditSubmitBtn'} 
+                        onClick={() => handleCommentEditSubmit(post, comment)}>Save</button>
                       </div> : 
                       <p>{comment.text}</p>} 
                     </div>
