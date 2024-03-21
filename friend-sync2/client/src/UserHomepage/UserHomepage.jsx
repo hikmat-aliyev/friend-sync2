@@ -30,7 +30,7 @@
     return (
       <div>
         {loading ? (
-          <p>Loading...</p>
+          <p className='loading-text'>Loading...</p>
         ) : user ? (
           <div className='user-homepage'>
             <div className='navbar-section'>

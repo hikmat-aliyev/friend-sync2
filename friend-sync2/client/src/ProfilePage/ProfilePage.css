@@ -1,7 +1,7 @@
 .background-shadow {
   width: 100vw;
   height: 500vh;
-  background-color: black;
+  background-color: var(--background-color);
   opacity: 0.5;
   position: absolute;
   z-index: 999;
@@ -27,7 +27,8 @@
   grid-row-start: 2 / span 1;
   grid-column: span 2;
   margin-top: 200px;
-  background: linear-gradient(to bottom, var(--background-color) 40%, white 40%);
+  background: linear-gradient(to bottom, var(--background-color) 40%, var(--background-color) 40%);
+  border: 1px solid var(--white-border);
   padding: 0 10rem 2rem 10rem;
 }
 
@@ -65,6 +66,7 @@
 .profile-pic-username-container > div > h1 {
   font-size: 2.5rem;
   font-weight: bold;
+  color: var(--main-color);
 }
 
 @media (max-width: 821px) {
@@ -90,7 +92,7 @@
   border-radius: 5px;
   padding: 0.8rem;
   font-weight: bold;
-  color: white;
+  color: var(--background-color);
   border: none;
   background-color: var(--main-color);
 }
