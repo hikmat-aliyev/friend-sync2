@@ -1,6 +1,7 @@
 
 * {
   color: rgba(0, 0, 0, 0.849);
+  color: rgba(255, 255, 255, 0.757);
 }
 
 .background-layer {
@@ -89,7 +90,8 @@
   max-height: fit-content;
   width: 700px;
   padding: 3px;
-  background-color: white;
+  background-color: var(--background-color);
+  border: 1px solid var(--white-border);
 }
 
 @media (max-width: 821px) {
@@ -105,7 +107,7 @@
   height: 100%;
   width: 100%;
   border: none;
-  background-color: white;
+  background-color: var(--background-color);
 }
 
 .create-post-container > form > textarea {
@@ -115,7 +117,7 @@
   outline: none;
   resize: none;
   font-size: var(--fs-l);
-  background-color: white;
+  background-color: var(--background-color);
 }
 
 .post-create-image-container {
@@ -205,13 +207,14 @@
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   background-color: white;
+  background-color: black;
+  border: 1px solid var(--white-border);
   margin-top: 20px;
   min-height: 200px;
   max-height: fit-content;
 }
 
 @media (max-width: 821px) {
-
   .single-post-container {
     width: 60vw;
   }
@@ -343,13 +346,9 @@
   }
 }
 
-
-
 .liked-button {
   color: var(--liked-color);
 }
-
-
 
 .comment-username:hover {
   cursor: pointer;
@@ -410,6 +409,7 @@
   max-height: 500px;
   max-width: 650px;
   align-self: center;
+  border-radius: 10px;
 }
 
 @media (max-width: 821px) {

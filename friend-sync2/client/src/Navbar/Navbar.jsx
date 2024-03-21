@@ -13,6 +13,12 @@ function Navbar ({user}) {
   const navigate = useNavigate();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [showMenu, setShowMenu] = useState(false);
+  const [bgColor, setBgColor] = useState('white')
+
+  function handleColorChange() {
+    bgColor == 'black' ? setBgColor('white') : setBgColor('black')
+    document.documentElement.style.setProperty('--background-color', bgColor);
+  }
 
   function handleLogOut() {
     AuthService.logout();
@@ -44,6 +50,8 @@ function Navbar ({user}) {
           </button>
           {showRequests && <div className='friend-requests-list'> <FriendRequests /> </div>}
         </div>
+        
+        <button onClick={handleColorChange}>Change Color</button>
 
         {windowWidth > 831 ? 
         <div className='settings-log-out-buttons-container'>

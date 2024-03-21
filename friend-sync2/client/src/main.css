@@ -11,8 +11,9 @@
   --fs-l: 1.3rem;
   --fs-m: 0.9rem;
   --main-color: rgb(68, 71, 103);
-  --hoveredBtn-background-color: rgba(167, 167, 167, 0.108);
   --background-color:  #ebebeb;
+  --hoveredBtn-background-color: rgba(167, 167, 167, 0.108);
+  --white-border: rgba(255, 255, 255, 0.254);
 }
 
 @media (max-width: 821px) {
