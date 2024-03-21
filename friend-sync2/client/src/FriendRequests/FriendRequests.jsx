@@ -51,11 +51,11 @@ function FriendRequests() {
 
   return(
     <div className='friend-requests-container'>
-      {receivedRequests.map((request, key) => (
+      {receivedRequests.length > 0 ? receivedRequests.map((request, key) => (
         <div key={key}>
            <button onClick={() => handleProfilePage(request.userId, navigate)}>{request.fullName}</button>
         </div>    
-      ))}
+      )) : <p>No friend requests</p>}
     </div>
   )
 }
