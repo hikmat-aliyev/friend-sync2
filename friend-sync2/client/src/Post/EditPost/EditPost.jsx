@@ -86,7 +86,7 @@ function EditPost ({setPosts, index, setEditMode, post, setActivePostIndex, edit
 
             </div>
 
-           {ready 
+           {(editedText.length > 0)
            ?  <button className='enabled-edit-save-btn' onClick={() => handleEditedPostSubmit()} type='submit'>
                 Save
               </button> 

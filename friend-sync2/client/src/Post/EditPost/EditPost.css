@@ -3,12 +3,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
   z-index: 9999999;
   width: 25vw;
   height: fit-content;
   padding: 1.2rem;
-  background-color: white;
+  background-color: var(--background-color);
+  border: 1px solid var(--white-border);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -25,7 +25,7 @@
 .section-header {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid gray;
   padding: 1rem 0 1rem 0;
 }
 
@@ -44,35 +44,40 @@
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;
-  border: 1px solid grey; 
 }
 
 
 .edit-section > form > textarea {
   width: 100%;
   border: 1px solid gray;
+  background-color: var(--background-color);
   resize: none;
 }
 
 .post-image-edited {
   display: flex;
+  align-items: center;
   flex-direction: column;
   gap: 5px;
 }
 
 .post-image-edited > img {
-  max-height: 500px;
-  max-width: 650px;
+  max-height: 400px;
+  max-width: 380px;
+  border-radius: 10px;
 }
 
 .disabled-edit-save-btn {
   pointer-events: none;
   font-weight: bold;
+  color: var(--main-color);
+  background-color: var(--background-color);
+  border: 1px solid var(--white-border);
 }
 
 .enabled-edit-save-btn {
   cursor: pointer;
   background-color: var( --main-color);
-  color: white;
+  color: var(--background-color);
   font-weight: bold;
 }

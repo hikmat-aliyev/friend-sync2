@@ -17,6 +17,7 @@ function Navbar ({user}) {
   const [bgColor, setBgColor] = useState('black');
   const [bodyBgColor, setBodyBgColor] = useState('black');
   const [mainColor,setMainColor] = useState('white');
+  const [logOutContainer, setLogOutContainer] = useState(false);
 
   function handleColorChange() {
     bgColor == 'black' ? setBgColor('white') : setBgColor('black');
@@ -78,7 +79,7 @@ function Navbar ({user}) {
             </span>
           </button>
 
-          <button onClick={handleLogOut}>
+          <button onClick={() => setLogOutContainer(true)}>
             <span className="material-symbols-outlined log-out-icon">
               logout
             </span>
@@ -98,6 +99,17 @@ function Navbar ({user}) {
 
 
       </div>
+
+      {logOutContainer &&
+       <div className='log-out-container'>
+        <div className='log-out-div'>
+          <h1>Do you want to log out?</h1>
+          <div>
+            <button onClick={() => setLogOutContainer(false)}>Cancel</button>
+            <button onClick={handleLogOut}>Log out</button>
+          </div>
+        </div>
+      </div>}
 
     </div>
   )

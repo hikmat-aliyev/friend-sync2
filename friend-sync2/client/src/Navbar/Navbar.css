@@ -73,7 +73,8 @@
 .navbar-username-btn:hover,
 .settings-log-out-buttons-container > button:hover, 
 .menu-container > button:hover {
-  background-color: var(--hoveredBtn-background-color)
+  background-color: var(--hoveredBtn-background-color);
+  transform: scale(1.02);
 }
 
 
@@ -95,12 +96,34 @@
 }
 
 .navbar-logo:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .log-out-icon, .settings-icon {
   font-size: 2.5rem;
   color: var(--main-color);
+}
+
+.log-out-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 998;
+}
+
+.log-out-div {
+  position: absolute;
+  z-index: 999;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  border: 2px solid red;
+  height: 50vh;
+  background-color: var(--background-color);
 }
 
 #friends-icon {
