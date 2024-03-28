@@ -20,9 +20,9 @@
 @media (max-width: 821px) {
   :root {
     font-size: 10px;
-    --fs-xl: 2.5rem;
+    --fs-xl: 2.3rem;
     --fs-l: 1.3rem;
-    --fs-m: 0.5rem;
+    --fs-m: 0.8rem;
   }
 }
 

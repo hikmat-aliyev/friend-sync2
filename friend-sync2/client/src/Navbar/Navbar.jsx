@@ -43,6 +43,7 @@ function Navbar ({user}) {
   return (
     <div className='navbar-container'>
 
+      {logOutContainer && <div className='background-layer'></div>}
       <button className='navbar-logo' onClick={() =>{
         navigate('/homepage')}}>friendSync
       </button>
@@ -102,13 +103,11 @@ function Navbar ({user}) {
 
       {logOutContainer &&
        <div className='log-out-container'>
-        <div className='log-out-div'>
           <h1>Do you want to log out?</h1>
           <div>
-            <button onClick={() => setLogOutContainer(false)}>Cancel</button>
             <button onClick={handleLogOut}>Log out</button>
+            <button onClick={() => setLogOutContainer(false)}>Cancel</button>
           </div>
-        </div>
       </div>}
 
     </div>

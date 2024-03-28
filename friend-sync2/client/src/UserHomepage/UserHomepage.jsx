@@ -8,6 +8,7 @@
   const UserHomepage = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    
     useEffect(() => {
       const jwt = AuthService.getToken();
       if (jwt) {
