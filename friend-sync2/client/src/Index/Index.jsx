@@ -10,7 +10,9 @@ function Index() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState("error");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  console.log(loading)
 
   //clear jwt
   useEffect(() => {
@@ -24,23 +26,26 @@ function Index() {
     e.preventDefault(); // Prevent the default form submission behavior
 
     try {
+      setLoading(true);
       // Use await to wait for the login to complete before proceeding
       await AuthService.login(email, password);
       setError(null);
+      setLoading(false);
       navigate('/homepage')
     } catch (error) {
       setError('Incorrect email or password')
       console.error('Login failed:', error.message);
-      // Handle login failure, show an error message, etc.
     }
   };
 
   async function handleDefaultLogin(e) {
     e.preventDefault(); // Prevent the default form submission behavior
     try {
+      setLoading(true);
       // Use await to wait for the login to complete before proceeding
       await AuthService.login('default@gmail.com', '12345');
       setError(null);
+      setLoading(false);
       navigate('/homepage')
     } catch (error) {
       setError('Incorrect email or password')
@@ -50,7 +55,9 @@ function Index() {
   }
  
   return (
-    <div className='index-container'>
+    <>
+    {!loading ?
+     <div className='index-container'>
       <img src={image2} />
         <div className='login-container'>
         <h1>friendSync</h1>
@@ -88,7 +95,8 @@ function Index() {
           <button onClick={handleDefaultLogin} className='default-account-login'>Continue with a default account</button>
 
       </div>
-    </div>
+    </div> : <p className='index-loading-text'>Loading...</p>}</>
+    
   )
 }
 
