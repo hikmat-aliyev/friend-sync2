@@ -13,6 +13,7 @@
   --main-color: white;
   --background-color: black;
   --body-background-color: black;
+  --post-bg-color: rgb(4, 4, 4);
   --hoveredBtn-background-color: rgba(167, 167, 167, 0.108);
   --white-border: rgba(255, 255, 255, 0.254);
 }

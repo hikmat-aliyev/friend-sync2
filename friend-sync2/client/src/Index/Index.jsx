@@ -33,7 +33,8 @@ function Index() {
       setLoading(false);
       navigate('/homepage')
     } catch (error) {
-      setError('Incorrect email or password')
+      setError('Incorrect email or password');
+      setLoading(false);
       console.error('Login failed:', error.message);
     }
   };

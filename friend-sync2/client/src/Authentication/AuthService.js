@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const API_BASE = 'https://friend-sync-server-production.up.railway.app'
+// export const API_BASE = 'https://friend-sync-server-production.up.railway.app'\
+export const API_BASE = 'http://localhost:3000'
 
 const AuthService = {
   login: async (email, password) => {
