@@ -12,7 +12,6 @@ function Index() {
   const [error, setError] = useState("error");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  console.log(loading)
 
   //clear jwt
   useEffect(() => {
