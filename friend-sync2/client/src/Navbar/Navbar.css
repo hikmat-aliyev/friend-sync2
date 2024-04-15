@@ -66,6 +66,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform 0.2s ease-in-out;
 }
 
 .right-side > button:hover, 
@@ -74,7 +75,7 @@
 .settings-log-out-buttons-container > button:hover, 
 .menu-container > button:hover {
   background-color: var(--hoveredBtn-background-color);
-  transform: scale(1.02);
+  transform: scale(1.05);
 }
 
 
@@ -85,6 +86,7 @@
   cursor: pointer;
   border: none;
   background-color: transparent;
+  transition: transform 0.2s ease-in-out;
 }
 
 .navbar-logo {

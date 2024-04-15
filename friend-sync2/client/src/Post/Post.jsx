@@ -236,7 +236,6 @@ const Post = ({userInfo, profileInfo, path}) => {
     }
   }
 
-
   return (
     <div className='post-page'>
       {editMode && <div className="background-layer"></div>}
